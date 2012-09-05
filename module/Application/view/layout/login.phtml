@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="cs" class="no-js">
+    <head>
+        <meta charset=utf-8>
+        <?php echo $this->headTitle('Money')->setSeparator(' - ')->setAutoEscape(false); ?>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+        
+        <link href="<?php echo $this->public('/layout/jquery-ui-1.8.17.custom.css'); ?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo $this->public('/layout/bootstrap/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css"/>
+
+        <link href="<?php echo $this->public('/layout/login/layout.css?v=1'); ?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo $this->public('/layout/login/content.css?v=1'); ?>" rel="stylesheet" type="text/css"/>
+        <!--[if IE]>
+            <link href="<?php echo $this->public('/layout/login/layoutIE.css'); ?>" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <!--[if IE 7]>
+            <link href="<?php echo $this->public('/layout/login/layoutIE7.css'); ?>" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <!--[if IE 8]>
+            <link href="<?php echo $this->public('/layout/login/layoutIE8.css'); ?>" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <!--[if IE 9]>
+            <link href="<?php echo $this->public('/layout/login/layoutIE9.css'); ?>" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <link href="<?php echo $this->public('/layout/login/hacks.css?v=1'); ?>" rel="stylesheet" type="text/css"/>
+
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/modernizr.custom.33887.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery-1.7.1.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery.cookie.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery-ui-1.8.17.custom.min.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery-ui-timepicker-addon.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery.color.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/bootstrap.min.js'); ?>"></script>
+
+
+        <script type="text/javascript" src="<?php echo $this->public('/layout/login/js/application.js'); ?>"></script>
+    </head>
+    <body>
+        <!--   IE not suported     -->
+        <div id="ieh">
+            <p>Omlouváme se ale váš prohlížeč již <span>není podporován.</span> Proto můžete mít potíže se zobrazením tohoto webu. Update si můžete stáhnout na této <a href="http://windows.microsoft.com/cs-CZ/internet-explorer/products/ie/home">stránce.</a></p>
+        </div>
+        <div id="backgroundCleaner"></div>
+        <?php echo $this->content; ?>
+
+        <div id="footer">
+            NoWriter 2012
+        </div>
+    </body>	
+</html>

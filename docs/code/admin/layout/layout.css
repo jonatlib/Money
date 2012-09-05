@@ -1,0 +1,72 @@
+@charset "utf-8";
+
+html, body { background: url(image/bg.png) top left no-repeat #e1e1e1 !important; margin: 0; padding: 0; min-width: 1024px; }
+
+.w10 { width: 10%; }
+.w20 { width: 20%; }
+.w30 { width: 30%; }
+.w40 { width: 40%; }
+.w50 { width: 50%; }
+.w60 { width: 60%; }
+.w70 { width: 70%; }
+.w80 { width: 80%; }
+.w90 { width: 90%; }
+.w100 { width: 100%; }
+
+.s100 { width: 100px; }
+.s200 { width: 200px; }
+.s300 { width: 300px; }
+.s400 { width: 400px; }
+.s500 { width: 500px; }
+.s600 { width: 600px; }
+.s700 { width: 700px; }
+.s800 { width: 800px; }
+.s900 { width: 900px; }
+.s1000 { width: 1000px; }
+
+.left { float: left; }
+.right { float: right; }
+
+div#ieh { display: none; }
+.cleaner { clear: both; float: none; }
+.center { margin: 0 auto; }
+
+div#blocks { margin: 8px 0 0 0; }
+div#blocks > div { float: left; }
+
+div#blocks > div#leftBlockHead > div.padding  { padding: 0 3px 0 0; }
+div#blocks > div#rightBlockHead > div.padding { padding: 0 0 0 3px; }
+
+div#blocks > div#leftBlock > div.padding  { padding: 0 3px 0 0; }
+div#blocks > div#rightBlock > div.padding { padding: 0 0 0 3px; }
+div.content { min-height: 36px; margin: 0 0 6px 0; background: #fff; clear: both; }
+/*div.content { box-shadow: inset 0px 0px 20px 0px #aaa, 0px 0px 80px 10px #999; }*/
+div.content { box-shadow: 0px 0px 20px 0px #999; }
+
+/*Head*/
+div#blocks > div#leftBlockHead div#head { font-size: 36px; font-weight: bold; padding: 27px 0 0 40px; height: 47px; text-transform: uppercase; }
+
+/*Menu*/
+div#blocks > div#rightBlockHead div#headMenu { padding: 0 0 0 20px; height: 74px; }
+div#blocks > div#rightBlockHead div#headMenu div.subnav { margin: 0 10px 0 0; }
+div#blocks > div#rightBlockHead div#headMenu div.subnav-fixed { 
+    position: fixed; width: 70%; padding: 17px 0 10px 20px; height: 47px;
+    margin: 0 0 0 -20px !important; top: 5px; background: #fff;
+    border-bottom: 1px solid #ddd; border-top: 1px solid #ddd; border-left: 1px solid #ddd;
+}
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul { margin: 0; padding: 0; }
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li { margin: 0 10px 0 0; }
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a:visited,
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a:active,
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a { margin: 0; height: 34px; padding: 40px 15px 0 15px; background: none; color: #000; }
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a.hover { background: #08c; color: #fff; }
+
+/*Content*/
+
+div#blocks > div > div.padding div#sidebar { float: right; margin: 35px 0 0 0; width: 100%; }
+div#blocks > div > div.padding div#sidebar div.content { float: right; width: 85%; padding: 15px; }
+
+div#blocks > div > div.padding div#inner { float: left; margin: 35px 0 0 0; width: 100%; }
+div#blocks > div > div.padding div#inner div.content { float: left; width: 85%; padding: 18px; }
+
+div#footer { height: 59px; background: #fff; width: 100%; margin: 80px 0 0 0; text-align: center; color: #aaa; padding: 15px 0 0 0; }

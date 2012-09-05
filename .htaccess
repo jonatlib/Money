@@ -1,0 +1,6 @@
+SetEnv APPLICATION_ENV development
+
+RewriteEngine on
+
+RewriteRule ^((.*)\/)?docs\/(.*)$ - [NC,L]
+RewriteRule ^.*$ public/$1 [NC,L]

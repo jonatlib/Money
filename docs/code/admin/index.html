@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="cs" class="no-js">
+    <head>
+        <meta charset=utf-8>
+        <title>NoWriter</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        
+        <link href="layout/jquery-ui-1.8.17.custom.css" rel="stylesheet" type="text/css"/>
+        <link href="layout/bootstrap/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="layout/layout.css?v=1" rel="stylesheet" type="text/css"/>
+        <link href="layout/content.css?v=1" rel="stylesheet" type="text/css"/>
+        <!--[if IE]>
+            <link href="layout/layoutIE.css" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <!--[if IE 7]>
+            <link href="layout/layoutIE7.css" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <!--[if IE 8]>
+            <link href="layout/layoutIE8.css" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <!--[if IE 9]>
+            <link href="layout/layoutIE9.css" rel="stylesheet" type="text/css"/>
+        <![endif]-->
+        <link href="layout/hacks.css?v=1" rel="stylesheet" type="text/css"/>
+
+        <script type="text/javascript" src="layout/js/modernizr.custom.33887.js"></script>
+        <script type="text/javascript" src="layout/js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="layout/js/jquery.cookie.js"></script>
+        <script type="text/javascript" src="layout/js/jquery-ui-1.8.17.custom.min.js"></script>
+        <script type="text/javascript" src="layout/js/jquery-ui-timepicker-addon.js"></script>
+        <script type="text/javascript" src="layout/js/jquery.color.js"></script>
+        <script type="text/javascript" src="layout/js/bootstrap.min.js"></script>
+
+
+        <script type="text/javascript" src="layout/js/application.js"></script>
+    </head>
+    <body>
+        <!--   IE not suported     -->
+        <div id="ieh">
+            <p>Omlouváme se ale váš prohlížeč již <span>není podporován.</span> Proto můžete mít potíže se zobrazením tohoto webu. Update si můžete stáhnout na této <a href="http://windows.microsoft.com/cs-CZ/internet-explorer/products/ie/home">stránce.</a></p>
+        </div>
+
+        <div id="blocks">
+            <div class="w30" id="leftBlockHead">
+                <div class="padding">
+                    <div class="content" id="head">
+                        nowriter
+                    </div>
+                </div>
+            </div>
+            <div class="w70" id="rightBlockHead">
+                <div class="padding">
+                    <div class="content" id="headMenu">
+                        <div class="subnav">
+                            <ul class="nav nav-pills">
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Buttons <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#buttonGroups">Button groups</a></li>
+                                        <li><a href="#buttonDropdowns">Button dropdowns</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Navigation <b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#navs">Nav, tabs, pills</a></li>
+                                        <li><a href="#navbar">Navbar</a></li>
+                                        <li><a href="#breadcrumbs">Breadcrumbs</a></li>
+                                        <li><a href="#pagination">Pagination</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#labels">Labels</a></li>
+                                <li><a href="#badges">Badges</a></li>
+                                <li><a href="#typography">Typography</a></li>
+                                <li><a href="#thumbnails">Thumbnails</a></li>
+                                <li><a href="#alerts">Alerts</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cleaner"></div>
+
+            <div class="w30" id="leftBlock">
+                <div class="padding">
+                    <div id="sidebar">
+                        <div class="content">
+                            <ul class="nav nav-list">
+                                <li class="nav-header">List of Modules</li>
+                                <li class="active"><a href="#"><i class="icon-file icon-white"></i> Articles</a></li>
+                                <li><a href="#"><i class="icon-file"></i> Pages</a></li>
+                                <li><a href="#"><i class="icon-file"></i> Galery</a></li>
+                                <li><a href="#"><i class="icon-file"></i> Tags</a></li>
+                                <li><a href="#"><i class="icon-file"></i> Comments</a></li>
+                                <li class="divider"></li>
+                                <li class="nav-header">Others</li>
+                                <li><a href="#"><i class="icon-file"></i> Settings</a></li>
+                            </ul>
+                        </div>
+                        <div class="content attach">
+                            Some content
+                        </div>
+                        <div class="content">
+
+                            <ul class="nav nav-list">
+                                <li class="nav-header">Others</li>
+                                <li><a href="#"><i class="icon-file"></i> Settings</a></li>
+                                <li><a href="#"><i class="icon-file"></i> Other Settings</a></li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w70" id="rightBlock">
+                <div class="padding">
+                    <div id="inner">
+                        <div id="messages">
+                            <div class="content alert alert-success alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Warning!</h4>
+                                Best check yo self, you're not...
+                            </div>
+                            <div class="content alert alert-warning alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Warning!</h4>
+                                Best check yo self, you're not...
+                            </div>
+                            <div class="content alert alert-error alert-block">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                <h4>Warning!</h4>
+                                Best check yo self, you're not...
+                            </div>
+                        </div>
+                        <div class="content">
+                            <h1>Module Settings</h1>
+                        </div>
+
+                        <form class="form-horizontal">
+                            <div class="content">
+                                <fieldset>
+                                    <legend>Legend text</legend>
+                                    <div class="control-group">
+                                        <label class="control-label" for="input01">Text input</label>
+                                        <div class="controls">
+                                            <div class="input-append">
+                                                <input type="text" title="Tets info k nejakemu inputu" class="input-xlarge">
+                                                <span class="add-on"><i class="icon-question-sign"></i></span>
+                                            </div>
+                                            <p class="help-block">Supporting help text</p>
+                                        </div>
+                                    </div>
+                                    <div class="control-group success">
+                                        <label class="control-label" for="input01">Text input</label>
+                                        <div class="controls">
+                                            <div class="input-append">
+                                                <input type="text" title="Tets info k nejakemu inputu" class="input-xlarge">
+                                                <span class="add-on"><i class="icon-ok-sign"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="control-group error">
+                                        <label class="control-label" for="input01">Text input</label>
+                                        <div class="controls">
+                                            <div class="input-append">
+                                                <input type="text" title="Tets info k nejakemu inputu" class="input-xlarge">
+                                                <span class="add-on"><i class="icon-remove-sign"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+
+                            <div class="content">
+                                <div class="s300">
+                                    <a class="btn btn-primary btn-large left">Save</a>
+                                    <a class="btn btn-primary btn-large right">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="content">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in sapien in tortor pharetra vestibulum. Mauris quis tempor metus. Suspendisse tempus viverra faucibus. Nullam odio dolor, bibendum sit amet elementum at, ullamcorper vel velit. Aliquam massa felis, tincidunt sed dictum quis, congue eget erat. Morbi venenatis volutpat purus non ullamcorper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam ultrices viverra lacinia. Vestibulum sodales velit et lorem commodo nec suscipit elit eleifend. Aliquam fringilla bibendum fringilla. Aenean lacus libero, ultricies id adipiscing ut, elementum a massa. Etiam ultricies consectetur lectus, ac volutpat ante porttitor et.
+
+                            <p>Mauris rhoncus euismod quam, fermentum sollicitudin magna convallis ut. Fusce tempus, sem non gravida ornare, justo nunc fermentum ipsum, ac eleifend nibh dolor ut nibh. Nulla semper luctus nunc, eu hendrerit mauris accumsan nec. Nulla eleifend porttitor lectus ac pretium. Sed sed turpis et nibh placerat porta at vitae eros. Curabitur volutpat dignissim tristique. Etiam aliquam risus tristique metus molestie et iaculis quam tempor. Aenean tincidunt nisl sit amet leo bibendum dapibus. Nunc magna lectus, suscipit non tempor et, tincidunt id massa. Pellentesque lacinia magna sit amet dui eleifend at vehicula tellus gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in ligula ipsum. Duis id eros a sem laoreet feugiat ac vel lorem. Donec vitae diam orci. Ut vel leo urna, quis elementum erat. Nam eget mattis tortor.
+
+                            <p>Quisque quis dolor ac elit tempus pretium. Fusce pellentesque nisl ac risus consequat eu semper elit tincidunt. Mauris tempus justo quis urna gravida malesuada. Quisque et ipsum felis. Aliquam dolor elit, faucibus eu faucibus ac, tristique sed metus. Morbi dapibus imperdiet elit, ac rutrum odio molestie vitae. Donec sodales, lorem sed ullamcorper lobortis, enim tortor tempor felis, ut lobortis tellus eros vel leo. Maecenas feugiat, justo id pretium tristique, magna urna eleifend ligula, et tincidunt mauris dui sit amet nunc. Nunc ante ante, congue eget consequat quis, pellentesque quis elit. Quisque hendrerit eleifend fringilla. Integer mi libero, sagittis ut vehicula dignissim, dapibus ut sapien. Vivamus turpis orci, fermentum eget auctor ut, auctor sed sem. Mauris ornare fringilla felis id pretium. Vestibulum vehicula mi quis turpis congue rutrum.
+
+                            <p>Quisque vel felis risus, at imperdiet mauris. Aliquam tincidunt lorem et nibh facilisis non varius metus congue. Mauris ac dui est, nec porta erat. Donec convallis semper ornare. Quisque sit amet neque magna, ac imperdiet turpis. Ut mollis ligula eu ipsum faucibus tincidunt. Sed condimentum dictum enim, luctus dictum arcu rutrum in. Etiam feugiat facilisis vulputate. Proin mollis, erat facilisis luctus varius, mauris ante cursus odio, vitae ultricies leo arcu at sapien. Integer commodo, tellus ullamcorper venenatis varius, nisi leo pulvinar ipsum, vel congue tortor urna nec mauris. Nullam sed lorem enim, vel lobortis lacus.
+
+                            <p>Curabitur ac felis tellus, nec semper enim. Aliquam lorem mauris, euismod in laoreet ut, gravida vitae magna. Proin sit amet nisi id massa sagittis scelerisque non eu nibh. Nunc viverra neque eget nisi viverra vulputate. Cras rhoncus dignissim cursus. Praesent in nulla ante, bibendum iaculis libero. Proin vitae tortor turpis. Nam ornare, tortor a scelerisque posuere, velit dui aliquam urna, cursus malesuada arcu nulla quis nibh.
+                        </div>
+                        <div class="content">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras in sapien in tortor pharetra vestibulum. Mauris quis tempor metus. Suspendisse tempus viverra faucibus. Nullam odio dolor, bibendum sit amet elementum at, ullamcorper vel velit. Aliquam massa felis, tincidunt sed dictum quis, congue eget erat. Morbi venenatis volutpat purus non ullamcorper. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam ultrices viverra lacinia. Vestibulum sodales velit et lorem commodo nec suscipit elit eleifend. Aliquam fringilla bibendum fringilla. Aenean lacus libero, ultricies id adipiscing ut, elementum a massa. Etiam ultricies consectetur lectus, ac volutpat ante porttitor et.
+
+                            <p>Mauris rhoncus euismod quam, fermentum sollicitudin magna convallis ut. Fusce tempus, sem non gravida ornare, justo nunc fermentum ipsum, ac eleifend nibh dolor ut nibh. Nulla semper luctus nunc, eu hendrerit mauris accumsan nec. Nulla eleifend porttitor lectus ac pretium. Sed sed turpis et nibh placerat porta at vitae eros. Curabitur volutpat dignissim tristique. Etiam aliquam risus tristique metus molestie et iaculis quam tempor. Aenean tincidunt nisl sit amet leo bibendum dapibus. Nunc magna lectus, suscipit non tempor et, tincidunt id massa. Pellentesque lacinia magna sit amet dui eleifend at vehicula tellus gravida. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur in ligula ipsum. Duis id eros a sem laoreet feugiat ac vel lorem. Donec vitae diam orci. Ut vel leo urna, quis elementum erat. Nam eget mattis tortor.
+
+                            <p>Quisque quis dolor ac elit tempus pretium. Fusce pellentesque nisl ac risus consequat eu semper elit tincidunt. Mauris tempus justo quis urna gravida malesuada. Quisque et ipsum felis. Aliquam dolor elit, faucibus eu faucibus ac, tristique sed metus. Morbi dapibus imperdiet elit, ac rutrum odio molestie vitae. Donec sodales, lorem sed ullamcorper lobortis, enim tortor tempor felis, ut lobortis tellus eros vel leo. Maecenas feugiat, justo id pretium tristique, magna urna eleifend ligula, et tincidunt mauris dui sit amet nunc. Nunc ante ante, congue eget consequat quis, pellentesque quis elit. Quisque hendrerit eleifend fringilla. Integer mi libero, sagittis ut vehicula dignissim, dapibus ut sapien. Vivamus turpis orci, fermentum eget auctor ut, auctor sed sem. Mauris ornare fringilla felis id pretium. Vestibulum vehicula mi quis turpis congue rutrum.
+
+                            <p>Quisque vel felis risus, at imperdiet mauris. Aliquam tincidunt lorem et nibh facilisis non varius metus congue. Mauris ac dui est, nec porta erat. Donec convallis semper ornare. Quisque sit amet neque magna, ac imperdiet turpis. Ut mollis ligula eu ipsum faucibus tincidunt. Sed condimentum dictum enim, luctus dictum arcu rutrum in. Etiam feugiat facilisis vulputate. Proin mollis, erat facilisis luctus varius, mauris ante cursus odio, vitae ultricies leo arcu at sapien. Integer commodo, tellus ullamcorper venenatis varius, nisi leo pulvinar ipsum, vel congue tortor urna nec mauris. Nullam sed lorem enim, vel lobortis lacus.
+
+                            <p>Curabitur ac felis tellus, nec semper enim. Aliquam lorem mauris, euismod in laoreet ut, gravida vitae magna. Proin sit amet nisi id massa sagittis scelerisque non eu nibh. Nunc viverra neque eget nisi viverra vulputate. Cras rhoncus dignissim cursus. Praesent in nulla ante, bibendum iaculis libero. Proin vitae tortor turpis. Nam ornare, tortor a scelerisque posuere, velit dui aliquam urna, cursus malesuada arcu nulla quis nibh.
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cleaner"></div>
+
+        <div id="footer">
+            NoWriter 2012
+        </div>
+    </body>	
+</html>
