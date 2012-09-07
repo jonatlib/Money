@@ -1,29 +1,33 @@
 <div id="content" class="content">
     <h1>Money</h1>
+    <?php echo $this->form()->openTag($form) . PHP_EOL; ?>
     <fieldset>
         <legend>Login to administration</legend>
-        <div class="control-group">
-            <label class="control-label" for="input01">Email</label>
-            <div class="controls">
-                <div class="input-append">
-                    <input id="email" name="email" type="text" title="Tets info k nejakemu inputu" class="input-xlarge">
-                    <span class="add-on"><i class="icon-question-sign"></i></span>
-                </div>
-                <!--<p class="help-block">Supporting help text</p>-->
+        <?php foreach ($this->form->getIterator() as $element): ?>
+            <?php if (($element instanceof Zend\Form\Element\Button)) continue; ?>
+            <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
+            <div class="control-group">
+                <?php if ($element->getLabel()) echo $this->formLabel($element) . PHP_EOL; ?>
+                <?php if (!($element instanceof Zend\Form\Element\Csrf)): ?>
+                    <div class="controls">
+                        <div class="input-append">
+                            <?php echo $this->formElement($element) . PHP_EOL; ?>
+                            <span class="add-on"><i class="icon-question-sign"></i></span>
+                        </div>
+                        <p class="help-block"><?php echo $this->formElementErrors($element) . PHP_EOL; ?></p>
+                    </div>
+                <?php else: ?>
+                    <div>
+                        <?php echo $this->formElement($element) . PHP_EOL; ?>
+                        <?php echo $this->formElementErrors($element) . PHP_EOL; ?>
+                    </div>
+                <?php endif; ?>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="input01">Password</label>
-            <div class="controls">
-                <div class="input-append">
-                    <input id="password" name="password" type="password" title="Tets info k nejakemu inputu" class="input-xlarge">
-                    <span class="add-on"><i class="icon-question-sign"></i></span>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </fieldset>
     <div class="buttons">
-        <a class="btn btn-primary btn-large left">Login</a>
-        <a class="btn btn-primary btn-large right">Cancel</a>
+        <?php echo $this->formElement($form->get('submit')); ?>
+        <?php echo $this->formElement($form->get('reset')); ?>
     </div>
+    <?php echo $this->form()->closeTag(); ?>
 </div>
