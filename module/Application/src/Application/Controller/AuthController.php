@@ -18,6 +18,8 @@ class AuthController extends AbstractActionController
             $form->setData($this->request->getPost());
             if($form->isValid()){
                 
+//                $this->flashMessenger()->addMessage('Success');
+                $this->redirect()->toRoute('application/default', array('controller' => 'auth'));
             }
         }
         

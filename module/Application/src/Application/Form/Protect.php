@@ -46,7 +46,8 @@ class Protect extends Form {
         $validator = $inputSpecification['validators'][0];
         if ($validator instanceof \Zend\Validator\Csrf) {
             $validator->setSession($this->session);
-            $validator->setSalt(get_called_class());
+            if(!isset($this->session->salt)) $this->session->salt = 0;
+            $validator->setSalt(get_called_class() . $this->session->salt);
         }
         $this->add($element, array('priority' => -1000));
     }
