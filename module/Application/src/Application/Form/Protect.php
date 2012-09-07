@@ -51,7 +51,40 @@ class Protect extends Form {
         $this->add($element, array('priority' => -1000));
     }
 
+    private function initFilter(){
+        ////// ZF1 like
+        $filter = new \Zend\InputFilter\BaseInputFilter();
+        foreach($this->getIterator() as $element){
+            $e = new \Zend\InputFilter\Input($element->getName());
+            $e->setRequired( ($element->getOption('required')) ? true : false );
+            
+            $validators = new \Zend\Validator\ValidatorChain();
+            if(!is_null($element->getOption('validators'))){
+                foreach($element->getOption('validators') as $k => $v){
+                    $validators->addByName($k, $v);
+                }
+            }
+            if($element instanceof \Zend\Form\Element\Csrf){
+                $csrf = $element->getInputSpecification();
+                $validators->addValidator($csrf['validators'][0]);
+            }
+            $e->setValidatorChain($validators);
+            
+            $filters = new \Zend\Filter\FilterChain();
+            if(!is_null($element->getOption('filters'))){
+                foreach($element->getOption('filters') as $k => $v){
+                    $filters->attachByName($k, $v);
+                }
+            }
+            $e->setFilterChain($filters);
+                        
+            $filter->add($e);
+        }
+        $this->setInputFilter($filter);
+    }
+    
     public function isValid() {
+        $this->initFilter();
         $result = parent::isValid();
         if (!$result) {
             $this->setFailure();
