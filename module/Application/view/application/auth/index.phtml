@@ -8,7 +8,7 @@
             <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
             <div class="control-group">
                 <?php if ($element->getLabel()) echo $this->formLabel($element) . PHP_EOL; ?>
-                <?php if (!($element instanceof Zend\Form\Element\Csrf)): ?>
+                <?php if ( !($element instanceof Zend\Form\Element\Csrf) && !($element instanceof Zend\Form\Element\Captcha) ): ?>
                     <div class="controls">
                         <div class="input-append">
                             <?php echo $this->formElement($element) . PHP_EOL; ?>

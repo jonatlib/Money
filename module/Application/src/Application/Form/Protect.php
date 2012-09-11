@@ -36,7 +36,11 @@ class Protect extends Form {
 
         if ($this->getFailure()) {
             $element = new Element\Captcha('captcha');
-            $element->setCaptcha(new \Zend\Captcha\Dumb());
+            $adapter = new \Zend\Captcha\ReCaptcha();
+            $adapter->setPubkey('6LefWNYSAAAAAMtcdir9eBe97thnOHW0mmo4EQYC');
+            $adapter->setPrivkey('6LefWNYSAAAAALi7Y-252ZFP7bEilX6DQKdR0LkW');
+            $adapter->setOption('theme', 'white');
+            $element->setCaptcha($adapter);
             $this->add($element, array('priority' => -1));
         }
 

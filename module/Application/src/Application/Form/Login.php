@@ -43,6 +43,7 @@ class Login extends Protect {
             'type' => '\Zend\Form\Element\Submit',
             'name' => 'submit',
             'options' => array(
+                'label' => 'a'
             ),
             'attributes' => array(
                 'value' => 'Login',
@@ -53,6 +54,7 @@ class Login extends Protect {
             'type' => '\Zend\Form\Element\Button',
             'name' => 'reset',
             'options' => array(
+                'label' => 'Reset'
             ),
             'attributes' => array(
                 'value' => 'Reset',
