@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Global Configuration Override
  *
@@ -10,7 +11,15 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
 return array(
-    'baseurl' => '/money/'
+    'baseurl' => '/money/',
+    'db' => array(
+        'driver' => 'PDO',
+        'dsn' => 'mysql:dbname=money;hostname=localhost',
+        'username' => 'root',
+        'password' => 'heslo',
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        ),
+    ),
 );

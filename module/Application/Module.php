@@ -28,6 +28,10 @@ class Module {
     }
 
     public function initAuth(\Zend\Mvc\MvcEvent $e) {
+        $authService = new \Zend\Authentication\AuthenticationService();
+        if ($authService->hasIdentity()) {
+            return;
+        }
         $controller = $e->getRouteMatch()->getParam(ModuleRouteListener::ORIGINAL_CONTROLLER);
         if (strtolower($controller) == 'auth')
             return;

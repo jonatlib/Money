@@ -49,6 +49,12 @@ return array(
     'service_manager' => array(
         'factories' => array(
             'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'db-adapter' => function($sm) {
+                $config = $sm->get('config');
+                $config = $config['db'];
+                $dbAdapter = new \Zend\Db\Adapter\Adapter($config);
+                return $dbAdapter;
+            },
         ),
     ),
     'translator' => array(
@@ -71,9 +77,9 @@ return array(
                 /* @var $em Zend\EventManager\SharedEventManager */
                 $em = $cm->getServiceLocator()->get('SharedEventManager');
                 $instance = new Application\Controller\AuthController();
-                $em->attach('Application\Controller\AuthController', 'dispatch', array($instance, 'init'));
+                $em->attach('Application\Controller\AuthController', 'dispatch', array($instance, 'init'), 1000);
                 return $instance;
-            }
+            },
         )
     ),
     'view_helpers' => array(

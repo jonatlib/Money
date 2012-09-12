@@ -11,15 +11,18 @@ class Protect extends Form {
      * @var \Zend\Session\Container
      */
     private $session;
+    private $set = false;
 
     public function setFailure() {
         if (!isset($this->session->failure)) {
             $this->session->failure = 0;
         }
         $this->session->failure = ((int) $this->session->failure) + 1;
+        $this->set = true;
     }
 
     public function resetFailure() {
+        if($this->set) return;
         $this->session->failure = 0;
         $this->remove('captcha');
     }
@@ -91,11 +94,6 @@ class Protect extends Form {
     public function isValid() {
         $this->initFilter();
         $result = parent::isValid();
-        if (!$result) {
-            $this->setFailure();
-        } else {
-            $this->resetFailure();
-        }
         return $result;
     }
 
