@@ -5,12 +5,13 @@
         <?php echo $this->headTitle('Money')->setSeparator(' - ')->setAutoEscape(false); ?>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
-        
+
         <link href="<?php echo $this->public('/layout/jquery-ui-1.8.17.custom.css'); ?>" rel="stylesheet" type="text/css"/>
         <link href="<?php echo $this->public('/layout/bootstrap/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo $this->public('/layout/datepicker/css/datepicker.css'); ?>" rel="stylesheet" type="text/css"/>
 
         <link href="<?php echo $this->public('/layout/layout.css?v=1'); ?>" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo $this->public('/layout/content.css?v=1'); ?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo $this->public('/layout/content.css?v=2'); ?>" rel="stylesheet" type="text/css"/>
         <!--[if IE]>
             <link href="<?php echo $this->public('/layout/layoutIE.css'); ?>" rel="stylesheet" type="text/css"/>
         <![endif]-->
@@ -23,7 +24,7 @@
         <!--[if IE 9]>
             <link href="<?php echo $this->public('/layout/layoutIE9.css'); ?>" rel="stylesheet" type="text/css"/>
         <![endif]-->
-        <link href="<?php echo $this->public('/layout/hacks.css?v=1'); ?>" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo $this->public('/layout/hacks.css'); ?>" rel="stylesheet" type="text/css"/>
 
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/modernizr.custom.33887.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery-1.7.1.min.js'); ?>"></script>
@@ -32,6 +33,10 @@
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery-ui-timepicker-addon.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/jquery.color.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/bootstrap.min.js'); ?>"></script>
+
+        <script type="text/javascript" src="<?php echo $this->public('/layout/datepicker/js/datepicker.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/datepicker/js/eye.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/datepicker/js/utils.js'); ?>"></script>
 
 
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/application.js'); ?>"></script>
@@ -100,7 +105,12 @@
                             </ul>
                         </div>
                         <div class="content attach">
-                            Some content
+                            <div id="widgetField">
+                                <span>28 July, 2008 &divide; 31 July, 2008</span>
+                                <a href="#">Select date range</a>
+                            </div>
+                            <div id="widgetCalendar">
+                            </div>
                         </div>
                         <div class="content">
 
@@ -135,7 +145,7 @@
                                 Best check yo self, you're not...
                             </div>
                         </div>
-                        
+
                         <?php echo $this->content; ?>
 
                     </div>

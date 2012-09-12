@@ -15,7 +15,7 @@ class AuthController extends AbstractActionController {
     public function indexAction() {
         $view = new ViewModel();
 
-        $form = new \Application\Form\Login('login');
+        $view->form = $form = new \Application\Form\Login('login');
 
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
@@ -29,7 +29,7 @@ class AuthController extends AbstractActionController {
                     if ($result->isValid()) {
                         $form->resetFailure();
                         $this->redirect()->toRoute('home');
-                        return;
+                        return $view;
                     } else {
                         $form->setFailure();
                         $view->message = 'authWrong';
@@ -48,7 +48,6 @@ class AuthController extends AbstractActionController {
             }
         }
 
-        $view->form = $form;
         return $view;
     }
 
@@ -60,10 +59,7 @@ class AuthController extends AbstractActionController {
         $this->authService->clearIdentity();
 
         $this->redirect()->toRoute('application/default', array('controller' => 'auth'));
-
-        $view = new ViewModel;
-        $view->setTerminal(true);
-        return $view;
+        return $this->getResponse();
     }
 
     public function registerAction() {

@@ -1,1 +1,7 @@
 @charset "utf-8";
+
+div#widgetCalendar { position: absolute; }
+
+div.datepicker > div { background-image: none; background: #f5f5f5; }
+div.datepicker .datepickerDays a { color: #555; }
+div.datepicker .datepickerNotInMonth a { color: #999; }
