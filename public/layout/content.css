@@ -1,1 +1,20 @@
 @charset "utf-8";
+
+div#widgetCalendar { position: absolute; border: 1px solid #bbb; display: none; }
+
+div#widgetCalendar, div.datepicker, div.datepicker > div { background-image: none; background: #f5f5f5; }
+
+div.datepicker .datepickerDays a { color: #555; }
+div.datepicker .datepickerDays td:hover { background: #ddd; }
+div.datepicker .datepickerNotInMonth a { color: #999; }
+
+div.datepicker .datepickerSelected span { color: #fff; }
+div.datepicker .datepickerSelected:hover span { color: #0af; }
+div.datepicker .datepickerViewDays thead > tr th:hover span { color: #0af; }
+
+div.datepicker .datepickerMonths td span, .datepickerYears td span { color: #aaa; }
+div.datepicker .datepickerMonths td:hover span, .datepickerYears td:hover span { color: #555; }
+
+div.datepicker .datepickerWeek span { color: #059; }
+div.datepicker .datepickerWeek span:hover { color: #0af; }
+div.datepicker .datepickerMonth a span, .datepickerGoNext span, .datepickerGoPrev span { color: #0480be; }

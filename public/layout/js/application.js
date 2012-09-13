@@ -50,28 +50,42 @@ function cleanAlerts(){
     }, 2000);
 }
 
+function initDatePicker(){
+    $('#widgetField a').click(function(){
+        if($('div#widgetCalendar:hidden').length > 0){
+            $('div#widgetCalendar:hidden').fadeIn('slow');
+            return;
+        }
+        if($('div#widgetCalendar:visible').length > 0){
+            $('div#widgetCalendar:visible').fadeOut('slow');
+            return;
+        }
+    });
+    $('#widgetCalendar').show();
+    $('#widgetCalendar').DatePicker({
+        flat: true,
+        format: 'd.m.Y',
+        date: [new Date(), new Date()],
+        calendars: 3,
+        mode: 'range',
+        starts: 1,
+        onChange: function(formated) {
+            $('#widgetField div').get(0).innerHTML = formated.join(' - ');
+        }
+    });
+    $('#widgetCalendar').hide();
+}
+
 $(function(){
+    initDatePicker();
     scrollSideBar();
     setTimeout(cleanAlerts, 3000);
-    
-//    $('div.content').hover(
-//        function(){
-//            $(this).stop().animate({
-//                backgroundColor: '#ffffef'
-//            }, 'slow');
-//        },
-//        function(){
-//            $(this).stop().animate({
-//                backgroundColor: '#fff'
-//            }, 'slow');
-//        });
-        
+           
     $('div#headMenu div.subnav ul > li > a').hover(function(){
         $(this).addClass('hover');
     }, function(){
         $(this).removeClass('hover'); //.clearQueue()
     });
-    
     
     $('input').tooltip({
         placement: 'top', 
