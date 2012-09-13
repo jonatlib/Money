@@ -18,6 +18,17 @@ return array(
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
+            'logout' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/logout',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'logout',
+                    ),
+                ),
+            ),
             'application' => array(
                 'type' => 'Literal',
                 'options' => array(
