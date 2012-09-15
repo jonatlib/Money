@@ -23,8 +23,34 @@ class Module {
 
     public function init() {
         $events = StaticEventManager::getInstance();
+
         $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'initAuth'), 100);
         $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initCustom'), 100);
+
+        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initSession'), 100);
+        $events->attach('Zend\Mvc\Application', 'render', array($this, 'saveSession'), 1000);
+    }
+
+    public function initSession(\Zend\Mvc\MvcEvent $e) {
+        $manager = \Zend\Session\Container::getDefaultManager();
+        $session = new \Zend\Session\Container('sess', $manager);
+        if (!isset($session->init)) {
+            $manager->rememberMe(2 * 60 * 60);
+            $manager->regenerateId();
+
+            $session->init = time();
+            $session->ip = $_SERVER['REMOTE_ADDR'];
+        } else {
+            $ip = explode('.', $session->ip);
+            $Cip = explode('.', $_SERVER['REMOTE_ADDR']);
+            if ((time() - $session->init > 2 * 60 * 60) || ($ip[0] != $Cip[0] || $ip[1] != $Cip[2])) {
+                $manager->destroy();
+            }
+        }
+    }
+
+    public function saveSession() {
+        \Zend\Session\Container::getDefaultManager()->writeClose();
     }
 
     public function initAuth(\Zend\Mvc\MvcEvent $e) {
