@@ -8,7 +8,7 @@ class Register extends Protect {
 
     public function __construct($name = null) {
         parent::__construct($name);
-        
+                
         $this->add(array(
             'type' => '\Zend\Form\Element\Email',
             'name' => 'email',
@@ -43,7 +43,7 @@ class Register extends Protect {
             'type' => '\Zend\Form\Element\Password',
             'name' => 'passwordtwo',
             'options' => array(
-                'label' => 'Password two',
+                'label' => 'Password Two',
                 'required' => true,
                 'validators' => array(
                     '\Zend\Validator\StringLength' => array('min' => 6)
@@ -51,7 +51,30 @@ class Register extends Protect {
             ),
             'attributes' => array(
                 'class' => 'input-xlarge',
-                'id' => 'password'
+                'id' => 'passwordtwo'
+            )
+        ));
+        
+        $this->add(array(
+            'type' => '\Zend\Form\Element\Text',
+            'name' => 'firstname',
+            'options' => array(
+                'label' => 'First Name',
+                'required' => false,
+            ),
+            'attributes' => array(
+                'class' => 'input-xlarge',
+            )
+        ));
+        $this->add(array(
+            'type' => '\Zend\Form\Element\Text',
+            'name' => 'lastname',
+            'options' => array(
+                'label' => 'Last Name',
+                'required' => false,
+            ),
+            'attributes' => array(
+                'class' => 'input-xlarge',
             )
         ));
         

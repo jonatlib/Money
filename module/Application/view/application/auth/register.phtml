@@ -3,7 +3,7 @@
     <h1>Money</h1>
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     <fieldset>
-        <legend>Login to administration</legend>
+        <legend>Registration form</legend>
         <?php foreach ($this->form->getIterator() as $element): ?>
             <?php if (($element instanceof Zend\Form\Element\Button)) continue; ?>
             <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
@@ -11,9 +11,8 @@
                 <?php if ($element->getLabel()) echo $this->formLabel($element) . PHP_EOL; ?>
                 <?php if (!($element instanceof Zend\Form\Element\Csrf) && !($element instanceof Zend\Form\Element\Captcha)): ?>
                     <div class="controls">
-                        <div class="input-append">
+                        <div>
                             <?php echo $this->formElement($element) . PHP_EOL; ?>
-                            <span class="add-on"><i class="icon-question-sign"></i></span>
                         </div>
                         <p class="help-block"><?php echo $this->formElementErrors($element) . PHP_EOL; ?></p>
                     </div>

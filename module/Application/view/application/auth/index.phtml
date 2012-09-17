@@ -3,7 +3,7 @@
     <h1>Money</h1>
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     <fieldset>
-        <legend>Login to administration</legend>
+        <legend>Login form</legend>
         <?php foreach ($this->form->getIterator() as $element): ?>
             <?php if (($element instanceof Zend\Form\Element\Button)) continue; ?>
             <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
