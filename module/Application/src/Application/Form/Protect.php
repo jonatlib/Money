@@ -22,9 +22,25 @@ class Protect extends Form {
     }
 
     public function resetFailure() {
-        if($this->set) return;
+        if ($this->set)
+            return;
         $this->session->failure = 0;
         $this->remove('captcha');
+    }
+
+    public function addCaptcha() {
+        static $added = false;
+        if($added) return;
+        
+        $element = new Element\Captcha('captcha');
+        $adapter = new \Zend\Captcha\ReCaptcha();
+        $adapter->setPubkey('6LefWNYSAAAAAMtcdir9eBe97thnOHW0mmo4EQYC');
+        $adapter->setPrivkey('6LefWNYSAAAAALi7Y-252ZFP7bEilX6DQKdR0LkW');
+        $adapter->setOption('theme', 'white');
+        $element->setCaptcha($adapter);
+        $this->add($element, array('priority' => -1));
+        
+        $added = true;
     }
 
     private function getFailure() {
@@ -38,13 +54,7 @@ class Protect extends Form {
         $this->session = new \Zend\Session\Container('Protected' . get_called_class(), new \Zend\Session\SessionManager);
 
         if ($this->getFailure()) {
-            $element = new Element\Captcha('captcha');
-            $adapter = new \Zend\Captcha\ReCaptcha();
-            $adapter->setPubkey('6LefWNYSAAAAAMtcdir9eBe97thnOHW0mmo4EQYC');
-            $adapter->setPrivkey('6LefWNYSAAAAALi7Y-252ZFP7bEilX6DQKdR0LkW');
-            $adapter->setOption('theme', 'white');
-            $element->setCaptcha($adapter);
-            $this->add($element, array('priority' => -1));
+            $this->addCaptcha();
         }
 
         $element = new \Zend\Form\Element\Csrf('csrf');
@@ -53,44 +63,45 @@ class Protect extends Form {
         $validator = $inputSpecification['validators'][0];
         if ($validator instanceof \Zend\Validator\Csrf) {
             $validator->setSession($this->session);
-            if(!isset($this->session->salt)) $this->session->salt = 0;
+            if (!isset($this->session->salt))
+                $this->session->salt = 0;
             $validator->setSalt(get_called_class() . $this->session->salt);
         }
         $this->add($element, array('priority' => -1000));
     }
 
-    private function initFilter(){
+    private function initFilter() {
         ////// ZF1 like
         $filter = new \Zend\InputFilter\BaseInputFilter();
-        foreach($this->getIterator() as $element){
+        foreach ($this->getIterator() as $element) {
             $e = new \Zend\InputFilter\Input($element->getName());
-            $e->setRequired( ($element->getOption('required')) ? true : false );
-            
+            $e->setRequired(($element->getOption('required')) ? true : false );
+
             $validators = new \Zend\Validator\ValidatorChain();
-            if(!is_null($element->getOption('validators'))){
-                foreach($element->getOption('validators') as $k => $v){
+            if (!is_null($element->getOption('validators'))) {
+                foreach ($element->getOption('validators') as $k => $v) {
                     $validators->addByName($k, $v);
                 }
             }
-            if($element instanceof \Zend\Form\Element\Csrf){
+            if ($element instanceof \Zend\Form\Element\Csrf) {
                 $csrf = $element->getInputSpecification();
                 $validators->addValidator($csrf['validators'][0]);
             }
             $e->setValidatorChain($validators);
-            
+
             $filters = new \Zend\Filter\FilterChain();
-            if(!is_null($element->getOption('filters'))){
-                foreach($element->getOption('filters') as $k => $v){
+            if (!is_null($element->getOption('filters'))) {
+                foreach ($element->getOption('filters') as $k => $v) {
                     $filters->attachByName($k, $v);
                 }
             }
             $e->setFilterChain($filters);
-                        
+
             $filter->add($e);
         }
         $this->setInputFilter($filter);
     }
-    
+
     public function isValid() {
         $this->initFilter();
         $result = parent::isValid();

@@ -18,6 +18,17 @@ return array(
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
+            'login' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/login',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
             'logout' => array(
                 'type' => 'Literal',
                 'options' => array(
@@ -26,6 +37,17 @@ return array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller' => 'Auth',
                         'action' => 'logout',
+                    ),
+                ),
+            ),
+            'register' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/register',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'register',
                     ),
                 ),
             ),

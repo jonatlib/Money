@@ -64,7 +64,7 @@ class Module {
         /* @var $router \Zend\Mvc\Router\Http\TreeRouteStack */
         $router = $e->getApplication()->getServiceManager()->get('Router');
 
-        $link = $router->assemble(array('controller' => 'auth'), array('only_return_path' => true, 'name' => 'application/default'));
+        $link = $router->assemble(array(), array('only_return_path' => true, 'name' => 'login'));
 
         $response = $e->getResponse();
         $response->setStatusCode(302);

@@ -1,5 +1,5 @@
 <div id="content" class="content">
-    <div class="right"><span><a href="<?php echo $this->url('register'); ?>">Registrovat se</a></span></div>
+    <div class="right"><span><a href="<?php echo $this->url('login'); ?>">Login</a></span></div>
     <h1>Money</h1>
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     <fieldset>
@@ -9,7 +9,7 @@
             <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
             <div class="control-group">
                 <?php if ($element->getLabel()) echo $this->formLabel($element) . PHP_EOL; ?>
-                <?php if ( !($element instanceof Zend\Form\Element\Csrf) && !($element instanceof Zend\Form\Element\Captcha) ): ?>
+                <?php if (!($element instanceof Zend\Form\Element\Csrf) && !($element instanceof Zend\Form\Element\Captcha)): ?>
                     <div class="controls">
                         <div class="input-append">
                             <?php echo $this->formElement($element) . PHP_EOL; ?>

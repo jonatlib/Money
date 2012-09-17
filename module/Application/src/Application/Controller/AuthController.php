@@ -62,12 +62,24 @@ class AuthController extends AbstractActionController {
         $manager->regenerateId();
         $manager->destroy();
         
-        $this->redirect()->toRoute('application/default', array('controller' => 'auth'));
+        $this->redirect()->toRoute('login');
         return $this->getResponse();
     }
 
     public function registerAction() {
-        $view = new ViewModel;
+        $view = new ViewModel();
+
+        $view->form = $form = new \Application\Form\Register('register');
+        $form->addCaptcha();
+
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
+                
+            }
+                
+        }
+
         return $view;
     }
 
