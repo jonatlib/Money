@@ -30,6 +30,8 @@ class Protect extends Form {
 
     public function addCaptcha() {
         static $added = false;
+        $added = (false | ( defined('DEBUG') && DEBUG ));
+        
         if($added) return;
         
         $element = new Element\Captcha('captcha');

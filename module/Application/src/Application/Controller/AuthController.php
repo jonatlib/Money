@@ -20,7 +20,11 @@ class AuthController extends AbstractActionController {
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
-                $adapter = new \Zend\Authentication\Adapter\DbTable($this->getServiceLocator()->get('db-adapter'), 'Users', 'email', 'password');
+                $staticSalt = \Application\Model\User::getStaticSalt();
+                $adapter = new \Zend\Authentication\Adapter\DbTable(
+                        $this->getServiceLocator()->get('db-adapter'), 'Users', 'email', 'password',
+                        "SHA1(CONCAT(?, CONCAT(salt, '{$staticSalt}'))) && ( deleted != 1 )");
+
                 $adapter->setIdentity($form->get('email')->getValue());
                 $adapter->setCredential($form->get('password')->getValue());
 
@@ -43,7 +47,7 @@ class AuthController extends AbstractActionController {
                     $form->resetFailure();
                     $view->message = 'error';
                 }
-            }else{
+            } else {
                 $form->setFailure();
             }
         }
@@ -57,11 +61,11 @@ class AuthController extends AbstractActionController {
 
     public function logoutAction() {
         $this->authService->clearIdentity();
-        
+
         $manager = \Zend\Session\Container::getDefaultManager();
         $manager->regenerateId();
         $manager->destroy();
-        
+
         $this->redirect()->toRoute('login');
         return $this->getResponse();
     }
@@ -75,9 +79,24 @@ class AuthController extends AbstractActionController {
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
-                
+                try {
+                    $model = new \Application\Model\User($this->getServiceLocator()->get('db-adapter'));
+                    $data = $form->getData();
+                    if ($model->registerUser(array_merge($data['loginInfo'], $data['personInfo']))) {
+                        $view->message = 'success';
+                    } else {
+                        $view->message = 'errorUnknown';
+                    }
+                } catch (\Zend\Db\Adapter\Exception\InvalidQueryException $e) {
+                    $view->message = 'error';
+                    /* @var $e \RuntimeException */
+                    switch ((int) $e->getPrevious()->getCode()) {
+                        case 23000: $view->message = 'errorUnique';
+                            break;
+                        default : \Application\Library\Debug::dThrow($e);
+                    }
+                }
             }
-                
         }
 
         return $view;
