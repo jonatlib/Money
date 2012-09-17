@@ -28,7 +28,7 @@ class Module {
         $events = StaticEventManager::getInstance();
 
         $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'initAuth'), 100);
-        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initCustom'), 100);
+        $events->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'initAuthError'), 100);
 
         $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initSession'), 100);
         $events->attach('Zend\View\View', 'renderer', array($this, 'saveSession'), -100);
@@ -47,7 +47,7 @@ class Module {
             $ip = explode('.', $session->ip);
             $Cip = explode('.', $_SERVER['REMOTE_ADDR']);
             if ((time() - $session->init > 2 * 60 * 60) || ($ip[0] != $Cip[0] || $ip[1] != $Cip[2])) {
-                $manager->destroy();
+                //$manager->destroy(); //FIXME on live server
             }
         }
     }
@@ -74,9 +74,13 @@ class Module {
         $response->getHeaders()->addHeaderLine('Location', $link);
         return $response;
     }
-
-    public function initCustom(\Zend\Mvc\MvcEvent $e) {
-        
+    
+    public function initAuthError(\Zend\Mvc\MvcEvent $e){
+        $authService = new \Zend\Authentication\AuthenticationService();
+        if ($authService->hasIdentity()) {
+            return;
+        }
+        $e->getViewModel()->setTemplate('layout/login');
     }
 
     ////////////////////////////////////////////////////////////////////////
