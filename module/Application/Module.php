@@ -28,7 +28,7 @@ class Module {
         $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initCustom'), 100);
 
         $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initSession'), 100);
-        $events->attach('Zend\Mvc\Application', 'render', array($this, 'saveSession'), 1000);
+        $events->attach('Zend\View\View', 'renderer', array($this, 'saveSession'), -100);
     }
 
     public function initSession(\Zend\Mvc\MvcEvent $e) {
