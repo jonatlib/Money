@@ -6,6 +6,18 @@
             <route>/lostpassword</route>
             <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="lost" />
         </options>
+        <may_terminate>1</may_terminate>
+        <child_routes>
+            <default type="Segment">
+                <options>
+                    <route>/:id</route>
+                    <constraints>
+                        <id>[a-zA-Z0-9]+</id>
+                    </constraints>
+                    <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="retrieve" />
+                </options>
+            </default>
+        </child_routes>
     </lostpassword>
     
     <register type="Literal">

@@ -118,6 +118,16 @@ class AuthController extends AbstractActionController {
         return $view;
     }
 
+    public function retrieveAction(){
+        $view = new ViewModel();
+        $view->id = $id = $this->event->getRouteMatch()->getParam('id', null);
+        if(is_null($id) || strlen($id) != 40){
+            $this->redirect()->toRoute('application/default', array('controller' => 'Index'));
+        }
+                
+        return $view;
+    }
+    
     public function init() {
         $this->layout('layout/login');
         $this->authService = new \Zend\Authentication\AuthenticationService();

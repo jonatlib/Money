@@ -6,14 +6,17 @@ div#ieh { display: none; }
 * { border-radius: 0 0 0 0 !important; }
 .right { float: right; }
 
+fieldset { margin: 0 0 50px 0; }
+div.buttons { margin: 0 auto; width: 170px; }
+
 div.content { min-height: 36px; margin: 0 0 6px 0; background: #fff; }
 div.content { box-shadow: 0px 0px 20px 0px #999; }
 
 div#backgroundCleaner { height: 30px; }
 div#content{ margin: 0 auto; padding: 25px; width: 310px;  }
 
-fieldset { margin: 0 0 50px 0; }
+div#retrieve { margin: 20px 0 0 0; }
+div#retrieve > div > span { color: #777; }
 
-div.buttons { margin: 0 auto; width: 170px; }
 
 div#footer { height: 59px; background: #fff; width: 100%; margin: 80px 0 0 0; text-align: center; color: #aaa; padding: 15px 0 0 0; }
