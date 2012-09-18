@@ -4,7 +4,7 @@ namespace Application\Form;
 
 use Application\Form\Protect;
 
-class Login extends Protect {
+class LostPassword extends Protect {
 
     public function __construct($name = null) {
         parent::__construct($name);
@@ -43,10 +43,10 @@ class Login extends Protect {
             'type' => '\Zend\Form\Element\Submit',
             'name' => 'submit',
             'options' => array(
-                'label' => 'Login'
+                'label' => 'Send'
             ),
             'attributes' => array(
-                'value' => 'Login',
+                'value' => 'Send',
                 'class' => 'btn btn-primary btn-large left'
             )
         ), array('priority' => -10));

@@ -5,27 +5,37 @@
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     <fieldset>
         <legend><?php echo $this->translate('Login Form'); ?></legend>
-        <?php foreach ($this->form->getIterator() as $element): ?>
-            <?php if (($element instanceof Zend\Form\Element\Button)) continue; ?>
-            <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
-            <div class="control-group">
-                <?php if ($element->getLabel()) echo $this->formLabel($element) . PHP_EOL; ?>
-                <?php if ( !($element instanceof Zend\Form\Element\Csrf) && !($element instanceof Zend\Form\Element\Captcha) ): ?>
-                    <div class="controls">
-                        <div class="input-append">
-                            <?php echo $this->formElement($element) . PHP_EOL; ?>
-                            <span class="add-on"><i class="icon-question-sign"></i></span>
-                        </div>
-                        <p class="help-block"><?php echo $this->formElementErrors($element) . PHP_EOL; ?></p>
-                    </div>
-                <?php else: ?>
-                    <div>
-                        <?php echo $this->formElement($element) . PHP_EOL; ?>
-                        <?php echo $this->formElementErrors($element) . PHP_EOL; ?>
-                    </div>
-                <?php endif; ?>
+        <div class="control-group">
+            <?php echo $this->formLabel($this->form->get('email')) . PHP_EOL; ?>
+            <div class="controls">
+                <div class="input-append">
+                    <?php echo $this->formElement($this->form->get('email')) . PHP_EOL; ?>
+                    <span class="add-on"><i class="icon-question-sign"></i></span>
+                </div>
+                <p class="help-block"><?php echo $this->formElementErrors($this->form->get('email')) . PHP_EOL; ?></p>
             </div>
-        <?php endforeach; ?>
+        </div>
+        <div class="control-group">
+            <?php echo $this->formLabel($this->form->get('password')) . PHP_EOL; ?>
+            <div class="controls">
+                <div class="input-append">
+                    <?php echo $this->formElement($this->form->get('password')) . PHP_EOL; ?>
+                    <span class="add-on"><i class="icon-question-sign"></i></span>
+                <div><span><a href="<?php echo $this->url('lostpassword'); ?>"><?php echo $this->translate('Did you forget your password ?'); ?></a></span></div>
+                <div></div>
+                <p class="help-block"><?php echo $this->formElementErrors($this->form->get('password')) . PHP_EOL; ?></p>
+            </div>
+        </div>
+        <?php if ($this->form->has('captcha')): ?>
+            <div>
+                <?php echo $this->formElement($this->form->get('captcha')) . PHP_EOL; ?>
+                <?php echo $this->formElementErrors($this->form->get('captcha')) . PHP_EOL; ?>
+            </div>
+        <?php endif; ?>
+        <div>
+            <?php echo $this->formHidden($this->form->get('csrf')) . PHP_EOL; ?>
+            <?php echo $this->formElementErrors($this->form->get('csrf')) . PHP_EOL; ?>
+        </div>
     </fieldset>
     <div class="buttons">
         <?php echo $this->formElement($this->form->get('submit')); ?>
@@ -33,6 +43,6 @@
     </div>
     <?php echo $this->form()->closeTag(); ?>
     <div>
-        <?php echo $this->message; ?>
+        <?php echo $this->translate($this->message); ?>
     </div>
 </div>

@@ -29,6 +29,17 @@ return array(
                     ),
                 ),
             ),
+            'lostpassword' => array(
+                'type' => 'Literal',
+                'options' => array(
+                    'route' => '/lostpassword',
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller' => 'Auth',
+                        'action' => 'lost',
+                    ),
+                ),
+            ),
             'logout' => array(
                 'type' => 'Literal',
                 'options' => array(

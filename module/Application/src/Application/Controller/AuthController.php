@@ -36,16 +36,16 @@ class AuthController extends AbstractActionController {
                         return $view;
                     } else {
                         $form->setFailure();
-                        $view->message = 'authWrong';
+                        $view->message = 'Wrong password or user name.';
                     }
                 } catch (\Zend\Db\Exception\RuntimeException $e) {
-                    $view->message = 'dbRunTimeError';
+                    $view->message = 'Runtime DB error.';
                 } catch (\Zend\Authentication\Exception\RuntimeException $e) {
                     $form->resetFailure();
-                    $view->message = 'authRunTimeError';
+                    $view->message = 'Authentacion error.';
                 } catch (\Exception $e) {
                     $form->resetFailure();
-                    $view->message = 'error';
+                    $view->message = 'Error';
                 }
             } else {
                 $form->setFailure();
@@ -83,15 +83,15 @@ class AuthController extends AbstractActionController {
                     $model = new \Application\Model\User($this->getServiceLocator()->get('db-adapter'));
                     $data = $form->getData();
                     if ($model->registerUser(array_merge($data['loginInfo'], $data['personInfo']))) {
-                        $view->message = 'success';
+                        $view->message = 'You ware successfull registered.';
                     } else {
-                        $view->message = 'errorUnknown';
+                        $view->message = 'Error';
                     }
                 } catch (\Zend\Db\Adapter\Exception\InvalidQueryException $e) {
                     $view->message = 'error';
                     /* @var $e \RuntimeException */
                     switch ((int) $e->getPrevious()->getCode()) {
-                        case 23000: $view->message = 'errorUnique';
+                        case 23000: $view->message = 'This email is allready registered.';
                             break;
                         default : \Application\Library\Debug::dThrow($e);
                     }
@@ -103,7 +103,18 @@ class AuthController extends AbstractActionController {
     }
 
     public function lostAction() {
-        $view = new ViewModel;
+        $view = new ViewModel();
+
+        $view->form = $form = new \Application\Form\LostPassword('lostpassword');
+        $form->addCaptcha();
+
+        if ($this->request->isPost()) {
+            $form->setData($this->request->getPost());
+            if ($form->isValid()) {
+                
+            }
+        }
+
         return $view;
     }
 
