@@ -19,6 +19,9 @@ class Module {
 
         $router->setBaseUrl($config['baseurl']);
         $e->getParam('application')->getServiceManager()->get('viewhelpermanager')->get('basepath')->setBasePath($config['baseurl']);
+        
+        $config = $e->getApplication()->getServiceManager()->get('config');
+        if($config['debug']) define ('DEBUG', true);
     }
 
     public function init() {

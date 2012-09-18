@@ -1,29 +1,14 @@
+<?php $form->prepare(); ?>
 <div id="content" class="content">
-    <div class="right"><span><a href="<?php echo $this->url('login'); ?>">Login</a></span></div>
-    <h1>Money</h1>
+    <div class="right"><span><a href="<?php echo $this->url('login'); ?>"><?php echo $this->translate('Login'); ?></a></span></div>
+    <h1><?php echo $this->translate('No-Money'); ?></h1>
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     <fieldset>
-        <legend>Registration form</legend>
-        <?php foreach ($this->form->getIterator() as $element): ?>
-            <?php if (($element instanceof Zend\Form\Element\Button)) continue; ?>
-            <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>
-            <div class="control-group">
-                <?php if ($element->getLabel()) echo $this->formLabel($element) . PHP_EOL; ?>
-                <?php if (!($element instanceof Zend\Form\Element\Csrf) && !($element instanceof Zend\Form\Element\Captcha)): ?>
-                    <div class="controls">
-                        <div>
-                            <?php echo $this->formElement($element) . PHP_EOL; ?>
-                        </div>
-                        <p class="help-block"><?php echo $this->formElementErrors($element) . PHP_EOL; ?></p>
-                    </div>
-                <?php else: ?>
-                    <div>
-                        <?php echo $this->formElement($element) . PHP_EOL; ?>
-                        <?php echo $this->formElementErrors($element) . PHP_EOL; ?>
-                    </div>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
+        <legend><?php echo $this->translate('Registration form'); ?></legend>
+        <div class="control-group">
+            <?php echo $this->formCollection($form->get('loginInfo')); ?>
+            <?php echo $this->formCollection($form->get('personInfo')); ?>
+        </div>
     </fieldset>
     <div class="buttons">
         <?php echo $this->formElement($this->form->get('submit')); ?>

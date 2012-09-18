@@ -1,9 +1,10 @@
+<?php $form->prepare(); ?>
 <div id="content" class="content">
-    <div class="right"><span><a href="<?php echo $this->url('register'); ?>">Registrovat se</a></span></div>
-    <h1>Money</h1>
+    <div class="right"><span><a href="<?php echo $this->url('register'); ?>"><?php echo $this->translate('Registration'); ?></a></span></div>
+    <h1><?php echo $this->translate('No-Money'); ?></h1>
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     <fieldset>
-        <legend>Login form</legend>
+        <legend><?php echo $this->translate('Login Form'); ?></legend>
         <?php foreach ($this->form->getIterator() as $element): ?>
             <?php if (($element instanceof Zend\Form\Element\Button)) continue; ?>
             <?php if (($element instanceof Zend\Form\Element\Submit)) continue; ?>

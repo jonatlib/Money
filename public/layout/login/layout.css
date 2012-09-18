@@ -14,6 +14,6 @@ div#content{ margin: 0 auto; padding: 25px; width: 310px;  }
 
 fieldset { margin: 0 0 50px 0; }
 
-div.buttons { margin: 0 auto; width: 150px; }
+div.buttons { margin: 0 auto; width: 170px; }
 
-div#footer { height: 59px; background: #fff; width: 100%; margin: 80px 0 0 0; text-align: center; color: #aaa; padding: 15px 0 0 0; position: absolute; bottom: 0; }
+div#footer { height: 59px; background: #fff; width: 100%; margin: 80px 0 0 0; text-align: center; color: #aaa; padding: 15px 0 0 0; }
