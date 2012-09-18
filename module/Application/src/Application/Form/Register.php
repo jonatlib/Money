@@ -12,7 +12,7 @@ class Register extends Protect {
                 
         
         $loginInfo = new Form\Fieldset('loginInfo');
-        $loginInfo->setLabel('Login Info');
+        $loginInfo->setLabel('Login Info - required');
                 
         $loginInfo->add(array(
             'type' => '\Zend\Form\Element\Email',
@@ -33,7 +33,7 @@ class Register extends Protect {
             'type' => '\Zend\Form\Element\Password',
             'name' => 'password',
             'options' => array(
-                'label' => 'Password',
+                'label' => 'Password (min. 6 chars)',
                 'required' => true,
                 'validators' => array(
                     '\Zend\Validator\StringLength' => array('min' => 6)
@@ -86,7 +86,7 @@ class Register extends Protect {
         
         
         $personInfo = new Form\Fieldset('personInfo');
-        $personInfo->setLabel('Personal Info');
+        $personInfo->setLabel('Personal Info - optional');
         $personInfo->add(array(
             'type' => '\Zend\Form\Element\Text',
             'name' => 'name',
