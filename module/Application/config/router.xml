@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<router>
+    
+    <lostpassword type="Literal">
+        <options>
+            <route>/lostpassword</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="lost" />
+        </options>
+    </lostpassword>
+    
+    <register type="Literal">
+        <options>
+            <route>/register</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="register" />
+        </options>
+    </register>
+    
+    <logout type="Literal">
+        <options>
+            <route>/login</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="logout" />
+        </options>
+    </logout>
+    
+    <login type="Literal">
+        <options>
+            <route>/login</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="index" />
+        </options>
+    </login>
+    
+</router>

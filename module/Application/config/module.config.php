@@ -3,69 +3,10 @@
 return array(
     'router' => array(
         'routes' => array(
-            'home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route' => '/',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Index',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            'login' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/login',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Auth',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'lostpassword' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/lostpassword',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Auth',
-                        'action' => 'lost',
-                    ),
-                ),
-            ),
-            'logout' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/logout',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Auth',
-                        'action' => 'logout',
-                    ),
-                ),
-            ),
-            'register' => array(
-                'type' => 'Literal',
-                'options' => array(
-                    'route' => '/register',
-                    'defaults' => array(
-                        '__NAMESPACE__' => 'Application\Controller',
-                        'controller' => 'Auth',
-                        'action' => 'register',
-                    ),
-                ),
-            ),
             'application' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/application',
+                    'route' => '/',
                     'defaults' => array(
                         '__NAMESPACE__' => 'Application\Controller',
                         'controller' => 'Index',
@@ -77,7 +18,7 @@ return array(
                     'default' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '/[:controller[/:action]]',
+                            'route' => '[:controller[/:action]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',

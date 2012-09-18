@@ -7,33 +7,43 @@ use Zend\EventManager\StaticEventManager,
 
 class Module {
 
-    public function onBootstrap(\Zend\Mvc\MvcEvent $e) {
-        $e->getApplication()->getServiceManager()->get('translator');
+    public function init() {
+        $events = StaticEventManager::getInstance();
+        //Plugins
+        $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'pluginAuth'), 100);
+        $events->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'pluginAuthError'), 100);
+        $events->attach('Zend\View\View', 'renderer', array($this, 'pluginSession'), -100);
+        //Bootstrap
+        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initSession'), 100);
+        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initRouter'), 100);
+        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initLocale'), 100);
+        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initView'), 100);
+        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initDebug'), 100);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    /////////////////////// Bootstrap /////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    
+    public function initRouter(\Zend\Mvc\MvcEvent $e){
         $eventManager = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
 
         $config = $e->getParam('application')->getConfig();
+        
         /* @var $router \Zend\Mvc\Router\Http\TreeRouteStack */
         $router = $e->getApplication()->getServiceManager()->get('Router');
-
         $router->setBaseUrl($config['baseurl']);
-        $e->getParam('application')->getServiceManager()->get('viewhelpermanager')->get('basepath')->setBasePath($config['baseurl']);
         
-        $config = $e->getApplication()->getServiceManager()->get('config');
-        if($config['debug']) define ('DEBUG', true);
+        $xml = \Zend\Config\Factory::fromFile(__DIR__ . '/config/router.xml', true);
+        $router->addRoutes( $xml );
     }
-
-    public function init() {
-        $events = StaticEventManager::getInstance();
-
-        $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'initAuth'), 100);
-        $events->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'initAuthError'), 100);
-
-        $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initSession'), 100);
-        $events->attach('Zend\View\View', 'renderer', array($this, 'saveSession'), -100);
+    
+    public function initLocale(\Zend\Mvc\MvcEvent $e){
+        $e->getApplication()->getServiceManager()->get('translator');
     }
-
+    
     public function initSession(\Zend\Mvc\MvcEvent $e) {
         $manager = \Zend\Session\Container::getDefaultManager();
         $session = new \Zend\Session\Container('sess', $manager);
@@ -52,11 +62,25 @@ class Module {
         }
     }
 
-    public function saveSession() {
+    public function initView(\Zend\Mvc\MvcEvent $e){
+        $config = $e->getApplication()->getServiceManager()->get('config');
+        $e->getParam('application')->getServiceManager()->get('viewhelpermanager')->get('basepath')->setBasePath($config['baseurl']);
+    }
+    
+    public function initDebug(\Zend\Mvc\MvcEvent $e){
+        $config = $e->getApplication()->getServiceManager()->get('config');
+        if($config['debug']) define ('DEBUG', true);
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    ////////////////////////// Plugins ///////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
+    
+    public function pluginSession() {
         \Zend\Session\Container::getDefaultManager()->writeClose();
     }
 
-    public function initAuth(\Zend\Mvc\MvcEvent $e) {
+    public function pluginAuth(\Zend\Mvc\MvcEvent $e) {
         $authService = new \Zend\Authentication\AuthenticationService();
         if ($authService->hasIdentity()) {
             return;
@@ -75,7 +99,7 @@ class Module {
         return $response;
     }
     
-    public function initAuthError(\Zend\Mvc\MvcEvent $e){
+    public function pluginAuthError(\Zend\Mvc\MvcEvent $e){
         $authService = new \Zend\Authentication\AuthenticationService();
         if ($authService->hasIdentity()) {
             return;
