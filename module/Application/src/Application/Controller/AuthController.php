@@ -32,6 +32,7 @@ class AuthController extends AbstractActionController {
                     $result = $this->authService->authenticate($adapter);
                     if ($result->isValid()) {
                         $form->resetFailure();
+                        \Zend\Session\Container::getDefaultManager()->regenerateId();
                         $this->redirect()->toRoute('home');
                         return $view;
                     } else {
@@ -46,6 +47,7 @@ class AuthController extends AbstractActionController {
                 } catch (\Exception $e) {
                     $form->resetFailure();
                     $view->message = 'Error';
+                    \Application\Library\Debug::dThrow($e);
                 }
             } else {
                 $form->setFailure();

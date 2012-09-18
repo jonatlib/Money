@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <router>
     
+    <home type="Literal">
+        <options>
+            <route>/</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Index" action="index" />
+        </options>
+    </home>
+    
     <lostpassword type="Literal">
         <options>
             <route>/lostpassword</route>
@@ -29,7 +36,7 @@
     
     <logout type="Literal">
         <options>
-            <route>/login</route>
+            <route>/logout</route>
             <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="logout" />
         </options>
     </logout>
