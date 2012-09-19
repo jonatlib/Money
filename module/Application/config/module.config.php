@@ -40,6 +40,10 @@ return array(
                 $dbAdapter = new \Zend\Db\Adapter\Adapter($config);
                 return $dbAdapter;
             },
+            'mail' => function($sm){
+                $adapter = $sm->get('db-adapter');
+                return new \Application\Model\Email('no-replay', 'No-Money: ', $adapter);
+            },
         ),
     ),
     'translator' => array(

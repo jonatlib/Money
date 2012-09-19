@@ -107,6 +107,11 @@ class Protect extends Form {
     public function isValid() {
         $this->initFilter();
         $result = parent::isValid();
+        if(!$result){
+            $this->populateValues($this->getData());
+        }else{
+            $this->setData(array());
+        }
         return $result;
     }
 

@@ -24,21 +24,7 @@ class LostPassword extends Protect {
                 'id' => 'email'
             )
         ));
-        $this->add(array(
-            'type' => '\Zend\Form\Element\Password',
-            'name' => 'password',
-            'options' => array(
-                'label' => 'Password',
-                'required' => true,
-                'validators' => array(
-                    '\Zend\Validator\StringLength' => array('min' => 6)
-                )
-            ),
-            'attributes' => array(
-                'class' => 'input-xlarge',
-                'id' => 'password'
-            )
-        ));
+        
         $this->add(array(
             'type' => '\Zend\Form\Element\Submit',
             'name' => 'submit',

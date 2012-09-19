@@ -11,6 +11,10 @@ class AuthController extends AbstractActionController {
      * @var \Zend\Authentication\AuthenticationService
      */
     protected $authService;
+    /**
+     * @var \Application\Model\Email
+     */
+    protected $mail;
 
     public function indexAction() {
         $view = new ViewModel();
@@ -22,8 +26,8 @@ class AuthController extends AbstractActionController {
             if ($form->isValid()) {
                 $staticSalt = \Application\Model\User::getStaticSalt();
                 $adapter = new \Zend\Authentication\Adapter\DbTable(
-                        $this->getServiceLocator()->get('db-adapter'), 'Users', 'email', 'password',
-                        "SHA1(CONCAT(?, CONCAT(salt, '{$staticSalt}'))) && ( deleted != 1 )");
+                                $this->getServiceLocator()->get('db-adapter'), 'Users', 'email', 'password',
+                                "SHA1(CONCAT(?, CONCAT(salt, '{$staticSalt}'))) && ( deleted != 1 )");
 
                 $adapter->setIdentity($form->get('email')->getValue());
                 $adapter->setCredential($form->get('password')->getValue());
@@ -113,26 +117,42 @@ class AuthController extends AbstractActionController {
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
-                
+                $model = new \Application\Model\Lost($this->getServiceLocator()->get('db-adapter'));
+                $email = $form->get('email')->getValue();
+                if ( ($hash = $model->createRequest($email)) ) {
+                    $view->message = 'success';
+                    $this->mail->sendToMail($email, 'Password retrieve', 
+                            "To reset password click on this link:" . $this->url()->fromRoute('lostpassword/default', array('id' => $hash)));
+                } else {
+                    $view->message = 'User not found';
+                }
             }
         }
 
         return $view;
     }
 
-    public function retrieveAction(){
+    public function retrieveAction() {
         $view = new ViewModel();
         $view->id = $id = $this->event->getRouteMatch()->getParam('id', null);
-        if(is_null($id) || strlen($id) != 40){
+        if (is_null($id) || strlen($id) != 40) {
             $this->redirect()->toRoute('application/default', array('controller' => 'Index'));
         }
-                
+        
+        $model = new \Application\Model\Lost($this->getServiceLocator()->get('db-adapter'));
+        if( ($paddword = $model->resetPassword($id)) ){
+            $view->message = $paddword;
+        }else{
+            $this->redirect()->toRoute('application/default', array('controller' => 'Index'));
+        }
+        
         return $view;
     }
-    
-    public function init() {
+
+    public function init(\Zend\Mvc\MvcEvent $e) {
         $this->layout('layout/login');
         $this->authService = new \Zend\Authentication\AuthenticationService();
+        $this->mail = $e->getApplication()->getServiceManager()->get('mail');
     }
 
 }

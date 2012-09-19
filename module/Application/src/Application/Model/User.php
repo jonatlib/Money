@@ -11,6 +11,14 @@ class User extends \Zend\Db\TableGateway\TableGateway {
         return self::$STATIC_SALT;
     }
     
+    public function getUser($id){
+        $users = $this->select(array('id' => $id));
+        if($users->count() < 1){
+            return false;
+        }
+        return $users->current();
+    }
+    
     public function registerUser(array $data){
         $row = new Db\RowGateway\RowGateway('id', $this->getTable(), $this->getAdapter());
         $row->email = $data['email'];
@@ -22,6 +30,17 @@ class User extends \Zend\Db\TableGateway\TableGateway {
         $row->register = new Db\Sql\Expression('NOW()');
         $row->role = 'user';
         return $row->save();
+    }
+    
+    public function setPassword($id, $password){
+        $users = $this->select(array('id' => $id));
+        if($users->count() < 1){
+            return false;
+        }
+        $user = $users->current();
+        $user->salt = $salt = sha1( rand(0, time()) );
+        $user->password = sha1($password . $salt . self::$STATIC_SALT);
+        return $user->save();
     }
     
     public function __construct($adapter) {
