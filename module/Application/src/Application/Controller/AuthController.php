@@ -121,7 +121,7 @@ class AuthController extends AbstractActionController {
                 $email = $form->get('email')->getValue();
                 if ( ($hash = $model->createRequest($email)) ) {
                     $view->message = 'success';
-                    $this->mail->sendTemplate($email, 'lost', array('password' => $hash, 'email' => $email));
+                    var_dump( $this->mail->sendTemplate($email, 'lost', array('password' => $hash, 'email' => $email)) );
                 } else {
                     $view->message = 'User not found';
                 }
