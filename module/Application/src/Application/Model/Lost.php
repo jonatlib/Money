@@ -38,10 +38,7 @@ class Lost extends \Zend\Db\TableGateway\TableGateway {
         $password = substr(sha1(time()), 0, 6);
         $this->userModel->setPassword($hash->user, $password);
         
-        foreach ($hashs as $h){
-            $this->delete(array('id' => $h->id));
-        }
-        
+        $this->delete(array('id' => $hash->id));
         return array('id' => $hash->user, 'password' => $password);
     }
     
