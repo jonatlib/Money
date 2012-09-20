@@ -122,7 +122,7 @@ class AuthController extends AbstractActionController {
                 if ( ($hash = $model->createRequest($email)) ) {
                     $view->message = 'success';
                     $this->mail->sendTemplate($email, 'lost', array(
-                        'link' => $_SERVER['HTTP_HOST'] . $this->url()->fromRoute('lostpassword/default', array('id' => $hash)),
+                        'link' => 'http://' . $_SERVER['HTTP_HOST'] . $this->url()->fromRoute('lostpassword/default', array('id' => $hash)),
                         'email' => $email));
                 } else {
                     $view->message = 'User not found';
@@ -141,8 +141,9 @@ class AuthController extends AbstractActionController {
         }
         
         $model = new \Application\Model\Lost($this->getServiceLocator()->get('db-adapter'));
-        if( ($paddword = $model->resetPassword($id)) ){
-            $view->message = $paddword;
+        if( ($data = $model->resetPassword($id)) ){
+            $view->message = $data['password'];
+            $this->mail->sendTemplate((int)$data['id'], 'recover', array('password' => $data['password']));
         }else{
             $this->redirect()->toRoute('application/default', array('controller' => 'Index'));
         }

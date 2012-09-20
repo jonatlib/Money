@@ -1,18 +1,19 @@
-<?php $this->subject = $this->translate('Lost Password'); ?>
+<?php $this->subject = $this->translate('New Password'); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
     <head>
         <title></title>
         <style type="text/css">
             h1 { border-bottom: 1px solid #2f96b4; }
+            span { font-weight: bold; color: #858585; }
         </style>
     </head>
     <body>
         <h1><?php echo $this->translate('No-money'); ?></h1>
         <h3><?php echo $this->translate('Recover password'); ?></h3>
-        <p><?php echo $this->translate('To recover password use this link'); ?></p>
-        <p><?php echo $this->translate('Link'); ?>: <a href="<?php echo $this->link; ?>"><?php echo $this->link; ?></a></p>
-        <br />
-        <p><?php echo $this->translate('If you dont want to reset your password, please ignore this email.'); ?></p>
+        <div>
+            <p><?php echo $this->translate('Your new password is'); ?>: <span><?php echo $this->password; ?></span></p>
+            <p><?php echo $this->translate('Please change your new password as soon as possible.'); ?></p>
+        </div>
     </body>
 </html>

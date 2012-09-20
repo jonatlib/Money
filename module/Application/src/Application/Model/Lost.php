@@ -42,7 +42,7 @@ class Lost extends \Zend\Db\TableGateway\TableGateway {
             $this->delete(array('id' => $h->id));
         }
         
-        return $password;
+        return array('id' => $hash->user, 'password' => $password);
     }
     
     public function __construct($adapter) {
