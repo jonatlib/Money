@@ -9,6 +9,7 @@ class Email {
     protected $mail;
     protected $from;
     protected $subject;
+    protected $translator;
 
     /**
      * @var \Application\Model\User
@@ -27,6 +28,12 @@ class Email {
 
     public function getTemplate($name, $vars = array()) {
         $view = new \Zend\View\Renderer\PhpRenderer();
+        $translator = $this->translator;
+        $view->getHelperPluginManager()->setFactory('translate', function($sm)use($translator){
+            $instance = new \Zend\I18n\View\Helper\Translate();
+            $instance->setTranslator($translator);
+            return $instance;
+        });
         $view->setResolver(new \Zend\View\Resolver\TemplatePathStack(array('script_paths' => array(__DIR__ . '/Emails/'))));
         $view->setVars($vars);
         
@@ -76,11 +83,12 @@ class Email {
         return $this->mail->send($message);
     }
 
-    public function __construct($from, $subject, $adapter) {
+    public function __construct($from, $subject, $adapter, $translator) {
         $this->mail = new \Zend\Mail\Transport\Sendmail();
         $this->user = new \Application\Model\User($adapter);
         $this->from = $from;
         $this->subject = $subject;
+        $this->translator = $translator;
     }
 
 }

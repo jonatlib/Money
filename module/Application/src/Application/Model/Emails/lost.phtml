@@ -5,8 +5,7 @@
         <title></title>
     </head>
     <body>
-        <h1><?php echo $this->translate('We sending you new password.'); ?></h1>
-        <p>Email: <span><?php echo $this->email; ?></span></p>
-        <p>Password: <span><?php echo $this->password; ?></span></p>
+        <h1><?php echo $this->translate('Recover password'); ?></h1>
+        <p><?php echo $this->translate('To recover password use this link:'); ?><a href="<?php echo $this->link; ?>"><?php $this->translate('Link'); ?></a></p>
     </body>
 </html>
