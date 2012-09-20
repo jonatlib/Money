@@ -61,11 +61,17 @@ class Email {
         $message = new Mail\Message();
         $message->setEncoding("UTF-8");
 
+        $html = new \Zend\Mime\Part($text);
+        $html->type = "text/html";
+        
+        $body = new \Zend\Mime\Message();
+        $body->setParts(array( $html ));
+        
         $message->setTo($to);
         $message->setFrom($from);
         $message->setSender($from);
         $message->setSubject($subject);
-        $message->setBody($text);
+        $message->setBody($body);
 
         return $this->mail->send($message);
     }
