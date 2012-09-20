@@ -87,7 +87,8 @@ class AuthController extends AbstractActionController {
                 try {
                     $model = new \Application\Model\User($this->getServiceLocator()->get('db-adapter'));
                     $data = $form->getData();
-                    if ($model->registerUser(array_merge($data['loginInfo'], $data['personInfo']))) {
+                    if ( ($user = $model->registerUser(array_merge($data['loginInfo'], $data['personInfo']))) ) {
+                        $this->mail->sendTemplate($user->email, 'welcome', array('email' => $user->email));
                         $view->message = 'You ware successfull registered.';
                     } else {
                         $view->message = 'Error';
@@ -120,8 +121,7 @@ class AuthController extends AbstractActionController {
                 $email = $form->get('email')->getValue();
                 if ( ($hash = $model->createRequest($email)) ) {
                     $view->message = 'success';
-                    $this->mail->sendToMail($email, 'Password retrieve', 
-                            "To reset password click on this link:" . $this->url()->fromRoute('lostpassword/default', array('id' => $hash)));
+                    $this->mail->sendTemplate($email, 'lost', array('password' => $hash, 'email' => $email));
                 } else {
                     $view->message = 'User not found';
                 }
