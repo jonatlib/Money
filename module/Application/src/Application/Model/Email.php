@@ -66,9 +66,9 @@ class Email {
 
     public function sendMail($to, $from, $subject, $text) {
         $message = new Mail\Message();
-        $message->setEncoding("UTF-8");
-
+        
         $html = new \Zend\Mime\Part($text);
+        $html->charset = "UTF-8";
         $html->type = "text/html";
         
         $body = new \Zend\Mime\Message();

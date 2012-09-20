@@ -42,7 +42,7 @@ return array(
             },
             'mail' => function($sm){
                 $adapter = $sm->get('db-adapter');
-                return new \Application\Model\Email('no-replay', 'No-Money: ', $adapter, $sm->get('translator'));
+                return new \Application\Model\Email('no-replay@no-money.cz', 'No-Money: ', $adapter, $sm->get('translator'));
             },
         ),
     ),
