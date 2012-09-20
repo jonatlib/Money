@@ -18,7 +18,6 @@ class AuthController extends AbstractActionController {
 
     public function indexAction() {
         $view = new ViewModel();
-
         $view->form = $form = new \Application\Form\Login('login');
 
         if ($this->request->isPost()) {
