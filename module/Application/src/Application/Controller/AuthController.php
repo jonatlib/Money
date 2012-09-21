@@ -11,15 +11,29 @@ class AuthController extends AbstractActionController {
      * @var \Zend\Authentication\AuthenticationService
      */
     protected $authService;
+
     /**
      * @var \Application\Model\Email
      */
     protected $mail;
 
+    protected function conditionRedirect($logged) {
+        if ($logged && $this->authService->hasIdentity()) {
+            $this->redirect()->toRoute('home');
+            return;
+        } else if (!$logged && !$this->authService->hasIdentity()) {
+            $this->redirect()->toRoute('home');
+            return;
+        }
+        return;
+    }
+
     public function indexAction() {
         $view = new ViewModel();
         $view->form = $form = new \Application\Form\Login('login');
-
+        
+        $this->conditionRedirect(true);
+        
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
@@ -36,7 +50,7 @@ class AuthController extends AbstractActionController {
                     if ($result->isValid()) {
                         $form->resetFailure();
                         \Zend\Session\Container::getDefaultManager()->regenerateId();
-                        $this->redirect()->toRoute('home');
+                        $this->conditionRedirect(true);
                         return $view;
                     } else {
                         $form->setFailure();
@@ -65,6 +79,7 @@ class AuthController extends AbstractActionController {
     }
 
     public function logoutAction() {
+        $this->conditionRedirect(false);
         $this->authService->clearIdentity();
 
         $manager = \Zend\Session\Container::getDefaultManager();
@@ -78,6 +93,8 @@ class AuthController extends AbstractActionController {
     public function registerAction() {
         $view = new ViewModel();
 
+        $this->conditionRedirect(true);
+        
         $view->form = $form = new \Application\Form\Register('register');
         $form->addCaptcha();
 
@@ -87,7 +104,7 @@ class AuthController extends AbstractActionController {
                 try {
                     $model = new \Application\Model\User($this->getServiceLocator()->get('db-adapter'));
                     $data = $form->getData();
-                    if ( ($user = $model->registerUser(array_merge($data['loginInfo'], $data['personInfo']))) ) {
+                    if (($user = $model->registerUser(array_merge($data['loginInfo'], $data['personInfo'])))) {
                         $this->mail->sendTemplate($user->email, 'welcome', array('email' => $user->email));
                         $view->message = 'You ware successfull registered.';
                     } else {
@@ -111,6 +128,8 @@ class AuthController extends AbstractActionController {
     public function lostAction() {
         $view = new ViewModel();
 
+        $this->conditionRedirect(true);
+        
         $view->form = $form = new \Application\Form\LostPassword('lostpassword');
         $form->addCaptcha();
 
@@ -119,7 +138,7 @@ class AuthController extends AbstractActionController {
             if ($form->isValid()) {
                 $model = new \Application\Model\Lost($this->getServiceLocator()->get('db-adapter'));
                 $email = $form->get('email')->getValue();
-                if ( ($hash = $model->createRequest($email)) ) {
+                if (($hash = $model->createRequest($email))) {
                     $view->message = 'success';
                     $this->mail->sendTemplate($email, 'lost', array(
                         'link' => 'http://' . $_SERVER['HTTP_HOST'] . $this->url()->fromRoute('lostpassword/default', array('id' => $hash)),
@@ -135,19 +154,22 @@ class AuthController extends AbstractActionController {
 
     public function retrieveAction() {
         $view = new ViewModel();
+        
+        $this->conditionRedirect(true);
+        
         $view->id = $id = $this->event->getRouteMatch()->getParam('id', null);
         if (is_null($id) || strlen($id) != 40) {
             $this->redirect()->toRoute('application/default', array('controller' => 'Index'));
         }
-        
+
         $model = new \Application\Model\Lost($this->getServiceLocator()->get('db-adapter'));
-        if( ($data = $model->resetPassword($id)) ){
+        if (($data = $model->resetPassword($id))) {
             $view->message = $data['password'];
-            $this->mail->sendTemplate((int)$data['id'], 'recover', array('password' => $data['password']));
-        }else{
+            $this->mail->sendTemplate((int) $data['id'], 'recover', array('password' => $data['password']));
+        } else {
             $this->redirect()->toRoute('application/default', array('controller' => 'Index'));
         }
-        
+
         return $view;
     }
 

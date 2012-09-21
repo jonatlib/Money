@@ -41,7 +41,9 @@ class Module {
     }
     
     public function initLocale(\Zend\Mvc\MvcEvent $e){
-        $e->getApplication()->getServiceManager()->get('translator');
+        /* @var $translator \Zend\I18n\Translator\Translator */
+        $translator = $e->getApplication()->getServiceManager()->get('translator');
+        
     }
     
     public function initSession(\Zend\Mvc\MvcEvent $e) {
