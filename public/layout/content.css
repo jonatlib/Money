@@ -6,7 +6,6 @@ div#widgetCalendar, div.datepicker, div.datepicker > div { background-image: non
 
 div.datepicker .datepickerDays a { color: #555; }
 div.datepicker .datepickerDays td:hover { background: #ddd; }
-div.datepicker .datepickerNotInMonth a { color: #999; }
 
 div.datepicker .datepickerSelected span { color: #fff; }
 div.datepicker .datepickerSelected:hover span { color: #0af; }
@@ -18,3 +17,10 @@ div.datepicker .datepickerMonths td:hover span, .datepickerYears td:hover span {
 div.datepicker .datepickerWeek span { color: #059; }
 div.datepicker .datepickerWeek span:hover { color: #0af; }
 div.datepicker .datepickerMonth a span, .datepickerGoNext span, .datepickerGoPrev span { color: #0480be; }
+
+div.datepicker .datepickerNotInMonth,
+div.datepicker .datepickerNotInMonth:hover,
+div.datepicker .datepickerNotInMonth.datepickerSelected,
+div.datepicker .datepickerNotInMonth.datepickerSelected:hover { background: #f5f5f5 !important; }
+
+div.datepicker .datepickerNotInMonth a { display: none;  }
