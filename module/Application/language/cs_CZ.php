@@ -27,6 +27,10 @@ return array(
     'Logout' => 'Odhlásit se',
     'Add' => 'Přidat',
     
+    'User Profile' => 'Uživatelský profil',
+    
+//    '' => '',
+//    '' => '',
 //    '' => '',
 //    '' => '',
 );

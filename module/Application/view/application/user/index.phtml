@@ -1,3 +1,32 @@
 <div class="content">
-    <h1>Tohle je nadpis</h1>
+    <h1><?php echo $this->translate('User Profile'); ?></h1>
+</div>
+
+<div class="content">
+    <h3><?php echo $this->user(); ?></h3>
+    <hr/>
+    
+    <h4><?php echo $this->translate('Change personal info'); ?></h4>
+    
+    <hr/>
+    
+    <h4><?php echo $this->translate('Change password'); ?></h4>
+    <?php echo $this->form()->openTag($this->passwordForm); ?>
+    <div>
+        <div><?php echo $this->formLabel($this->passwordForm->get('password')); ?></div>
+        <div><?php echo $this->formElement($this->passwordForm->get('password')); ?></div>
+        <div><?php echo $this->formElementErrors($this->passwordForm->get('password')); ?></div>
+    </div>
+    <div>
+        <div><?php echo $this->formLabel($this->passwordForm->get('passwordtwo')); ?></div>
+        <div><?php echo $this->formElement($this->passwordForm->get('passwordtwo')); ?></div>
+        <div><?php echo $this->formElementErrors($this->passwordForm->get('passwordtwo')); ?></div>
+    </div>
+    <div><?php echo $this->formElement($this->passwordForm->get('submit')); ?></div>
+    <?php echo $this->form()->closeTag($this->passwordForm); ?>
+    <hr/>
+    
+    <h4><?php echo $this->translate('Change email'); ?></h4>
+    
+    <hr/>
 </div>

@@ -32,6 +32,9 @@ return array(
         ),
     ),
     'service_manager' => array(
+        'invokables' => array(
+            'mail-adapter' => '\Zend\Mail\Transport\Sendmail',
+        ),
         'factories' => array(
             'translator' => function($sm){
                 $factory = new \Application\Library\I18n\Translator\TranslatorServiceFactory();
@@ -51,7 +54,8 @@ return array(
             },
             'mail' => function($sm){
                 $adapter = $sm->get('db-adapter');
-                return new \Application\Model\Email('no-replay@no-money.cz', 'No-Money: ', $adapter, $sm->get('translator'));
+                $mailadapter = $sm->get('mail-adapter');
+                return new \Application\Model\Email('no-replay@no-money.cz', 'No-Money: ', $mailadapter, $adapter, $sm->get('translator'));
             },
         ),
     ),
@@ -87,6 +91,7 @@ return array(
             'public' => 'Application\View\Helper\PublicLink',
             'user' => 'Application\View\Helper\User',
             'addMoney' => 'Application\View\Helper\AddMoney',
+            'formSelect' => 'Application\Library\Form\View\Helper\FormSelect'
         )
     ),
     'view_manager' => array(

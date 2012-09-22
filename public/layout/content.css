@@ -27,8 +27,11 @@ div.datepicker .datepickerNotInMonth.datepickerSelected:hover { background: #f5f
 div.datepicker .datepickerNotInMonth a { display: none;  }
 
 /* add money */
-div#addMoney { min-height: 0px; padding: 0 18px 0 18px !important; }
+div#addMoney { min-height: 0px; padding: 0 18px 0 18px !important; background: #ddd; }
 div#addMoney form { padding: 5px; margin: 0; }
 div#addMoney form input[type="submit"] { margin: 0 0 0 20px; }
 div#addMoney form input[type="text"],
 div#addMoney form select { margin: 0px 0 0 0; }
+
+/* profile */
+form#changePassword { padding: 15px; }

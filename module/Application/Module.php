@@ -7,12 +7,15 @@ use Zend\EventManager\StaticEventManager,
 
 class Module {
 
+    protected $lastRouteMatch;
+    
     public function init() {
         $events = StaticEventManager::getInstance();
         //Plugins
+        $events->attach('Zend\Mvc\Application', \Zend\Mvc\MvcEvent::EVENT_ROUTE, array($this, 'pluginLastPage'), 0);
         $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'pluginAuth'), 100);
         $events->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'pluginAuthError'), 100);
-        $events->attach('Zend\View\View', 'renderer', array($this, 'pluginSession'), -100);
+        $events->attach('Zend\View\View', 'response', array($this, 'pluginSession'), 100);
         //Bootstrap
         $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initSession'), 100);
         $events->attach('Zend\Mvc\Application', 'bootstrap', array($this, 'initRouter'), 100);
@@ -43,7 +46,6 @@ class Module {
     public function initLocale(\Zend\Mvc\MvcEvent $e){
         /* @var $translator \Zend\I18n\Translator\Translator */
         $translator = $e->getApplication()->getServiceManager()->get('translator');
-//        \Zend\I18n\View\HelperConfig;
     }
     
     public function initSession(\Zend\Mvc\MvcEvent $e) {
@@ -55,6 +57,7 @@ class Module {
 
             $session->init = time();
             $session->ip = $_SERVER['REMOTE_ADDR'];
+            $session->lastPage = $e->getRouteMatch();
         } else {
             $ip = explode('.', $session->ip);
             $Cip = explode('.', $_SERVER['REMOTE_ADDR']);
@@ -78,7 +81,15 @@ class Module {
     ////////////////////////// Plugins ///////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
     
-    public function pluginSession() {
+    public function pluginLastPage(\Zend\Mvc\MvcEvent $e){
+        $this->lastRouteMatch = $e->getRouteMatch();
+    }
+    
+    public function pluginSession(\Zend\View\ViewEvent $e) {
+        $manager = \Zend\Session\Container::getDefaultManager();
+        $session = new \Zend\Session\Container('sess', $manager);
+        $session->lastPage = $this->lastRouteMatch;
+        
         \Zend\Session\Container::getDefaultManager()->writeClose();
     }
 

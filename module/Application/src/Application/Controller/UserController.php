@@ -10,6 +10,8 @@ class UserController extends AbstractActionController
     {
         $view = new ViewModel();
         
+        $view->passwordForm = $passwordForm = new \Application\Form\ChangePassword('changePassword');
+        
         return $view;
     }
     

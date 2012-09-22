@@ -83,8 +83,8 @@ class Email {
         return $this->mail->send($message);
     }
 
-    public function __construct($from, $subject, $adapter, $translator) {
-        $this->mail = new \Zend\Mail\Transport\Sendmail();
+    public function __construct($from, $subject, \Zend\Mail\Transport\TransportInterface $mail, $adapter, $translator) {
+        $this->mail = $mail;
         $this->user = new \Application\Model\User($adapter);
         $this->from = $from;
         $this->subject = $subject;
