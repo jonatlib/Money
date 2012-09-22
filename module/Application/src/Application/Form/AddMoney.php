@@ -6,7 +6,7 @@ use Application\Form\Protect;
 
 class AddMoney extends Protect {
 
-    public function __construct($money, $groups, $subgroups, $action) {
+    public function __construct($groups, $subgroups, $action) {
         parent::__construct('addMoney');
         $this->setAttribute('action', $action);
         
@@ -22,7 +22,7 @@ class AddMoney extends Protect {
             'attributes' => array(
                 'class' => 'input-medium',
                 'id' => 'money',
-                'placeholder' => $money
+                'placeholder' => 'Money'
             )
         ));
         $this->add(array(

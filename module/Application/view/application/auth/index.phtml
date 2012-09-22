@@ -43,6 +43,6 @@
     </div>
     <?php echo $this->form()->closeTag(); ?>
     <div>
-        <?php echo $this->translate($this->message); ?>
+        <?php echo (!empty($this->message)) ? $this->translate($this->message) : ''; ?>
     </div>
 </div>

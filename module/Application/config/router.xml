@@ -8,6 +8,20 @@
         </options>
     </home>
     
+    <profil type="Literal">
+        <options>
+            <route>/profil</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="User" action="index" />
+        </options>
+    </profil>
+    
+    <settings type="Literal">
+        <options>
+            <route>/settings</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="User" action="settings" />
+        </options>
+    </settings>
+    
     <lostpassword type="Literal">
         <options>
             <route>/lostpassword</route>

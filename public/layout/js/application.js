@@ -84,16 +84,21 @@ function initDatePicker(){
     $('#widgetCalendar').hide();
 }
 
+function initDropDown(){
+    $('ul.dropdown-menu li').hover(function(){
+        var e = $(this).find('i');
+        e.addClass('icon-white');
+    }, function(){
+        var e = $(this).find('i');
+        e.removeClass('icon-white');
+    });
+}
+
 $(function(){
     initDatePicker();
     scrollSideBar();
     setTimeout(cleanAlerts, 3000);
-           
-    $('div#headMenu div.subnav ul > li > a').hover(function(){
-        $(this).addClass('hover');
-    }, function(){
-        $(this).removeClass('hover'); //.clearQueue()
-    });
+    initDropDown();
     
     $('input').tooltip({
         placement: 'top', 

@@ -43,6 +43,7 @@ class Module {
     public function initLocale(\Zend\Mvc\MvcEvent $e){
         /* @var $translator \Zend\I18n\Translator\Translator */
         $translator = $e->getApplication()->getServiceManager()->get('translator');
+//        \Zend\I18n\View\HelperConfig;
     }
     
     public function initSession(\Zend\Mvc\MvcEvent $e) {

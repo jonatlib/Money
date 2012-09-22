@@ -64,7 +64,9 @@ div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a:visited,
 div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a:active,
 div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a { margin: 0; height: 34px; padding: 40px 15px 0 15px; background: none; color: #000; }
 div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li.divider-vertical { border-left: 1px solid #ccd; background: #aaa; height: 74px; }
-div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a.hover { background: #08c; color: #fff; }
+
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li.open > a,
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li:hover > a { background: #08c; color: #fff; }
 
 /*Content*/
 

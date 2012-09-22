@@ -33,7 +33,16 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'translator' => 'Zend\I18n\Translator\TranslatorServiceFactory',
+            'translator' => function($sm){
+                $factory = new \Application\Library\I18n\Translator\TranslatorServiceFactory();
+                $instance = $factory->createService($sm);
+                
+                $log = new \Zend\Log\Logger();
+                $log->addWriter( new \Zend\Log\Writer\Stream( __DIR__ . '/../log/translator.log' ) );
+                
+                $instance->setLog($log);
+                return $instance;
+            },
             'db-adapter' => function($sm) {
                 $config = $sm->get('config');
                 $config = $config['db'];
@@ -48,7 +57,7 @@ return array(
     ),
     'translator' => array(
         'locale' => 'cs_CZ',
-        'translation_patterns' => array(
+        'translation_file_patterns' => array(
             array(
                 'type' => 'phparray',
                 'base_dir' => __DIR__ . '/../language',
@@ -59,6 +68,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Money' => 'Application\Controller\MoneyController',
+            'Application\Controller\User' => 'Application\Controller\UserController',
 //            'Application\Controller\Auth' => 'Application\Controller\AuthController'
         ),
         'factories' => array(

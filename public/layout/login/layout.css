@@ -7,7 +7,7 @@ div#ieh { display: none; }
 .right { float: right; }
 
 fieldset { margin: 0 0 50px 0; }
-div.buttons { margin: 0 auto; width: 170px; }
+div.buttons { margin: 0 auto; }
 
 div.content { min-height: 36px; margin: 0 0 6px 0; background: #fff; }
 div.content { box-shadow: 0px 0px 20px 0px #999; }
