@@ -100,11 +100,5 @@ $(function(){
     setTimeout(cleanAlerts, 3000);
     initDropDown();
     
-    $('input').tooltip({
-        placement: 'top', 
-        delay: {
-            show: 0, 
-            hide: 500
-        }
-    });
+    
 });
