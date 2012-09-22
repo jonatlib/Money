@@ -11,9 +11,24 @@ class ChangePassword extends Protect {
          
         $this->add(array(
             'type' => '\Zend\Form\Element\Password',
+            'name' => 'oldpassword',
+            'options' => array(
+                'label' => 'Old password',
+                'required' => true,
+                'validators' => array(
+                    '\Zend\Validator\StringLength' => array('min' => 6)
+                )
+            ),
+            'attributes' => array(
+                'class' => 'input-xlarge',
+                'id' => 'oldpassword'
+            )
+        ));
+        $this->add(array(
+            'type' => '\Zend\Form\Element\Password',
             'name' => 'password',
             'options' => array(
-                'label' => 'Password (min. 6 chars)',
+                'label' => 'New Password (min. 6 chars)',
                 'required' => true,
                 'validators' => array(
                     '\Zend\Validator\StringLength' => array('min' => 6)

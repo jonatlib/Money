@@ -1,8 +1,2 @@
-2012-09-22T21:09:00+02:00 WARN (4): Missing translate for __'Lost Password'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:00+02:00 WARN (4): Missing translate for __'No-money'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:00+02:00 WARN (4): Missing translate for __'Recover password'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:00+02:00 WARN (4): Missing translate for __'To recover password use this link'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:00+02:00 WARN (4): Missing translate for __'Link'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:00+02:00 WARN (4): Missing translate for __'If you dont want to reset your password, please ignore this email.'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:02+02:00 WARN (4): Missing translate for __'Odeslat'__ in textDomain: 'default' and locale: 'cs_CZ'.
-2012-09-22T21:09:02+02:00 WARN (4): Missing translate for __'success'__ in textDomain: 'default' and locale: 'cs_CZ'.
+2012-09-23T01:07:33+02:00 WARN (4): Missing translate for __'Odeslat'__ in textDomain: 'default' and locale: 'cs_CZ'.
+2012-09-23T01:10:17+02:00 WARN (4): Missing translate for __'Odeslat'__ in textDomain: 'default' and locale: 'cs_CZ'.

@@ -13,6 +13,11 @@
     <h4><?php echo $this->translate('Change password'); ?></h4>
     <?php echo $this->form()->openTag($this->passwordForm); ?>
     <div>
+        <div><?php echo $this->formLabel($this->passwordForm->get('oldpassword')); ?></div>
+        <div><?php echo $this->formElement($this->passwordForm->get('oldpassword')); ?></div>
+        <div><?php echo $this->formElementErrors($this->passwordForm->get('oldpassword')); ?></div>
+    </div>
+    <div>
         <div><?php echo $this->formLabel($this->passwordForm->get('password')); ?></div>
         <div><?php echo $this->formElement($this->passwordForm->get('password')); ?></div>
         <div><?php echo $this->formElementErrors($this->passwordForm->get('password')); ?></div>

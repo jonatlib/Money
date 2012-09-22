@@ -43,6 +43,12 @@ return array(
                 $log = new \Zend\Log\Logger();
                 $log->addWriter( new \Zend\Log\Writer\Stream( __DIR__ . '/../log/translator.log' ) );
                 
+//                $message = new \Zend\Mail\Message();
+//                $message->setTo('jonat.libor@gmail.com');
+//                $message->setFrom('no-replay@no-money.cz');
+//                $message->setSubject('No-Money: Error log');
+//                $log->addWriter( new \Zend\Log\Writer\Mail( $message, $sm->get('mail-adapter') ) );
+                
                 $instance->setLog($log);
                 return $instance;
             },

@@ -47,7 +47,7 @@ class Email {
         $validator = new \Zend\Validator\EmailAddress();
         if ($validator->isValid($id)) {
             return $this->sendToMail($id, $subject, $text);
-        } else if (is_numeric($id) && ctype_digit($id) && (int) $id > 0) {
+        } else if ( (is_int($id) || (is_numeric($id) && ctype_digit($id)) ) && (int) $id > 0) {
             return $this->sendToUser($id, $subject, $text);
         }
         return false;
