@@ -59,9 +59,10 @@ class Module {
             $session->ip = $_SERVER['REMOTE_ADDR'];
             $session->lastPage = $e->getRouteMatch();
         } else {
-            $ip = explode('.', $session->ip);
-            $Cip = explode('.', $_SERVER['REMOTE_ADDR']);
-            if ((time() - $session->init > 2 * 60 * 60) || ($ip[0] != $Cip[0] || $ip[1] != $Cip[2])) {
+//            $ip = explode('.', $session->ip);
+//            $Cip = explode('.', $_SERVER['REMOTE_ADDR']);
+//            if ((time() - $session->init > 2 * 60 * 60) || ($ip[0] != $Cip[0] || $ip[1] != $Cip[2])) {
+            if ( (time() - $session->init) > 2 * 60 * 60 ) {
                 $manager->destroy(); //FIXME on live server
             }
         }
