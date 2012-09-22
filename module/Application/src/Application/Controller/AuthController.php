@@ -18,12 +18,13 @@ class AuthController extends AbstractActionController {
     protected $mail;
 
     protected function conditionRedirect($logged) {
+        if (is_null($logged)) {
+            return $this->redirect()->toRoute('home');
+        }
         if ($logged && $this->authService->hasIdentity()) {
-            $this->redirect()->toRoute('home');
-            return;
+            return $this->redirect()->toRoute('home');
         } else if (!$logged && !$this->authService->hasIdentity()) {
-            $this->redirect()->toRoute('home');
-            return;
+            return $this->redirect()->toRoute('home');
         }
         return;
     }
@@ -31,9 +32,9 @@ class AuthController extends AbstractActionController {
     public function indexAction() {
         $view = new ViewModel();
         $view->form = $form = new \Application\Form\Login('login');
-        
+
         $this->conditionRedirect(true);
-        
+
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
             if ($form->isValid()) {
@@ -50,8 +51,10 @@ class AuthController extends AbstractActionController {
                     if ($result->isValid()) {
                         $form->resetFailure();
                         \Zend\Session\Container::getDefaultManager()->regenerateId();
-                        $this->conditionRedirect(true);
-                        return $view;
+                        
+                        $this->authService->getStorage()->write( $adapter->getResultRowObject(NULL, array('password', 'salt')) );
+                        
+                        return $this->conditionRedirect(null);
                     } else {
                         $form->setFailure();
                         $view->message = 'Wrong password or user name.';
@@ -94,9 +97,8 @@ class AuthController extends AbstractActionController {
         $view = new ViewModel();
 
         $this->conditionRedirect(true);
-        
+
         $view->form = $form = new \Application\Form\Register('register');
-        $form->addCaptcha();
 
         if ($this->request->isPost()) {
             $form->setData($this->request->getPost());
@@ -129,7 +131,7 @@ class AuthController extends AbstractActionController {
         $view = new ViewModel();
 
         $this->conditionRedirect(true);
-        
+
         $view->form = $form = new \Application\Form\LostPassword('lostpassword');
         $form->addCaptcha();
 
@@ -154,9 +156,9 @@ class AuthController extends AbstractActionController {
 
     public function retrieveAction() {
         $view = new ViewModel();
-        
+
         $this->conditionRedirect(true);
-        
+
         $view->id = $id = $this->event->getRouteMatch()->getParam('id', null);
         if (is_null($id) || strlen($id) != 40) {
             $this->redirect()->toRoute('application/default', array('controller' => 'Index'));

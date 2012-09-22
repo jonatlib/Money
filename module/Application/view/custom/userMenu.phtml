@@ -1,0 +1,9 @@
+<li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->user(); ?> <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+        <li><a href="#"><i class="icon-user"></i> <?php echo $this->translate('Profil'); ?></a></li>
+        <li><a href="#"><i class="icon-wrench"></i> <?php echo $this->translate('Settings'); ?></a></li>
+        <li class="divider"></li>
+        <li><a href="<?php echo $this->url('logout'); ?>"><i class="icon-off"></i> <?php echo $this->translate('Logout'); ?></a></li>
+    </ul>
+</li>

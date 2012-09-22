@@ -45,6 +45,10 @@ div.content { box-shadow: 0px 0px 20px 0px #999; }
 
 /*Head*/
 div#blocks > div#leftBlockHead div#head { font-size: 36px; font-weight: bold; padding: 27px 0 0 40px; height: 47px; text-transform: uppercase; }
+div#blocks > div#leftBlockHead div#head a,
+div#blocks > div#leftBlockHead div#head a:visited,
+div#blocks > div#leftBlockHead div#head a:focus,
+div#blocks > div#leftBlockHead div#head a:active { color: #000; text-decoration: none; }
 
 /*Menu*/
 div#blocks > div#rightBlockHead div#headMenu { padding: 0 0 0 20px; height: 74px; }

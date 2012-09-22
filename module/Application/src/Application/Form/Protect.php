@@ -12,6 +12,10 @@ class Protect extends Form {
      */
     private $session;
     private $set = false;
+    /**
+     * @var \Zend\Authentication\AuthenticationService
+     */
+    private $auth;
 
     public function setFailure() {
         if (!isset($this->session->failure)) {
@@ -28,11 +32,11 @@ class Protect extends Form {
         $this->remove('captcha');
     }
 
-    public function addCaptcha() {
+    public function addCaptcha($force = false) {
         static $added = false;
-        $added = (false | ( defined('DEBUG') && DEBUG ));
+        $added = ( (false | ( defined('DEBUG') && DEBUG )) && !$force );
         
-        if($added) return;
+        if( ($added || $this->auth->hasIdentity()) ) return;
         
         $element = new Element\Captcha('captcha');
         $adapter = new \Zend\Captcha\ReCaptcha();
@@ -54,6 +58,7 @@ class Protect extends Form {
 
     private function init() {
         $this->session = new \Zend\Session\Container('Protected' . get_called_class(), new \Zend\Session\SessionManager);
+        $this->auth = new \Zend\Authentication\AuthenticationService();
 
         if ($this->getFailure()) {
             $this->addCaptcha();
@@ -72,12 +77,27 @@ class Protect extends Form {
         $this->add($element, array('priority' => -1000));
     }
 
+    public function prepare() {
+        parent::prepare();
+        foreach ($this->getIterator() as $element) {
+            $required = ($element->getOption('required')) ? true : false;
+            if($required){
+                /* @var $element \Zend\Form\Element */
+                $class = $element->getAttribute('class');
+                $class .= ( empty($class) ? 'required' : ' required' );
+                $element->setAttribute('class', $class);
+            }
+        }
+    }
+    
     private function initFilter() {
         ////// ZF1 like
         $filter = new \Zend\InputFilter\BaseInputFilter();
         foreach ($this->getIterator() as $element) {
             $e = new \Zend\InputFilter\Input($element->getName());
-            $e->setRequired(($element->getOption('required')) ? true : false );
+            
+            $required = ($element->getOption('required')) ? true : false;
+            $e->setRequired( $required );
 
             $validators = new \Zend\Validator\ValidatorChain();
             if (!is_null($element->getOption('validators'))) {
@@ -106,13 +126,7 @@ class Protect extends Form {
 
     public function isValid() {
         $this->initFilter();
-        $result = parent::isValid();
-        if(!$result){
-            $this->populateValues($this->getData());
-        }else{
-            $this->setData(array());
-        }
-        return $result;
+        return parent::isValid();
     }
 
     public function __construct($name = null) {

@@ -1,5 +1,8 @@
 @charset "utf-8";
 
+/* form input required */
+span.inputrequired { padding: 0 0 0 5px; color: #a00; font-weight: bold; font-size: 16px; }
+
 /* Not CSS3 Hacks */
 html.no-boxshadow div.content { border: 1px solid #ccd; }
 

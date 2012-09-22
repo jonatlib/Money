@@ -1,0 +1,13 @@
+<?php $this->form = $this->addMoney(); ?>
+<div class="content" id="addMoney">
+    <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
+    
+    <?php echo $this->formElement($this->form->get('money')) . PHP_EOL; ?>
+    <?php echo $this->formElement($this->form->get('group')) . PHP_EOL; ?>
+    <?php echo $this->formElement($this->form->get('subgroup')) . PHP_EOL; ?>
+    
+    <?php echo $this->formElement($this->form->get('add')); ?>
+    
+    <?php echo $this->formHidden($this->form->get('csrf')); ?>
+    <?php echo $this->form()->closeTag(); ?>
+</div>

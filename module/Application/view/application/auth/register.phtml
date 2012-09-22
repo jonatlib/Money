@@ -6,9 +6,45 @@
     <fieldset>
         <legend><?php echo $this->translate('Registration form'); ?></legend>
         <div class="control-group">
-            <?php echo $this->formCollection($form->get('loginInfo')); ?>
-            <?php echo $this->formCollection($form->get('personInfo')); ?>
+            <fieldset>
+                <legend><?php echo $this->translate('Login info'); ?></legend>
+                <div>
+                    <?php echo $this->formLabel($this->form->get('email')) . PHP_EOL; ?>
+                    <?php echo $this->formElement($this->form->get('email')) . PHP_EOL; ?>
+                    <?php echo $this->formElementErrors($this->form->get('email')) . PHP_EOL; ?>
+                </div>
+                <div>
+                    <?php echo $this->formLabel($this->form->get('password')) . PHP_EOL; ?>
+                    <?php echo $this->formElement($this->form->get('password')) . PHP_EOL; ?>
+                    <?php echo $this->formElementErrors($this->form->get('password')) . PHP_EOL; ?>
+                </div>
+                <div>
+                    <?php echo $this->formLabel($this->form->get('passwordtwo')) . PHP_EOL; ?>
+                    <?php echo $this->formElement($this->form->get('passwordtwo')) . PHP_EOL; ?>
+                    <?php echo $this->formElementErrors($this->form->get('passwordtwo')) . PHP_EOL; ?>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend><?php echo $this->translate('Personal info'); ?></legend>
+                <div>
+                    <?php echo $this->formLabel($this->form->get('name')) . PHP_EOL; ?>
+                    <?php echo $this->formElement($this->form->get('name')) . PHP_EOL; ?>
+                    <?php echo $this->formElementErrors($this->form->get('name')) . PHP_EOL; ?>
+                </div>
+                <div>
+                    <?php echo $this->formLabel($this->form->get('lastName')) . PHP_EOL; ?>
+                    <?php echo $this->formElement($this->form->get('lastName')) . PHP_EOL; ?>
+                    <?php echo $this->formElementErrors($this->form->get('lastName')) . PHP_EOL; ?>
+                </div>
+            </fieldset>
         </div>
+        <?php if ($this->form->has('captcha')): ?>
+            <div>
+                <?php echo $this->formElement($this->form->get('captcha')) . PHP_EOL; ?>
+                <?php echo $this->formElementErrors($this->form->get('captcha')) . PHP_EOL; ?>
+            </div>
+        <?php endif; ?>
         <?php echo $this->formHidden($this->form->get('csrf')); ?>
     </fieldset>
     <div class="buttons">

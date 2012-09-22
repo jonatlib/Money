@@ -43,7 +43,6 @@ class Module {
     public function initLocale(\Zend\Mvc\MvcEvent $e){
         /* @var $translator \Zend\I18n\Translator\Translator */
         $translator = $e->getApplication()->getServiceManager()->get('translator');
-        
     }
     
     public function initSession(\Zend\Mvc\MvcEvent $e) {
@@ -59,7 +58,7 @@ class Module {
             $ip = explode('.', $session->ip);
             $Cip = explode('.', $_SERVER['REMOTE_ADDR']);
             if ((time() - $session->init > 2 * 60 * 60) || ($ip[0] != $Cip[0] || $ip[1] != $Cip[2])) {
-                //$manager->destroy(); //FIXME on live server
+                $manager->destroy(); //FIXME on live server
             }
         }
     }

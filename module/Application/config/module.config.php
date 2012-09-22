@@ -73,7 +73,9 @@ return array(
     ),
     'view_helpers' => array(
         'invokables' => array(
-            'public' => 'Application\View\Helper\PublicLink'
+            'public' => 'Application\View\Helper\PublicLink',
+            'user' => 'Application\View\Helper\User',
+            'addMoney' => 'Application\View\Helper\AddMoney',
         )
     ),
     'view_manager' => array(

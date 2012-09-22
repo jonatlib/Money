@@ -10,11 +10,7 @@ class Register extends Protect {
     public function __construct($name = null) {
         parent::__construct($name);
                 
-        
-        $loginInfo = new Form\Fieldset('loginInfo');
-        $loginInfo->setLabel('Login Info - required');
-                
-        $loginInfo->add(array(
+        $this->add(array(
             'type' => '\Zend\Form\Element\Email',
             'name' => 'email',
             'options' => array(
@@ -29,7 +25,7 @@ class Register extends Protect {
                 'id' => 'email'
             )
         ));
-        $loginInfo->add(array(
+        $this->add(array(
             'type' => '\Zend\Form\Element\Password',
             'name' => 'password',
             'options' => array(
@@ -44,7 +40,7 @@ class Register extends Protect {
                 'id' => 'password'
             )
         ));
-        $loginInfo->add(array(
+        $this->add(array(
             'type' => '\Zend\Form\Element\Password',
             'name' => 'passwordtwo',
             'options' => array(
@@ -59,35 +55,8 @@ class Register extends Protect {
                 'id' => 'passwordtwo'
             )
         ));
-        
+
         $this->add(array(
-            'type' => '\Zend\Form\Element\Text',
-            'name' => 'firstname',
-            'options' => array(
-                'label' => 'First Name',
-                'required' => false,
-            ),
-            'attributes' => array(
-                'class' => 'input-xlarge',
-            )
-        ));
-        $this->add(array(
-            'type' => '\Zend\Form\Element\Text',
-            'name' => 'lastname',
-            'options' => array(
-                'label' => 'Last Name',
-                'required' => false,
-            ),
-            'attributes' => array(
-                'class' => 'input-xlarge',
-            )
-        ));
-        $this->add($loginInfo);
-        
-        
-        $personInfo = new Form\Fieldset('personInfo');
-        $personInfo->setLabel('Personal Info - optional');
-        $personInfo->add(array(
             'type' => '\Zend\Form\Element\Text',
             'name' => 'name',
             'options' => array(
@@ -99,7 +68,7 @@ class Register extends Protect {
                 'id' => 'firstname'
             )
         ));
-        $personInfo->add(array(
+        $this->add(array(
             'type' => '\Zend\Form\Element\Text',
             'name' => 'lastName',
             'options' => array(
@@ -111,8 +80,7 @@ class Register extends Protect {
                 'id' => 'lastname'
             )
         ));
-        $this->add($personInfo);
-        
+        $this->addCaptcha(true);
         ////////////////////////////////////////////////////////////////
         // Buttons
         $this->add(array(
