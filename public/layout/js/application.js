@@ -1,6 +1,8 @@
 function scrollSideBar(){
     var win = $(window);
     var side = $('div#sidebar div.attach');
+    if(side.length < 1) return;
+    
     var sidebar = $('div#sidebar');
     var top = side.position().top;
     var margin = parseInt(side.css('margin-top'));
