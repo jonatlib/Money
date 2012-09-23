@@ -85,6 +85,8 @@ class Module {
     ///////////////////////////////////////////////////////////////////////////
 
     public function pluginLastPage(\Zend\Mvc\MvcEvent $e) {
+        if (substr_count(strtolower($e->getRouteMatch()->getParam('__CONTROLLER__')), 'ajax'))
+            return;
         $this->lastRouteMatch = clone $e->getRouteMatch();
         $this->lastRouteMatch->setParam('controller', $this->lastRouteMatch->getParam('__CONTROLLER__'));
     }

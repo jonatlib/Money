@@ -11,7 +11,7 @@ function drawChart() {
     dchart.addColumn('number', 'Slices');
     var options = {
         'title':'Money spend by this day.',
-        'height':300
+        'height':150
     };
 
     $.ajax({
