@@ -65,7 +65,11 @@ return array(
     'Welcome to our service.' => 'Výtejte v naší službě.',
     'You ware successfull registered.' => 'Byl jste úspěšně registrován.',
     'Your money' => 'Vaše peníze',
-//    '' => '',
+    'Title' => 'Titulek',
+    'Money has to be number. And title have to be set.' => 'Peníze musí být číslo. A titulek musí být vyplněn.',
+    'A 404 error occurred' => '404 Stránka nenalezena.',
+    'The requested URL could not be matched by routing.' => 'Požadovaná adresa nemohla být nalezena.',
+    
 //    '' => '',
 //    '' => '',
 //    '' => '',
