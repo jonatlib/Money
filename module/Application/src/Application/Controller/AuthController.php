@@ -95,7 +95,6 @@ class AuthController extends AbstractActionController {
 
     public function registerAction() {
         $view = new ViewModel();
-
         $this->conditionRedirect(true);
 
         $view->form = $form = new \Application\Form\Register('register');
@@ -106,7 +105,7 @@ class AuthController extends AbstractActionController {
                 try {
                     $model = new \Application\Model\User($this->getServiceLocator()->get('db-adapter'));
                     $data = $form->getData();
-                    if (($user = $model->registerUser(array_merge($data['loginInfo'], $data['personInfo'])))) {
+                    if (($user = $model->registerUser($data))) {
                         $this->mail->sendTemplate($user->email, 'welcome', array('email' => $user->email));
                         $view->message = 'You ware successfull registered.';
                     } else {

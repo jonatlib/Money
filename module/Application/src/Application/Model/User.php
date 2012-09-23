@@ -33,7 +33,10 @@ class User extends \Zend\Db\TableGateway\TableGateway {
         $row->deleted = 0;
         $row->register = new Db\Sql\Expression('NOW()');
         $row->role = 'user';
-        return $row->save();
+        if($row->save()){
+            return $row;
+        }
+        return false;
     }
     
     public function setPassword($id, $password){

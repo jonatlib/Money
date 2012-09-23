@@ -2,9 +2,9 @@
 <div class="content" id="addMoney">
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     
+    <?php echo $this->formElement($this->form->get('title')) . PHP_EOL; ?>
     <?php echo $this->formElement($this->form->get('money')) . PHP_EOL; ?>
     <?php echo $this->formElement($this->form->get('group')) . PHP_EOL; ?>
-    <?php echo $this->formElement($this->form->get('subgroup')) . PHP_EOL; ?>
     
     <?php echo $this->formElement($this->form->get('add')); ?>
     

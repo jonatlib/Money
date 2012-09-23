@@ -1,3 +1,14 @@
 <div class="content">
-    <h1>Tohle je nadpis</h1>
+    <h1><?php echo $this->translate('Your money'); ?></h1>
+</div>
+
+<div class="content">
+    <?php foreach($this->moneys as $money): ?>
+    <div class="well">
+        <h4><?php echo $money->title; ?></h4>
+        <div><?php echo $money->date; ?></div>
+        <div><?php echo $money->categName ?> <span><?php echo $money->subcategName ?></span></div>
+        <div class="<?php echo ($money->value < 0) ? 'less' : 'more'; ?>"><?php echo $money->value; ?></div>
+    </div>
+    <?php endforeach; ?>
 </div>

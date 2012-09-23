@@ -43,12 +43,6 @@ return array(
                 $log = new \Zend\Log\Logger();
                 $log->addWriter(new \Zend\Log\Writer\Stream(__DIR__ . '/../log/translator.log'));
 
-//                $message = new \Zend\Mail\Message();
-//                $message->setTo('jonat.libor@gmail.com');
-//                $message->setFrom('no-replay@no-money.cz');
-//                $message->setSubject('No-Money: Error log');
-//                $log->addWriter( new \Zend\Log\Writer\Mail( $message, $sm->get('mail-adapter') ) );
-
                 $instance->setLog($log);
                 return $instance;
             },
@@ -96,10 +90,17 @@ return array(
         'invokables' => array(
             'public' => 'Application\View\Helper\PublicLink',
             'user' => 'Application\View\Helper\User',
-            'addMoney' => 'Application\View\Helper\AddMoney',
             'formSelect' => 'Application\Library\Form\View\Helper\FormSelect'
         ),
         'factories' => array(
+            'addMoney' => function($sm){
+                $instance = new \Application\View\Helper\AddMoney();
+                $auth = new \Zend\Authentication\AuthenticationService();
+                if($auth->hasIdentity()){
+                    $instance->setMoneyModel( new \Application\Model\Money($sm->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id) );
+                }
+                return $instance;
+            },
             'flashMessanger' => function($sm) {
                 $instance = new \Application\View\Helper\FlashMessanger();
                 $instance->setFlashMessanger($sm->getServiceLocator() 
