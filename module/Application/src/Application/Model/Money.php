@@ -54,7 +54,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
                     'date' => 'date',
                 ))
                 ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
-                ->group('Money.date');
+                ->group('Money.date')->group('c.id');
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         return $data;
     }
