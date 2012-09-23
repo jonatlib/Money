@@ -9,7 +9,7 @@ class User extends \Zend\View\Helper\AbstractHelper{
     public function __invoke() {
         list($mail, $domain) = explode('@', $this->auth->getIdentity()->email);
         $name = $this->auth->getIdentity()->name . ' ' . $this->auth->getIdentity()->lastName;
-        return (strlen($name) > 0) ? $name : $mail;
+        return (strlen(trim($name)) > 0) ? $name : ucfirst($mail);
     }
     
     public function __construct() {
