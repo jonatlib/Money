@@ -47,10 +47,13 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     public function getDayMoneySummary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
+        
+        $where1 = new Db\Sql\Where();
+        $where1->lessThanOrEqualTo('Money.value', 0);
 
         $select = $this->getSql()->select();
-        $select->where($where)->columns(array(
-                    'value' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+        $select->where($where)->where($where1)->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
                 ))
                 ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
