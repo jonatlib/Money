@@ -36,19 +36,19 @@ return array(
             'mail-adapter' => '\Zend\Mail\Transport\Sendmail',
         ),
         'factories' => array(
-            'translator' => function($sm){
+            'translator' => function($sm) {
                 $factory = new \Application\Library\I18n\Translator\TranslatorServiceFactory();
                 $instance = $factory->createService($sm);
-                
+
                 $log = new \Zend\Log\Logger();
-                $log->addWriter( new \Zend\Log\Writer\Stream( __DIR__ . '/../log/translator.log' ) );
-                
+                $log->addWriter(new \Zend\Log\Writer\Stream(__DIR__ . '/../log/translator.log'));
+
 //                $message = new \Zend\Mail\Message();
 //                $message->setTo('jonat.libor@gmail.com');
 //                $message->setFrom('no-replay@no-money.cz');
 //                $message->setSubject('No-Money: Error log');
 //                $log->addWriter( new \Zend\Log\Writer\Mail( $message, $sm->get('mail-adapter') ) );
-                
+
                 $instance->setLog($log);
                 return $instance;
             },
@@ -58,7 +58,7 @@ return array(
                 $dbAdapter = new \Zend\Db\Adapter\Adapter($config);
                 return $dbAdapter;
             },
-            'mail' => function($sm){
+            'mail' => function($sm) {
                 $adapter = $sm->get('db-adapter');
                 $mailadapter = $sm->get('mail-adapter');
                 return new \Application\Model\Email('no-replay@no-money.cz', 'No-Money: ', $mailadapter, $adapter, $sm->get('translator'));
@@ -98,6 +98,15 @@ return array(
             'user' => 'Application\View\Helper\User',
             'addMoney' => 'Application\View\Helper\AddMoney',
             'formSelect' => 'Application\Library\Form\View\Helper\FormSelect'
+        ),
+        'factories' => array(
+            'flashMessanger' => function($sm) {
+                $instance = new \Application\View\Helper\FlashMessanger();
+                $instance->setFlashMessanger($sm->getServiceLocator() 
+                             ->get('ControllerPluginManager') 
+                             ->get('flashMessenger'));
+                return $instance;
+            },
         )
     ),
     'view_manager' => array(

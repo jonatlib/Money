@@ -27,6 +27,7 @@
         <div><?php echo $this->formElement($this->passwordForm->get('passwordtwo')); ?></div>
         <div><?php echo $this->formElementErrors($this->passwordForm->get('passwordtwo')); ?></div>
     </div>
+    <?php echo $this->formElement($this->passwordForm->get('formname')); ?>
     <div><?php echo $this->formElement($this->passwordForm->get('submit')); ?></div>
     <?php echo $this->form()->closeTag($this->passwordForm); ?>
     <hr/>

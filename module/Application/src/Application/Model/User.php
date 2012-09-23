@@ -11,6 +11,10 @@ class User extends \Zend\Db\TableGateway\TableGateway {
         return self::$STATIC_SALT;
     }
     
+    protected function getPasswordHash($password, $salt){
+        return sha1($password . $salt . self::$STATIC_SALT);
+    }
+    
     public function getUser($id){
         $users = $this->select(array('id' => $id));
         if($users->count() < 1){
@@ -25,7 +29,7 @@ class User extends \Zend\Db\TableGateway\TableGateway {
         $row->name = $data['name'];
         $row->lastName = $data['lastName'];
         $row->salt = $salt = sha1( rand(0, time()) );
-        $row->password = sha1($data['password'] . $salt . self::$STATIC_SALT);
+        $row->password = $this->getPasswordHash($data['password'], $salt);
         $row->deleted = 0;
         $row->register = new Db\Sql\Expression('NOW()');
         $row->role = 'user';
@@ -39,8 +43,14 @@ class User extends \Zend\Db\TableGateway\TableGateway {
         }
         $user = $users->current();
         $user->salt = $salt = sha1( rand(0, time()) );
-        $user->password = sha1($password . $salt . self::$STATIC_SALT);
+        $user->password = $this->getPasswordHash($password, $salt);
         return $user->save();
+    }
+    
+    public function setPasswordOld($id, $old, $password){
+        if( ($user = $this->getUser($id)) === false ) return false;
+        if( $user->password != $this->getPasswordHash($old, $user->salt) ) return false;
+        return $this->setPassword($id, $password);
     }
     
     public function __construct($adapter) {

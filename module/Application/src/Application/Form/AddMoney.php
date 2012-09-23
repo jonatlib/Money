@@ -16,7 +16,7 @@ class AddMoney extends Protect {
             'options' => array(
                 'required' => true,
                 'validators' => array(
-                    '\Zend\Validator\Int' => array()
+                    '\Zend\Validator\Regex' => array('pattern' => '/^(\-)?[0-9]+([\,\.][0-9]+)?$/')
                 )
             ),
             'attributes' => array(

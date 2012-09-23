@@ -12,6 +12,7 @@ class Protect extends Form {
      */
     private $session;
     private $set = false;
+
     /**
      * @var \Zend\Authentication\AuthenticationService
      */
@@ -35,9 +36,10 @@ class Protect extends Form {
     public function addCaptcha($force = false) {
         static $added = false;
         $added = ( (false | ( defined('DEBUG') && DEBUG )) && !$force );
-        
-        if( ($added || $this->auth->hasIdentity()) ) return;
-        
+
+        if (($added || $this->auth->hasIdentity()))
+            return;
+
         $element = new Element\Captcha('captcha');
         $adapter = new \Zend\Captcha\ReCaptcha();
         $adapter->setPubkey('6LefWNYSAAAAAMtcdir9eBe97thnOHW0mmo4EQYC');
@@ -45,7 +47,7 @@ class Protect extends Form {
         $adapter->setOption('theme', 'white');
         $element->setCaptcha($adapter);
         $this->add($element, array('priority' => -1));
-        
+
         $added = true;
     }
 
@@ -75,13 +77,46 @@ class Protect extends Form {
             $validator->setSalt(get_called_class() . $this->session->salt);
         }
         $this->add($element, array('priority' => -1000));
+
+        $name = $this->getName();
+        if (!empty($name)) {
+            $this->add(array(
+                'type' => '\Zend\Form\Element\Hidden',
+                'name' => 'formname',
+                'options' => array(
+                    'required' => false,
+                ),
+                'attributes' => array(
+                    'value' => $name
+                )
+            ));
+        }
+    }
+
+    public function isThisSubmited($submitedName = null) {
+        $name = $this->getName();
+        if (empty($name))
+            return true;
+        if (!is_null($submitedName)) {
+            if (is_array($submitedName)) {
+                if (isset($submitedName['formname'])) {
+                    return ($name == $submitedName['formname']);
+                }
+                return true;
+            }
+            return false;
+        }
+        if ($this->has('formname')) {
+            return ($name == $this->get('formname')->getValue());
+        }
+        return true;
     }
 
     public function prepare() {
         parent::prepare();
         foreach ($this->getIterator() as $element) {
             $required = ($element->getOption('required')) ? true : false;
-            if($required){
+            if ($required) {
                 /* @var $element \Zend\Form\Element */
                 $class = $element->getAttribute('class');
                 $class .= ( empty($class) ? 'required' : ' required' );
@@ -89,15 +124,15 @@ class Protect extends Form {
             }
         }
     }
-    
+
     private function initFilter() {
         ////// ZF1 like
         $filter = new \Zend\InputFilter\BaseInputFilter();
         foreach ($this->getIterator() as $element) {
             $e = new \Zend\InputFilter\Input($element->getName());
-            
+
             $required = ($element->getOption('required')) ? true : false;
-            $e->setRequired( $required );
+            $e->setRequired($required);
 
             $validators = new \Zend\Validator\ValidatorChain();
             if (!is_null($element->getOption('validators'))) {
@@ -126,6 +161,9 @@ class Protect extends Form {
 
     public function isValid() {
         $this->initFilter();
+        if (!$this->isThisSubmited($this->data)) {
+            return false;
+        }
         return parent::isValid();
     }
 
