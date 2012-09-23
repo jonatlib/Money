@@ -5,36 +5,50 @@
 <div class="content">
     <h3><?php echo $this->user(); ?></h3>
     <hr/>
-    
-    <h4><?php echo $this->translate('Change personal info'); ?></h4>
-    
-    <hr/>
-    
-    <h4><?php echo $this->translate('Change password'); ?></h4>
-    <?php echo $this->form()->openTag($this->passwordForm); ?>
-    <div>
-        <div><?php echo $this->formLabel($this->passwordForm->get('oldpassword')); ?></div>
-        <div><?php echo $this->formElement($this->passwordForm->get('oldpassword')); ?></div>
-        <div><?php echo $this->formElementErrors($this->passwordForm->get('oldpassword')); ?></div>
+    <div class="bs-docs-example">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#profile-personal" data-toggle="tab"><?php echo $this->translate('Change personal info'); ?></a></li>
+            <li><a href="#profile-password" data-toggle="tab"><?php echo $this->translate('Change password'); ?></a></li>
+            <li><a href="#profile-email" data-toggle="tab"><?php echo $this->translate('Change email'); ?></a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="profile-personal">
+                <h4><?php echo $this->translate('Change personal info'); ?></h4>
+            </div>
+            <div class="tab-pane fade" id="profile-password">
+                <h4><?php echo $this->translate('Change password'); ?></h4>
+                <?php echo $this->form()->openTag($this->passwordForm); ?>
+                <div>
+                    <div><?php echo $this->formLabel($this->passwordForm->get('oldpassword')); ?></div>
+                    <div><?php echo $this->formElement($this->passwordForm->get('oldpassword')); ?></div>
+                    <div><?php echo $this->formElementErrors($this->passwordForm->get('oldpassword')); ?></div>
+                </div>
+                <div>
+                    <div><?php echo $this->formLabel($this->passwordForm->get('password')); ?></div>
+                    <div><?php echo $this->formElement($this->passwordForm->get('password')); ?></div>
+                    <div><?php echo $this->formElementErrors($this->passwordForm->get('password')); ?></div>
+                </div>
+                <div>
+                    <div><?php echo $this->formLabel($this->passwordForm->get('passwordtwo')); ?></div>
+                    <div><?php echo $this->formElement($this->passwordForm->get('passwordtwo')); ?></div>
+                    <div><?php echo $this->formElementErrors($this->passwordForm->get('passwordtwo')); ?></div>
+                </div>
+                <?php echo $this->formElement($this->passwordForm->get('formname')); ?>
+                <?php echo $this->formHidden($this->passwordForm->get('csrf')) . PHP_EOL; ?>
+                <?php echo $this->formElementErrors($this->passwordForm->get('csrf')) . PHP_EOL; ?>
+
+                <div><?php echo $this->formElement($this->passwordForm->get('submit')); ?></div>
+                <?php echo $this->form()->closeTag($this->passwordForm); ?>
+            </div>
+            <div class="tab-pane fade" id="profile-email">
+                <h4><?php echo $this->translate('Change email'); ?></h4>
+            </div>
+        </div>
     </div>
-    <div>
-        <div><?php echo $this->formLabel($this->passwordForm->get('password')); ?></div>
-        <div><?php echo $this->formElement($this->passwordForm->get('password')); ?></div>
-        <div><?php echo $this->formElementErrors($this->passwordForm->get('password')); ?></div>
-    </div>
-    <div>
-        <div><?php echo $this->formLabel($this->passwordForm->get('passwordtwo')); ?></div>
-        <div><?php echo $this->formElement($this->passwordForm->get('passwordtwo')); ?></div>
-        <div><?php echo $this->formElementErrors($this->passwordForm->get('passwordtwo')); ?></div>
-    </div>
-    <?php echo $this->formElement($this->passwordForm->get('formname')); ?>
-    <?php echo $this->formHidden($this->form->get('csrf')) . PHP_EOL; ?>
-    <?php echo $this->formElementErrors($this->form->get('csrf')) . PHP_EOL; ?>
-    <div><?php echo $this->formElement($this->passwordForm->get('submit')); ?></div>
-    <?php echo $this->form()->closeTag($this->passwordForm); ?>
     <hr/>
-    
-    <h4><?php echo $this->translate('Change email'); ?></h4>
-    
-    <hr/>
+    <script>
+        $(function () {
+//            $('#myTab a:last').tab('show');
+        })
+    </script>
 </div>

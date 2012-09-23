@@ -85,6 +85,13 @@ return array(
                 $em->attach('Application\Controller\AuthController', 'dispatch', array($instance, 'init'), 1000);
                 return $instance;
             },
+            'Application\Controller\Ajax' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                /* @var $em Zend\EventManager\SharedEventManager */
+                $em = $cm->getServiceLocator()->get('SharedEventManager');
+                $instance = new Application\Controller\AjaxController();
+                $em->attach('Application\Controller\AjaxController', 'dispatch', array($instance, 'init'), 1000);
+                return $instance;
+            },
         )
     ),
     'view_helpers' => array(
@@ -94,19 +101,19 @@ return array(
             'formSelect' => 'Application\Library\Form\View\Helper\FormSelect'
         ),
         'factories' => array(
-            'addMoney' => function($sm){
+            'addMoney' => function($sm) {
                 $instance = new \Application\View\Helper\AddMoney();
                 $auth = new \Zend\Authentication\AuthenticationService();
-                if($auth->hasIdentity()){
-                    $instance->setMoneyModel( new \Application\Model\Money($sm->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id) );
+                if ($auth->hasIdentity()) {
+                    $instance->setMoneyModel(new \Application\Model\Money($sm->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id));
                 }
                 return $instance;
             },
             'flashMessanger' => function($sm) {
                 $instance = new \Application\View\Helper\FlashMessanger();
-                $instance->setFlashMessanger($sm->getServiceLocator() 
-                             ->get('ControllerPluginManager') 
-                             ->get('flashMessenger'));
+                $instance->setFlashMessanger($sm->getServiceLocator()
+                                ->get('ControllerPluginManager')
+                                ->get('flashMessenger'));
                 return $instance;
             },
         )
@@ -126,6 +133,9 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+        'strategies' => array(
+            'ViewJsonStrategy',
         ),
     ),
 );

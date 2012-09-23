@@ -101,6 +101,4 @@ $(function(){
     scrollSideBar();
     setTimeout(cleanAlerts, 3000);
     initDropDown();
-    
-    
 });

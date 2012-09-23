@@ -1,6 +1,8 @@
 <?php echo $this->doctype(); ?>
 <html lang="cs" class="no-js">
     <head>
+        <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+        
         <meta charset=utf-8>
         <?php echo $this->headTitle('Money')->setSeparator(' - ')->setAutoEscape(false); ?>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -37,9 +39,10 @@
         <script type="text/javascript" src="<?php echo $this->public('/layout/datepicker/js/datepicker.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->public('/layout/datepicker/js/eye.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->public('/layout/datepicker/js/utils.js'); ?>"></script>
-
+        
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/forms.js'); ?>"></script>
         <script type="text/javascript" src="<?php echo $this->public('/layout/js/application.js'); ?>"></script>
+        <script type="text/javascript" src="<?php echo $this->public('/layout/js/charts.js'); ?>"></script>
     </head>
     <body>
         <!--   IE not suported     -->

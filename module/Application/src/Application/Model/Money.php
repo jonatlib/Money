@@ -44,6 +44,21 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return $data;
     }
 
+    public function getDayMoneySummary() {
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
+
+        $select = $this->getSql()->select();
+        $select->where($where)->columns(array(
+                    'value' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                    'date' => 'date',
+                ))
+                ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
+                ->group('Money.date');
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        return $data;
+    }
+
     public function __construct($adapter, $userId) {
         parent::__construct('Money', $adapter, new \Zend\Db\TableGateway\Feature\RowGatewayFeature('id'));
         $this->userId = $userId;
