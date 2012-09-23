@@ -1,4 +1,5 @@
 <?php $this->form = $this->addMoney(); ?>
+<?php if($this->form instanceof Zend\Form\Form): ?>
 <div class="content" id="addMoney">
     <?php echo $this->form()->openTag($this->form) . PHP_EOL; ?>
     
@@ -11,3 +12,9 @@
     <?php echo $this->formHidden($this->form->get('csrf')); ?>
     <?php echo $this->form()->closeTag(); ?>
 </div>
+<?php else: ?>
+<div class="content" id="addMoney">
+    <?php echo $this->translate('You dont have any category. Please create one. :'); ?>
+    <a href="<?php echo $this->url('application/default', array('controller' => 'category', 'action' => 'create')); ?>"><?php echo $this->translate('Create'); ?></a>
+</div>
+<?php endif; ?>

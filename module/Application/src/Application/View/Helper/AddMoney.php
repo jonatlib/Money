@@ -16,7 +16,9 @@ class AddMoney extends \Zend\View\Helper\AbstractHelper {
     public function __invoke() {
         if (is_null($this->model))
             return;
-        return new \Application\Form\AddMoney($this->model->getCategories(),
+        $category = $this->model->getCategories();
+        if(empty($category)) return null;
+        return new \Application\Form\AddMoney($category,
                         $this->view->url('application/default', array('controller' => 'money', 'action' => 'add')));
     }
 

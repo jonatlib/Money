@@ -74,6 +74,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Money' => 'Application\Controller\MoneyController',
             'Application\Controller\User' => 'Application\Controller\UserController',
+            'Application\Controller\Category' => 'Application\Controller\CategoryController',
 //            'Application\Controller\Auth' => 'Application\Controller\AuthController'
         ),
         'factories' => array(

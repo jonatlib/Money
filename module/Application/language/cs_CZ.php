@@ -70,9 +70,18 @@ return array(
     'A 404 error occurred' => '404 Stránka nenalezena.',
     'The requested URL could not be matched by routing.' => 'Požadovaná adresa nemohla být nalezena.',
     
+    'You dont have any category. Please create one. :' => 'Nemáte vytvořenou ',
+    'Create' => 'Vytvořit',
+    'Category created.' => 'Kategorie vytvořena',
+    'Create category' => 'Vytvořit kategorii',
+    
 //    '' => '',
 //    '' => '',
 //    '' => '',
 //    '' => '',
 //    '' => '',
+//    '' => '',
+//    '' => '',
+//    '' => '',
+    '' => '',
 );

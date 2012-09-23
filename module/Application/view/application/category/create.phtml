@@ -1,0 +1,15 @@
+<div class="content">
+    <h1><?php echo $this->translate('Create category'); ?></h1>
+</div>
+
+<div class="content">
+    <?php echo $this->form()->openTag($this->form); ?>
+    <div>
+        <div><?php echo $this->formLabel($this->form->get('title')); ?></div>
+        <div><?php echo $this->formElement($this->form->get('title')); ?></div>
+        <div><?php echo $this->formElementErrors($this->form->get('title')); ?></div>
+    </div>
+    <?php echo $this->formElement($this->form->get('csrf')); ?>
+    <div><?php echo $this->formElement($this->form->get('add')); ?></div>
+    <?php echo $this->form()->closeTag($this->form); ?>
+</div>
