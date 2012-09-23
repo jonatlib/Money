@@ -12,7 +12,7 @@ class Module {
     public function init() {
         $events = StaticEventManager::getInstance();
         //Plugins
-        $events->attach('Zend\Mvc\Application', \Zend\Mvc\MvcEvent::EVENT_ROUTE, array($this, 'pluginLastPage'), 0);
+        $events->attach('Zend\Mvc\Application', \Zend\Mvc\MvcEvent::EVENT_ROUTE, array($this, 'pluginLastPage'), 1);
         $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'pluginAuth'), 100);
         $events->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'pluginAuthError'), 100);
         $events->attach('Zend\View\View', 'response', array($this, 'pluginSession'), 100);
@@ -83,7 +83,8 @@ class Module {
     ///////////////////////////////////////////////////////////////////////////
     
     public function pluginLastPage(\Zend\Mvc\MvcEvent $e){
-        $this->lastRouteMatch = $e->getRouteMatch();
+        $this->lastRouteMatch = clone $e->getRouteMatch();
+        $this->lastRouteMatch->setParam('controller', $this->lastRouteMatch->getParam('__CONTROLLER__'));
     }
     
     public function pluginSession(\Zend\View\ViewEvent $e) {
