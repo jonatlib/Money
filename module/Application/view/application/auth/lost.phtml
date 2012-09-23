@@ -16,6 +16,8 @@
             </div>
         </div>
     </fieldset>
+    <?php echo $this->formHidden($this->form->get('csrf')) . PHP_EOL; ?>
+    <?php echo $this->formElementErrors($this->form->get('csrf')) . PHP_EOL; ?>
     <div class="buttons">
         <?php echo $this->formElement($this->form->get('submit')); ?>
         <?php echo $this->formElement($this->form->get('reset')); ?>

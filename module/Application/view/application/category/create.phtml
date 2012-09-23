@@ -9,7 +9,8 @@
         <div><?php echo $this->formElement($this->form->get('title')); ?></div>
         <div><?php echo $this->formElementErrors($this->form->get('title')); ?></div>
     </div>
-    <?php echo $this->formElement($this->form->get('csrf')); ?>
+    <?php echo $this->formHidden($this->form->get('csrf')) . PHP_EOL; ?>
+    <?php echo $this->formElementErrors($this->form->get('csrf')) . PHP_EOL; ?>
     <div><?php echo $this->formElement($this->form->get('add')); ?></div>
     <?php echo $this->form()->closeTag($this->form); ?>
 </div>
