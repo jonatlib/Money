@@ -69,14 +69,12 @@ return array(
     'Money has to be number. And title have to be set.' => 'Peníze musí být číslo. A titulek musí být vyplněn.',
     'A 404 error occurred' => '404 Stránka nenalezena.',
     'The requested URL could not be matched by routing.' => 'Požadovaná adresa nemohla být nalezena.',
-    
     'You dont have any category. Please create one. :' => 'Nemáte vytvořenou kategorii. Vytvořte prosím jednu. :',
     'Create' => 'Vytvořit',
     'Category created.' => 'Kategorie vytvořena',
     'Create category' => 'Vytvořit kategorii',
-    
-//    '' => '',
-//    '' => '',
+    'Money was successfully deleted.' => 'Peníze byli úspěšně odstraněny.',
+    'Delete' => 'Smazat',
 //    '' => '',
 //    '' => '',
 //    '' => '',
