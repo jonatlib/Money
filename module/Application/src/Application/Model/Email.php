@@ -79,8 +79,15 @@ class Email {
         $message->setSender($from);
         $message->setSubject($subject);
         $message->setBody($body);
-
-        return $this->mail->send($message);
+        
+        try{
+            return $this->mail->send($message);
+        }catch(\Zend\Mail\Exception\RuntimeException $e) {
+            if(defined('DEBUG') && DEBUG){
+                return;
+            }
+            throw $e;
+        }
     }
 
     public function __construct($from, $subject, \Zend\Mail\Transport\TransportInterface $mail, $adapter, $translator) {

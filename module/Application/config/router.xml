@@ -22,6 +22,25 @@
         </options>
     </settings>
     
+    <money type="Literal">
+        <options>
+            <route>/money</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="lost" />
+        </options>
+        <may_terminate>1</may_terminate>
+        <child_routes>
+            <delete type="Segment">
+                <options>
+                    <route>/delete/:id</route>
+                    <constraints>
+                        <id>[a-zA-Z0-9]+</id>
+                    </constraints>
+                    <defaults __NAMESPACE__="Application\Controller" controller="Money" action="delete" />
+                </options>
+            </delete>
+        </child_routes>
+    </money>
+    
     <lostpassword type="Literal">
         <options>
             <route>/lostpassword</route>

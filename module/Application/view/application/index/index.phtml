@@ -10,6 +10,11 @@
         <div class="cleaner"></div>
         <div class="category"><?php echo $money->categName ?> <span><?php echo $money->subcategName ?></span></div>
         <div class="value <?php echo ($money->value < 0) ? 'less' : 'more'; ?>"><?php echo $money->value; ?></div>
+        <div class="delete">
+            <a class="confirm" href="<?php echo $this->url('money/delete', array('id' => $money->id)); ?>">
+                <?php echo $this->translate('Delete'); ?>
+            </a>
+        </div>
     </div>
     <?php endforeach; ?>
 </div>

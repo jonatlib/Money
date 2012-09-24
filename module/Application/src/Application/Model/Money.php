@@ -17,6 +17,10 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return array('empty');
     }
 
+    public function deleteMoney($id){
+        return $this->delete(array('id' => $id));
+    }
+    
     public function addMoney($data) {
         $row = new Db\RowGateway\RowGateway('id', $this->getTable(), $this->getAdapter());
         $row->category = $data['group'];

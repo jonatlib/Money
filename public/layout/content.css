@@ -43,6 +43,10 @@ div#showMoney div.money.more { background: #dff0d8; }
 div#showMoney div.money h4 { float: left; font-size: 16px; }
 div#showMoney div.money div.date { float: right; }
 div#showMoney div.money div.category { color: #888; }
+div#showMoney div.money div.delete { float: right; }
+div#showMoney div.money div.delete a,
+div#showMoney div.money div.delete a:visited,
+div#showMoney div.money div.delete a:active { color: #888; }
 div#showMoney div.money div.value { margin: -20px 0 0 0; text-align: center; font-size: 18px; font-weight: bold; }
 div#showMoney div.money div.value.less { color: #855; }
 div#showMoney div.money div.value.more { color: #585; }
