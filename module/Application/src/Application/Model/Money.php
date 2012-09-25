@@ -54,9 +54,10 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         
         $where1 = new Db\Sql\Where();
         $where1->lessThanOrEqualTo('Money.value', 0);
-
+        
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->columns(array(
+        $select->where($where)->where($where1)->where('`Money`.`date` <= DATE(NOW()) AND `Money`.`date` > DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH))')
+                ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
                 ))
@@ -68,7 +69,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
 
     public function __construct($adapter, $userId) {
         parent::__construct('Money', $adapter, new \Zend\Db\TableGateway\Feature\RowGatewayFeature('id'));
-        $this->userId = $userId;
+        $this->userId = (int) $userId;
     }
 
 }
