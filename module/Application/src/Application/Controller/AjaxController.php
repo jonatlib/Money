@@ -17,7 +17,7 @@ class AjaxController extends AbstractActionController {
         $view = new JsonModel();
         $model = new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $this->userId);
         
-        $view->data = $model->getDayMoneySummary();
+        $view->data = $model->getMonthCategorySummary();
         
         return $view;
     }

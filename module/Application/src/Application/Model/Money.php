@@ -35,7 +35,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         }
     }
 
-    public function getMoneys() {
+    public function getMoneys($start = null, $stop = null) {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
 
@@ -48,7 +48,19 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return $data;
     }
 
-    public function getDayMoneySummary() {
+    public function getMonthEarningSummary($start = null, $stop = null){
+        
+    }
+    
+    public function getMonthSpendingSummary($start = null, $stop = null){
+        
+    }
+    
+    public function getMonthSumary($start = null, $stop = null){
+        
+    }
+    
+    public function getMonthCategorySummary($start = null, $stop = null) {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
         
