@@ -56,7 +56,8 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where('`Money`.`date` = DATE(NOW())')->columns(array(
+        $select->where($where)->where($where1)->where('`Money`.`date` >= DATE(NOW()) AND `Money`.`date` < DATE(DATE_ADD(NOW(), INTERVAL 1 MONTH))')
+                ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
                 ))
