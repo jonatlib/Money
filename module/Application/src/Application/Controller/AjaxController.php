@@ -12,19 +12,39 @@ class AjaxController extends AbstractActionController {
      */
     protected $auth;
     protected $userId;
+    /**
+     * @var \Application\Model\Money
+     */
+    protected $model;
     
     public function indexAction() {
         $view = new JsonModel();
-        $model = new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $this->userId);
-        
-        $view->data = $model->getMonthCategorySummary();
-        
+        $view->data = $this->model->getMonthCategorySummary();
+        return $view;
+    }
+    
+    public function summaryAction(){
+        $view = new JsonModel();
+        $view->data = $this->model->getMonthSumary();
+        return $view;
+    }
+    
+    public function spendingAction(){
+        $view = new JsonModel();
+        $view->data = $this->model->getMonthSpending();
+        return $view;
+    }
+    
+    public function earningAction(){
+        $view = new JsonModel();
+        $view->data = $this->model->getMonthEarning();
         return $view;
     }
     
     public function init(){
         $this->auth = new \Zend\Authentication\AuthenticationService();
         $this->userId = $this->auth->getIdentity()->id;
+        $this->model = new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $this->userId);
     }
 
 }
