@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* Date picker */
-div#widgetCalendar { position: absolute; border: 1px solid #bbb; display: none; }
+div#widgetCalendar { position: absolute; border: 1px solid #bbb; display: none; z-index: 1000; }
 
 div#widgetCalendar, div.datepicker, div.datepicker > div { background-image: none; background: #f5f5f5; }
 
@@ -50,3 +50,8 @@ div#showMoney div.money div.delete a:active { color: #888; }
 div#showMoney div.money div.value { margin: -20px 0 0 0; text-align: center; font-size: 18px; font-weight: bold; }
 div#showMoney div.money div.value.less { color: #855; }
 div#showMoney div.money div.value.more { color: #585; }
+
+/* Side money summary */
+div#side_summary {  }
+div#side_summary div#side_summary_overall { text-align: center; font-size: 22px; }
+div#side_summary div#side_summary_both { text-align: center; font-size: 12px; }

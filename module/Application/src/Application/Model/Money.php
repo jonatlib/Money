@@ -7,8 +7,9 @@ use Zend\Db;
 class Money extends \Zend\Db\TableGateway\TableGateway {
 
     protected $userId = null;
+    protected $start, $stop;
 
-    protected function getDateWhere($start = null, $stop = null){
+    protected function getDateWhere(){
         return '`Money`.`date` <= DATE(NOW()) AND `Money`.`date` > DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH))';
     }
     
@@ -39,7 +40,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         }
     }
 
-    public function getMoneys($start = null, $stop = null) {
+    public function getMoneys() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
 
@@ -52,19 +53,25 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return $data;
     }
 
-    public function getMonthSpending($start = null, $stop = null){
+    public function getMonthSpending(){
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
         
+        $where1 = new Db\Sql\Where();
+        $where1->lessThanOrEqualTo('Money.value', 0);
+        
+        $select = $this->getSql()->select();
+        $select->where($where)->where($where1)->where($this->getDateWhere())
+                ->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                    'date' => 'date',
+                ))
+                ->group('date');
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        return $data;
     }
     
-    public function getMonthEarning($start = null, $stop = null){
-        
-    }
-    
-    public function getMonthMoney($start = null, $stop = null){
-        
-    }
-    
-    public function getMonthEarningSummary($start = null, $stop = null){
+    public function getMonthEarning(){
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
         
@@ -72,7 +79,40 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->greaterThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere($start, $stop))
+        $select->where($where)->where($where1)->where($this->getDateWhere())
+                ->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                    'date' => 'date',
+                ))
+                ->group('date');
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        return $data;
+    }
+    
+    public function getMonthMoney(){
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
+        
+        $select = $this->getSql()->select();
+        $select->where($where)->where($this->getDateWhere())
+                ->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                    'date' => 'date',
+                ))
+                ->group('date');
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        return $data;
+    }
+    
+    public function getMonthEarningSummary(){
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
+        
+        $where1 = new Db\Sql\Where();
+        $where1->greaterThanOrEqualTo('Money.value', 0);
+        
+        $select = $this->getSql()->select();
+        $select->where($where)->where($where1)->where($this->getDateWhere())
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
@@ -83,7 +123,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return (int) $data->sumary;
     }
     
-    public function getMonthSpendingSummary($start = null, $stop = null){
+    public function getMonthSpendingSummary(){
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
         
@@ -91,7 +131,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere($start, $stop))
+        $select->where($where)->where($where1)->where($this->getDateWhere())
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
@@ -102,12 +142,12 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return (int) $data->sumary;
     }
     
-    public function getMonthSumary($start = null, $stop = null){
+    public function getMonthSumary(){
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($this->getDateWhere($start, $stop))
+        $select->where($where)->where($this->getDateWhere())
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
@@ -118,7 +158,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return (int) $data->sumary;
     }
     
-    public function getMonthCategorySummary($start = null, $stop = null) {
+    public function getMonthCategorySummary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
         
@@ -126,7 +166,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere($start, $stop))
+        $select->where($where)->where($where1)->where($this->getDateWhere())
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
@@ -137,7 +177,9 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return $data;
     }
 
-    public function __construct($adapter, $userId) {
+    public function __construct($adapter, $userId, $start = null, $stop = null) {
+        $this->start = $start;
+        $this->stop = $stop;
         parent::__construct('Money', $adapter, new \Zend\Db\TableGateway\Feature\RowGatewayFeature('id'));
         $this->userId = (int) $userId;
     }

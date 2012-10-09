@@ -109,6 +109,14 @@ return array(
                 }
                 return $instance;
             },
+            'money' => function($sm) {
+                $instance = new \Application\View\Helper\Money();
+                $auth = new \Zend\Authentication\AuthenticationService();
+                if ($auth->hasIdentity()) {
+                    $instance->setMoneyModel(new \Application\Model\Money($sm->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id));
+                }
+                return $instance;
+            },
             'flashMessanger' => function($sm) {
                 $instance = new \Application\View\Helper\FlashMessanger();
                 $instance->setFlashMessanger($sm->getServiceLocator()

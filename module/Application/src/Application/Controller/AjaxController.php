@@ -29,6 +29,12 @@ class AjaxController extends AbstractActionController {
         return $view;
     }
     
+    public function moneyAction(){
+        $view = new JsonModel();
+        $view->data = $this->model->getMonthMoney();
+        return $view;
+    }
+    
     public function spendingAction(){
         $view = new JsonModel();
         $view->data = $this->model->getMonthSpending();

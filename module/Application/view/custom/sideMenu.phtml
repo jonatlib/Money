@@ -7,9 +7,20 @@
     </div>
 </div>
 
+<div class="content attach" id="side_summary">
+    <h4><?php echo $this->translate('Summary'); ?></h4>
+    <div id="side_summary_overall"><?php echo $this->money()->getMonthSumary(); ?></div>
+    <div id="side_summary_both">
+        <span><?php echo $this->money()->getMonthSpendingSummary(); ?></span>
+        <span>/</span>
+        <span><?php echo $this->money()->getMonthEarningSummary(); ?></span>
+    </div>
+</div>
+
 <div class="content">
     <div id="chart_div"></div>
 </div>
+
 <!--<div class="content">
     <ul class="nav nav-list">
         <li class="nav-header">List of Modules</li>
