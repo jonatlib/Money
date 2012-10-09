@@ -158,6 +158,22 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return (int) $data->sumary;
     }
     
+    public function getSumary(){
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
+        
+        $select = $this->getSql()->select();
+        $select->where($where)
+                ->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                ));
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE)->current();
+        if(empty($data)){
+            return 0;
+        }
+        return (int) $data->sumary;
+    }
+    
     public function getMonthCategorySummary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
