@@ -17,7 +17,8 @@ function spendingChart(){
     dchart.addColumn('number', 'Summary');
     var options = {
         'title':'Money spend by this month.',
-        'height':300
+        'height':300,
+        'pointSize' : 3
     };
 
     $.ajax({
@@ -47,7 +48,8 @@ function spendingCategoryChart(){
 //    dchart.addColumn('number', 'Slices');
     var options = {
         'title':'Money spend by this month.',
-        'height':300
+        'height':400,
+        'isStacked': true
     };
 
     var dchart = null;
@@ -67,7 +69,7 @@ function spendingCategoryChart(){
         }
     });
 
-    var chart = new google.visualization.LineChart(document.getElementById('chart_spending_category'));
+    var chart = new google.visualization.ColumnChart(document.getElementById('chart_spending_category'));
     $(window).resize(function(){
         chart.draw(dchart, options);
     });
