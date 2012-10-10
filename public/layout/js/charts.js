@@ -25,11 +25,12 @@ function spendingChart(){
         method: 'get',
         success: function(data){
             if(data['data'] == undefined) return;
-            dchart = google.visualization.arrayToDataTable(data['data']);
-//            var rows = [];
-//            $.each(data['data'], function(k, v){
+            var rows = [];
+            $.each(data['data'], function(k, v){
 //                rows.push([ v['date'], Math.abs(v['sumary']) ]);
-//            });
+                rows.push(v);
+            });
+            dchart = google.visualization.arrayToDataTable(rows);
 //            dchart.addRows(rows);
             chart.draw(dchart, options);
         }
