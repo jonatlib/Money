@@ -56,6 +56,26 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return $data;
     }
 
+    public function getMonthSpendingByCategory(){
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
+        
+        $where1 = new Db\Sql\Where();
+        $where1->lessThanOrEqualTo('Money.value', 0);
+        
+        $select = $this->getSql()->select();
+        $select->where($where)->where($where1)->where($this->getDateWhere())
+                ->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                    'date' => 'date',
+                ))
+                ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
+                ->group('date')->group('c.id');
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+        
+        return $data;
+    }
+    
     public function getMonthSpending(){
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);

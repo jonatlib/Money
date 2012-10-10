@@ -15,7 +15,7 @@ class IndexController extends AbstractActionController {
     public function indexAction() {
         $view = new ViewModel();
         
-        $model = $this->getModel();
+        $model = $this->getModel();        
         $view->moneys = $model->getMoneys(5);
         
         return $view;

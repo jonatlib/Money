@@ -47,6 +47,12 @@ class AjaxController extends AbstractActionController {
         return $view;
     }
     
+    public function linegraphAction(){
+        $view = new JsonModel();
+        $view->data = $this->model->getMonthSpendingByCategory();
+        return $view;
+    }
+    
     public function init(){
         $this->auth = new \Zend\Authentication\AuthenticationService();
         $this->userId = $this->auth->getIdentity()->id;
