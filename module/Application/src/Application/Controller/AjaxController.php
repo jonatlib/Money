@@ -55,12 +55,8 @@ class AjaxController extends AbstractActionController {
     
     public function linegraphAction(){
         $view = new JsonModel();
-        $data = array('Date' => array('Date', 'Summary'));
+        $data = array('Date' => array('Date'));
         
-        $spending = array();
-        foreach($this->model->getMonthSpending() as $s){
-            $spending[$s['date']] = $s['sumary'];
-        }
         $d = $this->model->getMonthSpendingByCategory()->toArray();
         foreach($d as $val){
             if(!in_array($val['categName'], $data['Date']))
@@ -71,7 +67,6 @@ class AjaxController extends AbstractActionController {
             if(empty($data[$val['date']])){
                 foreach($data['Date'] as $i => $v) $data[$val['date']][$i] = 0;
                 $data[$val['date']][0] = $val['date'];
-                $data[$val['date']][1] = (int) abs($spending[$val['date']]);
             }
             $data[$val['date']][$index] = (int) abs($val['sumary']);
         }
