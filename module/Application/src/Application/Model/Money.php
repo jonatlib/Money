@@ -40,7 +40,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         }
     }
 
-    public function getMoneys() {
+    public function getMoneys($limit = null) {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
 
@@ -49,6 +49,9 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
                 ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
                 ->join(array('s' => 'Subcategory'), 'subcategory = s.id', array('subcategName' => 'name'), Db\Sql\Select::JOIN_LEFT)
                 ->order('Money.date desc, Money.id desc');
+        if(!is_null($limit)){
+            $select->limit($limit);
+        }
         $data = $this->selectWith($select);
         return $data;
     }

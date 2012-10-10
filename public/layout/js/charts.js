@@ -16,7 +16,7 @@ function spendingChart(){
     dchart.addColumn('number', 'Slices');
     var options = {
         'title':'Money spend by this month.',
-        'height':150
+        'height':300
     };
 
     $.ajax({

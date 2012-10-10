@@ -2,10 +2,6 @@
     <h1><?php echo $this->translate('Your money'); ?></h1>
 </div>
 
-<div class="content">
-    <div id="chart_spending"></div>
-</div>
-
 <div class="content" id="showMoney">
     <?php foreach($this->moneys as $money): ?>
     <div class="well money <?php echo ($money->value < 0) ? 'less' : 'more'; ?>">

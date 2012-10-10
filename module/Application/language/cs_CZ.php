@@ -75,11 +75,13 @@ return array(
     'Create category' => 'Vytvořit kategorii',
     'Money was successfully deleted.' => 'Peníze byli úspěšně odstraněny.',
     'Delete' => 'Smazat',
+    
+    'The requested controller was unable to dispatch the request.' => 'Požadovaný controller nebyl nalezen.',
+    'Controller' => 'Controller',
+    'Summary' => 'Shrnutí',
+    'History' => 'Historie',
+
 //    '' => '',
 //    '' => '',
 //    '' => '',
-//    '' => '',
-//    '' => '',
-//    '' => '',
-    '' => '',
 );
