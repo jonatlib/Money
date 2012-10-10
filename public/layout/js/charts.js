@@ -11,24 +11,26 @@ function drawChart() {
 }
 
 function spendingChart(){
-    var dchart = new google.visualization.DataTable();
-    dchart.addColumn('string', 'Topping');
-    dchart.addColumn('number', 'Slices');
+//    var dchart = new google.visualization.DataTable();
+//    dchart.addColumn('string', 'Topping');
+//    dchart.addColumn('number', 'Slices');
     var options = {
         'title':'Money spend by this month.',
         'height':300
     };
 
+    var dchart = null;
     $.ajax({
-        url: baseUrl + 'ajax/spending',
+        url: baseUrl + 'ajax/linegraph',
         method: 'get',
         success: function(data){
             if(data['data'] == undefined) return;
-            var rows = [];
-            $.each(data['data'], function(k, v){
-                rows.push([ v['date'], Math.abs(v['sumary']) ]);
-            });
-            dchart.addRows(rows);
+            dchart = google.visualization.arrayToDataTable(data['data']);
+//            var rows = [];
+//            $.each(data['data'], function(k, v){
+//                rows.push([ v['date'], Math.abs(v['sumary']) ]);
+//            });
+//            dchart.addRows(rows);
             chart.draw(dchart, options);
         }
     });
