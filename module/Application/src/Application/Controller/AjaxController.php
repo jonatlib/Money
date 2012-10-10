@@ -53,7 +53,7 @@ class AjaxController extends AbstractActionController {
         foreach($this->model->getMonthSpendingByCategory() as $val){
             if(!in_array($val['categName'], $data['Date']))
                 $data['Date'][] = $val['categName'];
-            $data[$val['date']][] = $val['value'];
+            $data[$val['date']][] = $val['summary'];
         }
         $view->data = $data;
         return $view;
