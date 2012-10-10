@@ -57,7 +57,7 @@ class AjaxController extends AbstractActionController {
         $view = new JsonModel();
         $data = array('Date' => array());
         
-        $d = $this->model->getMonthSpendingByCategory();
+        $d = $this->model->getMonthSpendingByCategory()->toArray();
         foreach($d as $val){
             if(!in_array($val['categName'], $data['Date']))
                 $data['Date'][] = $val['categName'];
