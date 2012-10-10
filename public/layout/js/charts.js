@@ -11,6 +11,36 @@ function drawChart() {
 }
 
 function spendingChart(){
+    var dchart = new google.visualization.DataTable();
+    dchart.addColumn('string', 'Summary');
+    dchart.addColumn('number', 'Slices');
+    var options = {
+        'title':'Money spend by this month.',
+        'height':300
+    };
+
+    $.ajax({
+        url: baseUrl + 'ajax/spending',
+        method: 'get',
+        success: function(data){
+            if(data['data'] == undefined) return;
+            var rows = [];
+            $.each(data['data'], function(k, v){
+                rows.push([ v['date'], Math.abs(v['sumary']) ]);
+            });
+            dchart.addRows(rows);
+            chart.draw(dchart, options);
+        }
+    });
+
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_spending'));
+    $(window).resize(function(){
+        chart.draw(dchart, options);
+    });
+    chart.draw(dchart, options);
+}
+
+function spendingCategoryChart(){
 //    var dchart = new google.visualization.DataTable();
 //    dchart.addColumn('string', 'Topping');
 //    dchart.addColumn('number', 'Slices');
@@ -36,7 +66,7 @@ function spendingChart(){
         }
     });
 
-    var chart = new google.visualization.AreaChart(document.getElementById('chart_spending'));
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_spending_category'));
     $(window).resize(function(){
         chart.draw(dchart, options);
     });
