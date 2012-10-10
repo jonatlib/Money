@@ -67,7 +67,7 @@ function spendingCategoryChart(){
         }
     });
 
-    var chart = new google.visualization.AreaChart(document.getElementById('chart_spending_category'));
+    var chart = new google.visualization.LineChart(document.getElementById('chart_spending_category'));
     $(window).resize(function(){
         chart.draw(dchart, options);
     });
