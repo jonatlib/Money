@@ -8,12 +8,13 @@ google.setOnLoadCallback(drawChart);
 function drawChart() {
     groupsChart();
     spendingChart();
+    spendingCategoryChart();
 }
 
 function spendingChart(){
     var dchart = new google.visualization.DataTable();
-    dchart.addColumn('string', 'Summary');
-    dchart.addColumn('number', 'Slices');
+    dchart.addColumn('string', 'Date');
+    dchart.addColumn('number', 'Summary');
     var options = {
         'title':'Money spend by this month.',
         'height':300
