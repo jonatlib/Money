@@ -47,6 +47,12 @@ class AjaxController extends AbstractActionController {
         return $view;
     }
     
+    public function spendingcategoryAction(){
+        $view = new JsonModel();
+        $view->data = $this->model->getMonthSpendingByCategory();
+        return $view;
+    }
+    
     public function linegraphAction(){
         $view = new JsonModel();
         $data = array('Date' => array());
