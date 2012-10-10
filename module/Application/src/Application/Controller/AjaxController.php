@@ -64,7 +64,8 @@ class AjaxController extends AbstractActionController {
         }
         foreach($d as $val){
             $index = array_search($val['categName'], $data['Date']);
-            foreach($data['Date'] as $i => $v) $data[$val['date']][$i] = 0;
+            if(empty($data[$val['date']]))
+                foreach($data['Date'] as $i => $v) $data[$val['date']][$i] = 0;
             $data[$val['date']][$index] = $val['sumary'];
         }
         $view->data = $data;
