@@ -92,7 +92,7 @@ function groupsChart(){
         dchart.addColumn('number', 'Summary');
         var rows = [];
         $.each(data, function(k, v){
-            rows.push([ v['date'], Math.abs(v['sumary']) ]);
+            rows.push([ v['categName'], Math.abs(v['sumary']) ]);
         });
         dchart.addRows(rows);
         return dchart;

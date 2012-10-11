@@ -10,7 +10,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     protected $start, $stop;
 
     protected function getDateWhere(){
-        return '`Money`.`date` <= DATE(NOW()) AND `Money`.`date` > DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH))';
+        return '`date` <= DATE(NOW()) AND `date` > DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH))';
     }
     
     public function getCategories() {
@@ -114,15 +114,14 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     
     public function getMonthMoney(){
         $where = new Db\Sql\Where();
-        $where->equalTo('Money.owner', $this->userId);
+        $where->equalTo('Comulative.owner', $this->userId);
         
-        $select = $this->getSql()->select();
+        $select = new Db\Sql\Select('Comulative');
         $select->where($where)->where($this->getDateWhere())
                 ->columns(array(
-                    'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
+                    'sumary' => 'summary',
                     'date' => 'date',
-                ))
-                ->group('date');
+                ));
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         return $data;
     }
