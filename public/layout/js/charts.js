@@ -86,7 +86,7 @@ function spendingCategoryChart(){
 function groupsChart(){
     createChart({
         'title':'Money spend by this month.',
-        'height':150
+        'height':200
     }, 'ajax/index', function(data){
         var dchart = new google.visualization.DataTable();
         dchart.addColumn('string', 'Date');
