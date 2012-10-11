@@ -9,6 +9,7 @@ function createChart(options, url, callbackData, id, chartType){
     $.ajax({
         url: baseUrl + url,
         method: 'get',
+        cache: false,
         success: function(data){
             if(data['data'] == undefined) return;
             var dchart = callbackData(data['data']);
@@ -33,7 +34,7 @@ function summaryChart(){
     createChart({
         'title':'Money summary for last 30 days.',
         'height':300,
-        'pointSize' : 3,
+        'pointSize' : 3
     }, 'ajax/money', function(data){
         var dchart = new google.visualization.DataTable();
         dchart.addColumn('string', 'Date');
