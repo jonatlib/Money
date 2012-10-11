@@ -64,7 +64,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere())
+        $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
@@ -84,7 +84,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere())
+        $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
@@ -102,7 +102,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->greaterThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere())
+        $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
@@ -117,7 +117,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where->equalTo('Comulative.owner', $this->userId);
         
         $select = new Db\Sql\Select('Comulative');
-        $select->where($where)->where($this->getDateWhere())
+        $select->where(array($where, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => 'summary',
                     'date' => 'date',
@@ -134,7 +134,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->greaterThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere())
+        $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
@@ -153,7 +153,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere())
+        $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
@@ -169,7 +169,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where->equalTo('Money.owner', $this->userId);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($this->getDateWhere())
+        $select->where(array($where, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
@@ -204,7 +204,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $where1->lessThanOrEqualTo('Money.value', 0);
         
         $select = $this->getSql()->select();
-        $select->where($where)->where($where1)->where($this->getDateWhere())
+        $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                     'date' => 'date',
