@@ -68,6 +68,9 @@ div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li.divider-vertic
 div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li.open > a,
 div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li:hover > a { background: #08c; color: #fff; }
 
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li.active > a,
+div#blocks > div#rightBlockHead div#headMenu div.subnav > ul > li > a.active { background: #ddecf2; color: #000; }
+
 /*Content*/
 
 div#blocks > div > div.padding div#sidebar { float: right; margin: 35px 0 0 0; width: 100%; }

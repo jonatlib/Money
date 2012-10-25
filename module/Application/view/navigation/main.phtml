@@ -1,0 +1,110 @@
+<ul class="nav nav-pills">
+<!--    <li><a href="<?php echo $this->url('application/default', array('controller' => 'category', 'action' => 'create')); ?>"><?php echo $this->translate('Create category'); ?></a></li>
+    <li><a href="<?php echo $this->url('application/default', array('controller' => 'index', 'action' => 'history')); ?>"><?php echo $this->translate('History'); ?></a></li>
+
+    <li class="divider-vertical"></li>
+
+    <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo $this->user(); ?> <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="<?php echo $this->url('profil'); ?>"><i class="icon-user"></i> <?php echo $this->translate('Profil'); ?></a></li>
+            <li><a href="<?php echo $this->url('settings'); ?>"><i class="icon-wrench"></i> <?php echo $this->translate('Settings'); ?></a></li>
+            <li class="divider"></li>
+            <li><a href="<?php echo $this->url('logout'); ?>"><i class="icon-off"></i> <?php echo $this->translate('Logout'); ?></a></li>
+        </ul>
+    </li>-->
+    <?php
+
+    function isActive($page){
+        $result = false;
+        if(!empty($page->pages)){
+            foreach($page->pages as $p){
+                $result |= isActive($p);
+            }
+        }
+        $result |= $page->isActive();
+        return $result;
+    }
+    
+    function submenu($page, &$html, $label) {
+        $html[] = '<ul class="dropdown-menu">';
+        foreach ($page->pages as $subpage) {
+            // visibility of the sub-page
+            if (!$subpage->isVisible()) {
+                continue;
+            }
+            if ($subpage->getLabel() == 'divider') {
+                $html[] = '<li class="divider"></li>';
+                continue;
+            }
+            $dropdown = !empty($subpage->pages);
+            $class = array();
+            if (isActive($subpage))
+                $class[] = 'active';
+            if ($dropdown)
+                $class[] = 'dropdown-submenu';
+            $html[] = '<li class="' . implode(' ', $class) . '">';
+            $html[] = '<a href="' . (($dropdown) ? '#' : $subpage->getHref()) . '">';
+
+            if ($subpage->get('icon')) {
+                $html[] = '<i class="icon-' . $subpage->get('icon') . '"></i>';
+            }
+
+            $html[] = $label($subpage);
+            $html[] = "</a>";
+
+            if (!$dropdown) {
+                $html[] = "</li>";
+                continue;
+            }
+            submenu($subpage, $html, $label);
+            $html[] = "</li>";
+        }
+        $html[] = "</ul>";
+    }
+
+    $that = & $this;
+    $label = function($page) use ($that) {
+                if ($page instanceof \Application\Library\Navigation\CanTranslate) {
+                    if (!$page->cantranslate()) {
+                        return $page->getLabel();
+                    }
+                }
+                return $that->translate($page->getLabel());
+            };
+
+    $html = array();
+    /* @var $page \Zend\Navigation\Page\AbstractPage */
+    foreach ($this->container as $page) {
+        // visibility of the page
+        if (!$page->isVisible()) {
+            continue;
+        }
+        if ($page->getLabel() == 'divider') {
+            $html[] = '<li class="divider-vertical"></li>';
+            continue;
+        }
+        $dropdown = !empty($page->pages);
+        $class = array();
+        if (isActive($page))
+            $class[] = 'active';
+        if ($dropdown)
+            $class[] = 'dropdown';
+        $html[] = '<li class="' . implode(' ', $class) . '">';
+        $html[] = '<a href="' . ($dropdown ? '#' : $page->getHref()) . '" '
+                . (($dropdown) ? 'class="dropdown-toggle" data-toggle="dropdown"' : '') . '>';
+        $html[] = $label($page);
+        if ($dropdown) {
+            $html[] = '<b class="caret"></b>';
+        }
+        $html[] = '</a>';
+        if (!$dropdown) {
+            $html[] = '</li>';
+            continue;
+        }
+        submenu($page, $html, $label);
+        $html[] = "</li>";
+    }
+    echo implode(PHP_EOL, $html);
+    ?>
+</ul>

@@ -77,12 +77,9 @@
             </div>
             <div class="w70" id="rightBlockHead">
                 <div class="padding">
-                    <div class="content"><?php echo $this->navigation('Navigation')->menu(); ?></div>
                     <div class="content" id="headMenu">
                         <div class="subnav">
-                            <ul class="nav nav-pills">
-                                <?php echo $this->render('custom/userMenu.phtml'); ?>
-                            </ul>
+                            <?php echo $this->navigation('Navigation')->menu()->setPartial('navigation/main.phtml'); ?>
                         </div>
                     </div>
                 </div>

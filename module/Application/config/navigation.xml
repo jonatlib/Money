@@ -1,7 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <navigation>
-    <page>
-        <label>Test</label>
-        <uri>/</uri>
-    </page>
+    <home>
+        <label>Home</label>
+        <route>application</route>
+    </home>
+    
+    <categorys>
+        <label>Categories</label>
+        <uri>#</uri>
+        <pages>
+            <create>
+                <label>Create category</label>
+                <route>application/default</route>
+                <controller>category</controller>
+                <action>create</action>
+            </create>
+            
+            <list>
+                <label>List of groups</label>
+                <route>application/default</route>
+                <controller>category</controller>
+                <action>list</action>
+            </list>
+        </pages>
+    </categorys>
+    
+    <history>
+        <label>History</label>
+        <route>application/default</route>
+        <controller>index</controller>
+        <action>history</action>
+    </history>
+    
+    <spacer label="divider" uri="" />
+    
+    <username type="Application\Library\Navigation\Page\Username">
+        <label>username</label>
+        <pages>
+            <profile>
+                <label>Profil</label>
+                <route>profil</route>
+                <icon>user</icon>
+            </profile>
+           
+            <settings>
+                <label>Settings</label>
+                <route>settings</route>
+                <icon>wrench</icon>
+            </settings>
+            
+            <spacer label="divider" uri="" />
+            
+            <logout>
+                <label>Logout</label>
+                <route>logout</route>
+                <icon>off</icon>
+            </logout>
+        </pages>
+    </username>
 </navigation>

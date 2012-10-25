@@ -81,6 +81,11 @@ return array(
     'Summary' => 'Shrnutí',
     'History' => 'Historie',
 
+    'Categories' => 'Kategorie',
+    'username' => 'uživatel',
+    'Home' => 'Domů',
+    'List of groups' => 'Seznam skupin',
+    
 //    '' => '',
 //    '' => '',
 //    '' => '',

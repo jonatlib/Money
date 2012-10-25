@@ -38,7 +38,9 @@ return array(
         'factories' => array(
             'Navigation' => function($sm) {
                 $config = \Zend\Config\Factory::fromFile(__DIR__ . '/../config/navigation.xml', true);
-                return new \Zend\Navigation\Navigation($config);
+                
+                $f = new Application\Library\Navigation\Service\ConstructedNavigationFactory($config);
+                return $f->createService($sm);
             },
             'translator' => function($sm) {
                 $factory = new \Application\Library\I18n\Translator\TranslatorServiceFactory();
