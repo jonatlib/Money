@@ -36,6 +36,10 @@ return array(
             'mail-adapter' => '\Zend\Mail\Transport\Sendmail',
         ),
         'factories' => array(
+            'Navigation' => function($sm) {
+                $config = \Zend\Config\Factory::fromFile(__DIR__ . '/../config/navigation.xml', true);
+                return new \Zend\Navigation\Navigation($config);
+            },
             'translator' => function($sm) {
                 $factory = new \Application\Library\I18n\Translator\TranslatorServiceFactory();
                 $instance = $factory->createService($sm);
