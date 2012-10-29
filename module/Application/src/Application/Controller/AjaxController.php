@@ -74,6 +74,19 @@ class AjaxController extends AbstractActionController {
         return $view;
     }
     
+    public function translateAction(){
+        $view = new JsonModel();
+        
+        if(isset($_GET['text']) && !empty($_GET['text'])){
+            $translator = $this->serviceLocator->get('translator');
+            $view->text = $translator->translate($_GET['text']);
+        }else{
+            $view->text = 'unknown';
+        }
+        
+        return $view;
+    }
+    
     public function init(){
         $this->auth = new \Zend\Authentication\AuthenticationService();
         $this->userId = $this->auth->getIdentity()->id;

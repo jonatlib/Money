@@ -22,10 +22,38 @@
         </options>
     </settings>
     
+    <category type="Literal">
+        <options>
+            <route>/category</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Category" action="index" />
+        </options>
+        <may_terminate>1</may_terminate>
+        <child_routes>
+            <delete type="Segment">
+                <options>
+                    <route>/delete/:id</route>
+                    <constraints>
+                        <id>[0-9]+</id>
+                    </constraints>
+                    <defaults __NAMESPACE__="Application\Controller" controller="Category" action="delete" />
+                </options>
+            </delete>
+            <edit type="Segment">
+                <options>
+                    <route>/edit/:id</route>
+                    <constraints>
+                        <id>[0-9]+</id>
+                    </constraints>
+                    <defaults __NAMESPACE__="Application\Controller" controller="Category" action="edit" />
+                </options>
+            </edit>
+        </child_routes>
+    </category>
+    
     <money type="Literal">
         <options>
             <route>/money</route>
-            <defaults __NAMESPACE__="Application\Controller" controller="Auth" action="lost" />
+            <defaults __NAMESPACE__="Application\Controller" controller="Index" action="index" />
         </options>
         <may_terminate>1</may_terminate>
         <child_routes>
