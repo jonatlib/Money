@@ -8,7 +8,13 @@ use Zend\View\Model\ViewModel;
 class CategoryController extends AbstractActionController {
 
     public function indexAction() {
-        return new ViewModel();
+        $view = new ViewModel();
+        $auth = new \Zend\Authentication\AuthenticationService();
+        $model = new \Application\Model\Category($this->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id);
+        
+        $view->data = $model->getCaregoriesList();
+        
+        return $view;
     }
 
     public function createAction() {

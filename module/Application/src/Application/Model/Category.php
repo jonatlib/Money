@@ -8,6 +8,11 @@ class Category extends \Zend\Db\TableGateway\TableGateway {
 
     protected $userId = null;
 
+    public function getCaregoriesList(){
+        $data = $this->select(array('owner' => $this->userId));
+        return $data;
+    }
+    
     public function getCategories() {
         $data = $this->select(array('owner' => $this->userId));
         $result = array();

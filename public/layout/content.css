@@ -55,3 +55,6 @@ div#showMoney div.money div.value.more { color: #585; }
 div#side_summary {  }
 div#side_summary div#side_summary_overall { text-align: center; font-size: 22px; }
 div#side_summary div#side_summary_both { text-align: center; font-size: 12px; }
+
+/* Category list */
+div#categoriesList table .action { width: 180px; }
