@@ -17,10 +17,8 @@
             </create>
             
             <list>
-                <label>List of groups</label>
-                <route>application/default</route>
-                <controller>category</controller>
-                <action>list</action>
+                <label>List of categories</label>
+                <route>category</route>
             </list>
         </pages>
     </categorys>

@@ -75,18 +75,22 @@ return array(
     'Create category' => 'Vytvořit kategorii',
     'Money was successfully deleted.' => 'Peníze byli úspěšně odstraněny.',
     'Delete' => 'Smazat',
-    
     'The requested controller was unable to dispatch the request.' => 'Požadovaný controller nebyl nalezen.',
     'Controller' => 'Controller',
     'Summary' => 'Shrnutí',
     'History' => 'Historie',
-
     'Categories' => 'Kategorie',
     'username' => 'uživatel',
     'Home' => 'Domů',
     'List of groups' => 'Seznam skupin',
+    'List of categories' => 'Seznam kategorií',
+    '#' => '#',
+    'Name' => 'Jméno',
+    'Description' => 'Popis',
+    'Action' => 'Akce',
+    'Edit' => 'Editovat',
+    'js-confirm-delete' => 'Přejete si odstranit následující záznam ?',
     
-//    '' => '',
 //    '' => '',
 //    '' => '',
 );
