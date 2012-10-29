@@ -15,18 +15,7 @@
 </div>
 
 <div class="content" id="showMoney">
-    <?php foreach($this->moneys as $money): ?>
-    <div class="well money <?php echo ($money->value < 0) ? 'less' : 'more'; ?>">
-        <h4><?php echo $money->title; ?></h4>
-        <div class="date"><?php echo date('d.m.Y', strtotime($money->date)); ?></div>
-        <div class="cleaner"></div>
-        <div class="category"><?php echo $money->categName ?> <span><?php echo $money->subcategName ?></span></div>
-        <div class="value <?php echo ($money->value < 0) ? 'less' : 'more'; ?>"><?php echo $money->value; ?></div>
-        <div class="delete">
-            <a class="confirm" href="<?php echo $this->url('money/delete', array('id' => $money->id)); ?>">
-                <?php echo $this->translate('Delete'); ?>
-            </a>
-        </div>
-    </div>
+    <?php foreach ($this->moneys as $money): ?>
+        <?php echo $this->render('custom/money.phtml', array('money' => $money)); ?>
     <?php endforeach; ?>
 </div>

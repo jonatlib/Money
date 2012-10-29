@@ -1,0 +1,12 @@
+<div class="well money <?php echo ($money->value < 0) ? 'less' : 'more'; ?>">
+    <h4><?php echo $money->title; ?></h4>
+    <div class="date"><?php echo date('d.m.Y', strtotime($money->date)); ?></div>
+    <div class="cleaner"></div>
+    <div class="category"><?php echo $money->categName ?> <span><?php echo $money->subcategName ?></span></div>
+    <div class="value <?php echo ($money->value < 0) ? 'less' : 'more'; ?>"><?php echo $money->value; ?></div>
+    <div class="delete">
+        <a class="confirm" rel="delete" href="<?php echo $this->url('money/delete', array('id' => $money->id)); ?>">
+            <?php echo $this->translate('Delete'); ?>
+        </a>
+    </div>
+</div>
