@@ -9,6 +9,11 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 CREATE TABLE IF NOT EXISTS `Comulative` (`owner` INT, `date` INT, `summary` INT);
 
 -- -----------------------------------------------------
+-- Placeholder table for view `Perday`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Perday` (`id` INT, `category` INT, `owner` INT, `subcategory` INT, `title` INT, `date` INT, `value` INT, `description` INT, `sum` INT);
+
+-- -----------------------------------------------------
 -- View `Comulative`
 -- -----------------------------------------------------
 DROP VIEW IF EXISTS `Comulative` ;
@@ -18,11 +23,24 @@ CREATE  OR REPLACE VIEW `Comulative` AS
 SELECT t.owner, t.date, (
 	SELECT SUM( x.value ) 
 	FROM Money x
-	WHERE x.date <= t.date AND x.owner = t.owner
+	WHERE x.id <= t.id AND x.owner = t.owner
 	) AS summary
 FROM Money t
 GROUP BY date, owner
 ORDER BY t.id
+$$
+DELIMITER ;
+
+;
+
+-- -----------------------------------------------------
+-- View `Perday`
+-- -----------------------------------------------------
+DROP VIEW IF EXISTS `Perday` ;
+DROP TABLE IF EXISTS `Perday`;
+DELIMITER $$
+CREATE  OR REPLACE VIEW `Perday` AS
+SELECT m.*, sum(m.value) as sum from Money m group by `date`
 $$
 DELIMITER ;
 
