@@ -10,6 +10,7 @@ function createChart(options, url, callbackData, id, chartType){
         url: baseUrl + url,
         method: 'get',
         cache: false,
+        async: true,
         success: function(data){
             if(data['data'] == undefined) return;
             var dchart = callbackData(data['data']);

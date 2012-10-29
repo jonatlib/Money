@@ -1,3 +1,19 @@
+function m_translate(text, handle){
+    $.ajax({
+        url: baseUrl + 'ajax/translate',
+        method: 'get',
+        data: {text: text},
+        cache: true,
+        async: true,
+        success: function(data){
+            if(data['text'] == undefined){
+                handle('unknown');
+            }
+            handle(data['text']);
+        }
+    });
+}
+
 function scrollSideBar(){
     var win = $(window);
     var side = $('div#sidebar div.attach');
@@ -96,8 +112,23 @@ function initDropDown(){
     });
 }
 
+function initConfirm(){
+    $('a.confirm').click(function(e){
+        e.preventDefault();
+        var element = $(this);
+        m_translate("js-confirm-" + element.attr('rel'), function(data){
+            var r = confirm(data);
+            if(r){
+                window.location = element.attr('href');
+            }
+        });
+        return false;
+    });
+}
+
 $(function(){
-    initDatePicker();
+    initConfirm();
+//    initDatePicker();
     scrollSideBar();
     setTimeout(cleanAlerts, 3000);
     initDropDown();
