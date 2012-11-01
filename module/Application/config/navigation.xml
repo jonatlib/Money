@@ -5,6 +5,13 @@
         <route>home</route>
     </home>
     
+    <history>
+        <label>History</label>
+        <route>application/default</route>
+        <controller>index</controller>
+        <action>history</action>
+    </history>
+    
     <categorys>
         <label>Categories</label>
         <uri>#</uri>
@@ -23,12 +30,25 @@
         </pages>
     </categorys>
     
-    <history>
-        <label>History</label>
-        <route>application/default</route>
-        <controller>index</controller>
-        <action>history</action>
-    </history>
+    <calculator>
+        <label>Calculator</label>
+        <uri>#</uri>
+        <pages>
+            <summary>
+                <label>Summary</label>
+                <route>application/default</route>
+                <controller>calculator</controller>
+                <action>index</action>
+            </summary>
+            
+            <perday>
+                <label>Perday</label>
+                <route>application/default</route>
+                <controller>calculator</controller>
+                <action>perday</action>
+            </perday>
+        </pages>
+    </calculator>
     
     <spacer label="divider" uri="" />
     

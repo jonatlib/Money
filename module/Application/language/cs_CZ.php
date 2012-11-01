@@ -90,7 +90,16 @@ return array(
     'Action' => 'Akce',
     'Edit' => 'Editovat',
     'js-confirm-delete' => 'Přejete si odstranit následující záznam ?',
+    'Generals' => 'Obecné',
+    'Security' => 'Zabezpečení',
+    'General settings' => 'Obecné nastavení',
+    'Security settings' => 'Nastavení zabezpečení',
+    'Edit category' => 'Upravit kategorii',
+    'Delete category' => 'Smazat kategorii',
+    'Calculator' => 'Kalkulátor',
+    'Perday' => 'Na den',
     
+//    '' => '',
 //    '' => '',
 //    '' => '',
 );

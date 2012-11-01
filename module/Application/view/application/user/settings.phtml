@@ -1,3 +1,26 @@
 <div class="content">
-    <h1>Tohle je nadpis</h1>
+    <h1><?php echo $this->translate('Settings'); ?></h1>
+</div>
+
+<div class="content">
+    <div class="bs-docs-example">
+        <ul id="myTab" class="nav nav-tabs">
+            <li class="active"><a href="#settings-general" data-toggle="tab"><?php echo $this->translate('Generals'); ?></a></li>
+            <li><a href="#settings-security" data-toggle="tab"><?php echo $this->translate('Security'); ?></a></li>
+        </ul>
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade in active" id="settings-general">
+                <h4><?php echo $this->translate('General settings'); ?></h4>
+            </div>
+            <div class="tab-pane fade" id="settings-security">
+                <h4><?php echo $this->translate('Security settings'); ?></h4>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <script>
+        $(function () {
+//            $('#myTab a:first').tab('show');
+        })
+    </script>
 </div>
