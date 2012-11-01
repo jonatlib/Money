@@ -37,4 +37,11 @@ class CategoryController extends AbstractActionController {
         return $view;
     }
 
+    public function editAction(){
+        
+    }
+    
+    public function deleteAction(){
+        
+    }
 }

@@ -90,7 +90,7 @@ class AjaxController extends AbstractActionController {
     public function init(){
         $this->auth = new \Zend\Authentication\AuthenticationService();
         $this->userId = $this->auth->getIdentity()->id;
-        $this->model = new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $this->userId);
+        $this->model = $this->getServiceLocator()->get('\Application\Model\Money');
     }
 
 }

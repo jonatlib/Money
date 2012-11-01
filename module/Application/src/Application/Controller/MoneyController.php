@@ -13,7 +13,7 @@ class MoneyController extends AbstractActionController {
 
     public function addAction() {
         $auth = new \Zend\Authentication\AuthenticationService();
-        $model = new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id);
+        $model = $this->getServiceLocator()->get('\Application\Model\Money');
 
         $form = new \Application\Form\AddMoney($model->getCategories(), '');
         if ($this->request->isPost()) {
@@ -42,7 +42,7 @@ class MoneyController extends AbstractActionController {
 
     public function deleteAction() {
         $auth = new \Zend\Authentication\AuthenticationService();
-        $model = new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id);
+        $model = $this->getServiceLocator()->get('\Application\Model\Money');
 
         $id = $this->event->getRouteMatch()->getParam('id', null);
         if (is_null($id)) {

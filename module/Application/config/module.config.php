@@ -36,6 +36,10 @@ return array(
             'mail-adapter' => '\Zend\Mail\Transport\Sendmail',
         ),
         'factories' => array(
+            '\Application\Model\Money' => function($sm){
+                $auth = new \Zend\Authentication\AuthenticationService();
+                return new \Application\Model\Money($sm->get('db-adapter'), $auth->getIdentity()->id);
+            },
             'Navigation' => function($sm) {
                 $config = \Zend\Config\Factory::fromFile(__DIR__ . '/../config/navigation.xml', true);
                 
@@ -111,7 +115,7 @@ return array(
                 $instance = new \Application\View\Helper\AddMoney();
                 $auth = new \Zend\Authentication\AuthenticationService();
                 if ($auth->hasIdentity()) {
-                    $instance->setMoneyModel(new \Application\Model\Money($sm->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id));
+                    $instance->setMoneyModel($sm->getServiceLocator()->get('\Application\Model\Money'));
                 }
                 return $instance;
             },
@@ -119,7 +123,7 @@ return array(
                 $instance = new \Application\View\Helper\Money();
                 $auth = new \Zend\Authentication\AuthenticationService();
                 if ($auth->hasIdentity()) {
-                    $instance->setMoneyModel(new \Application\Model\Money($sm->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id));
+                    $instance->setMoneyModel($sm->getServiceLocator()->get('\Application\Model\Money'));
                 }
                 return $instance;
             },

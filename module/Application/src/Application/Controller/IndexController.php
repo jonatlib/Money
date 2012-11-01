@@ -9,7 +9,7 @@ class IndexController extends AbstractActionController {
 
     protected function getModel(){
         $auth = new \Zend\Authentication\AuthenticationService();
-        return new \Application\Model\Money($this->getServiceLocator()->get('db-adapter'), $auth->getIdentity()->id);
+        return $this->getServiceLocator()->get('\Application\Model\Money');
     }
     
     public function indexAction() {
