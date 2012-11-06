@@ -21,21 +21,20 @@
                 <div class="input-append">
                     <?php echo $this->formElement($this->form->get('password')) . PHP_EOL; ?>
                     <span class="add-on"><i class="icon-question-sign"></i></span>
+                    <p class="help-block"><?php echo $this->formElementErrors($this->form->get('password')) . PHP_EOL; ?></p>
+                </div>
                 <div><span><a href="<?php echo $this->url('lostpassword'); ?>"><?php echo $this->translate('Did you forget your password ?'); ?></a></span></div>
-                <div></div>
-                <p class="help-block"><?php echo $this->formElementErrors($this->form->get('password')) . PHP_EOL; ?></p>
             </div>
-        </div>
-        <?php if ($this->form->has('captcha')): ?>
+            <?php if ($this->form->has('captcha')): ?>
+                <div>
+                    <?php echo $this->formElement($this->form->get('captcha')) . PHP_EOL; ?>
+                    <?php echo $this->formElementErrors($this->form->get('captcha')) . PHP_EOL; ?>
+                </div>
+            <?php endif; ?>
             <div>
-                <?php echo $this->formElement($this->form->get('captcha')) . PHP_EOL; ?>
-                <?php echo $this->formElementErrors($this->form->get('captcha')) . PHP_EOL; ?>
+                <?php echo $this->formHidden($this->form->get('csrf')) . PHP_EOL; ?>
+                <?php echo $this->formElementErrors($this->form->get('csrf')) . PHP_EOL; ?>
             </div>
-        <?php endif; ?>
-        <div>
-            <?php echo $this->formHidden($this->form->get('csrf')) . PHP_EOL; ?>
-            <?php echo $this->formElementErrors($this->form->get('csrf')) . PHP_EOL; ?>
-        </div>
     </fieldset>
     <div class="buttons">
         <?php echo $this->formElement($this->form->get('submit')); ?>

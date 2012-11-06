@@ -9,10 +9,10 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     protected $userId = null;
     protected $start, $stop;
 
-    protected function getDateWhere(){
+    protected function getDateWhere() {
         return '`date` <= DATE(NOW()) AND `date` > DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH))';
     }
-    
+
     public function getCategories() {
         $catgory = new \Application\Model\Category($this->getAdapter(), $this->userId);
         return $catgory->getCategories();
@@ -22,10 +22,10 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return array('empty');
     }
 
-    public function deleteMoney($id){
+    public function deleteMoney($id) {
         return $this->delete(array('id' => $id));
     }
-    
+
     public function addMoney($data) {
         $row = new Db\RowGateway\RowGateway('id', $this->getTable(), $this->getAdapter());
         $row->category = $data['group'];
@@ -49,20 +49,20 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
                 ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
                 ->join(array('s' => 'Subcategory'), 'subcategory = s.id', array('subcategName' => 'name'), Db\Sql\Select::JOIN_LEFT)
                 ->order('Money.date desc, Money.id desc');
-        if(!is_null($limit)){
+        if (!is_null($limit)) {
             $select->limit($limit);
         }
         $data = $this->selectWith($select);
         return $data;
     }
 
-    public function getMonthSpendingByCategory(){
+    public function getMonthSpendingByCategory() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $where1 = new Db\Sql\Where();
         $where1->lessThanOrEqualTo('Money.value', 0);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
@@ -72,17 +72,17 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
                 ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
                 ->group('date')->group('c.id');
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
-        
+
         return $data;
     }
-    
-    public function getMonthSpending(){
+
+    public function getMonthSpending() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $where1 = new Db\Sql\Where();
         $where1->lessThanOrEqualTo('Money.value', 0);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
@@ -93,14 +93,14 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         return $data;
     }
-    
-    public function getMonthEarning(){
+
+    public function getMonthEarning() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $where1 = new Db\Sql\Where();
         $where1->greaterThanOrEqualTo('Money.value', 0);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
@@ -111,11 +111,11 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         return $data;
     }
-    
-    public function getMonthMoney(){
+
+    public function getMonthMoney() {
         $where = new Db\Sql\Where();
         $where->equalTo('Comulative.owner', $this->userId);
-        
+
         $select = new Db\Sql\Select('Comulative');
         $select->where(array($where, $this->getDateWhere()))
                 ->columns(array(
@@ -125,84 +125,99 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         return $data;
     }
-    
-    public function getMonthEarningSummary(){
+
+    public function getMonthBegginMoney() {
+        $where = new Db\Sql\Where();
+        $where->equalTo('Comulative.owner', $this->userId);
+
+        $select = new Db\Sql\Select('Comulative');
+        $select->where(array($where, $this->getDateWhere()))
+                ->columns(array(
+                    'sumary' => 'summary',
+                    'date' => 'date',
+                ));
+        //FIXME set limit to sql.
+        $data = current($this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()) . ' LIMIT 1', Db\Adapter\Adapter::QUERY_MODE_EXECUTE)->toArray());
+        return (int) ((isset($data['sumary'])) ? $data['sumary'] : 0);
+    }
+
+    public function getMonthEarningSummary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $where1 = new Db\Sql\Where();
         $where1->greaterThanOrEqualTo('Money.value', 0);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE)->current();
-        if(empty($data)){
+        if (empty($data)) {
             return 0;
         }
-        return (int) $data->sumary;
+        return (int) $data->sumary + ( ($this->getMonthBegginMoney() > 0) ? $this->getMonthBegginMoney() : 0);
     }
-    
-    public function getMonthSpendingSummary(){
+
+    public function getMonthSpendingSummary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $where1 = new Db\Sql\Where();
         $where1->lessThanOrEqualTo('Money.value', 0);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE)->current();
-        if(empty($data)){
+        if (empty($data)) {
             return 0;
         }
         return (int) $data->sumary;
     }
-    
-    public function getMonthSumary(){
+
+    public function getMonthSumary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $this->getDateWhere()))
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE)->current();
-        if(empty($data)){
+        if (empty($data)) {
             return 0;
         }
         return (int) $data->sumary;
     }
-    
-    public function getSumary(){
+
+    public function getSumary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $select = $this->getSql()->select();
         $select->where($where)
                 ->columns(array(
                     'sumary' => new Db\Sql\Predicate\Expression('sum(Money.value)'),
                 ));
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE)->current();
-        if(empty($data)){
+        if (empty($data)) {
             return 0;
         }
         return (int) $data->sumary;
     }
-    
+
     public function getMonthCategorySummary() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
-        
+
         $where1 = new Db\Sql\Where();
         $where1->lessThanOrEqualTo('Money.value', 0);
-        
+
         $select = $this->getSql()->select();
         $select->where(array($where, $where1, $this->getDateWhere()))
                 ->columns(array(
