@@ -12,60 +12,62 @@ class AjaxController extends AbstractActionController {
      */
     protected $auth;
     protected $userId;
+
     /**
      * @var \Application\Model\Money
      */
     protected $model;
-    
+
     public function indexAction() {
         $view = new JsonModel();
         $view->data = $this->model->getMonthCategorySummary();
         return $view;
     }
-    
-    public function summaryAction(){
+
+    public function summaryAction() {
         $view = new JsonModel();
         $view->data = $this->model->getMonthSumary();
         return $view;
     }
-    
-    public function moneyAction(){
+
+    public function moneyAction() {
         $view = new JsonModel();
         $view->data = $this->model->getMonthMoney();
         return $view;
     }
-    
-    public function spendingAction(){
+
+    public function spendingAction() {
         $view = new JsonModel();
         $view->data = $this->model->getMonthSpending();
         return $view;
     }
-    
-    public function earningAction(){
+
+    public function earningAction() {
         $view = new JsonModel();
         $view->data = $this->model->getMonthEarning();
         return $view;
     }
-    
-    public function spendingcategoryAction(){
+
+    public function spendingcategoryAction() {
         $view = new JsonModel();
         $view->data = $this->model->getMonthSpendingByCategory();
         return $view;
     }
-    
-    public function linegraphAction(){
+
+    public function linegraphAction() {
         $view = new JsonModel();
         $data = array('Date' => array('Date'));
-        
+
         $d = $this->model->getMonthSpendingByCategory()->toArray();
-        foreach($d as $val){
-            if(!in_array($val['categName'], $data['Date']))
+        foreach ($d as $val) {
+            if (!in_array($val['categName'], $data['Date']))
                 $data['Date'][] = $val['categName'];
         }
-        foreach($d as $val){
+        foreach ($d as $val) {
             $index = array_search($val['categName'], $data['Date']);
-            if(empty($data[$val['date']])){
-                foreach($data['Date'] as $i => $v) $data[$val['date']][$i] = 0;
+            if (empty($data[$val['date']])) {
+                foreach ($data['Date'] as $i => $v)
+                    $data[$val['date']][$i] = 0;
                 $data[$val['date']][0] = $val['date'];
             }
             $data[$val['date']][$index] = (int) abs($val['sumary']);
@@ -73,21 +75,43 @@ class AjaxController extends AbstractActionController {
         $view->data = array_values($data);
         return $view;
     }
-    
-    public function translateAction(){
+
+    public function dictionaryAction(){
         $view = new JsonModel();
+        /* @var $translator \Application\Library\I18n\Translator\Translator */
+        $translator = $this->serviceLocator->get('translator');
         
-        if(isset($_GET['text']) && !empty($_GET['text'])){
-            $translator = $this->serviceLocator->get('translator');
-            $view->text = $translator->translate($_GET['text']);
-        }else{
-            $view->text = 'unknown';
-        }
-        
+        //FIXME get dictionary from translator
+        $locale = $translator->getLocale();
+        $dictionary = function()use($locale){
+           return require __DIR__ . "/../../../language/{$locale}.php";
+        };
+        $view->dictionary = $dictionary();
         return $view;
     }
     
-    public function init(){
+    public function translateAction() {
+        $view = new JsonModel();
+        $get = $this->params()->fromQuery('text', null);
+        if (!empty($get)) {
+            $translator = $this->serviceLocator->get('translator');
+            if (is_array($get)) {
+                $result = array();
+                foreach($get as $g){
+                    $result[] = $translator->translate($g);
+                }
+                $view->text = $result;
+            } else {
+                $view->text = $translator->translate($get);
+            }
+        } else {
+            $view->text = 'unknown';
+        }
+
+        return $view;
+    }
+
+    public function init() {
         $this->auth = new \Zend\Authentication\AuthenticationService();
         $this->userId = $this->auth->getIdentity()->id;
         $this->model = $this->getServiceLocator()->get('\Application\Model\Money');

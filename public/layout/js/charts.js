@@ -5,7 +5,8 @@ google.load('visualization', '1.0', {
 google.setOnLoadCallback(drawChart);
 
 function createChart(options, url, callbackData, id, chartType){
-    $('#' + id).html('<span class="info">Preparing data...</span>');
+    $('#' + id).html('<span class="info">' + m_synchrone_translate('Preparing data...') + '</span>');
+    options['title'] = m_synchrone_translate(options['title']);
     $.ajax({
         url: baseUrl + url,
         method: 'get',
@@ -38,8 +39,8 @@ function summaryChart(){
         'pointSize' : 3
     }, 'ajax/money', function(data){
         var dchart = new google.visualization.DataTable();
-        dchart.addColumn('string', 'Date');
-        dchart.addColumn('number', 'Summary');
+        dchart.addColumn('string', m_synchrone_translate('Date') );
+        dchart.addColumn('number', m_synchrone_translate('Summary') );
         var rows = [];
         $.each(data, function(k, v){
             rows.push([ v['date'], parseInt(v['sumary']) ]);
@@ -57,8 +58,8 @@ function spendingChart(){
         'colors' : ['a00']
     }, 'ajax/spending', function(data){
         var dchart = new google.visualization.DataTable();
-        dchart.addColumn('string', 'Date');
-        dchart.addColumn('number', 'Summary');
+        dchart.addColumn('string', m_synchrone_translate('Date') );
+        dchart.addColumn('number', m_synchrone_translate('Summary') );
         var rows = [];
         $.each(data, function(k, v){
             rows.push([ v['date'], Math.abs(v['sumary']) ]);
@@ -90,8 +91,8 @@ function groupsChart(){
         'height':200
     }, 'ajax/index', function(data){
         var dchart = new google.visualization.DataTable();
-        dchart.addColumn('string', 'Date');
-        dchart.addColumn('number', 'Summary');
+        dchart.addColumn('string', m_synchrone_translate('Date') );
+        dchart.addColumn('number', m_synchrone_translate('Summary') );
         var rows = [];
         $.each(data, function(k, v){
             rows.push([ v['categName'], Math.abs(v['sumary']) ]);

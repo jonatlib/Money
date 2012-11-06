@@ -1,17 +1,52 @@
-function m_translate(text, handle){
-    $.ajax({
-        url: baseUrl + 'ajax/translate',
-        method: 'get',
-        data: {text: text},
-        cache: true,
-        async: true,
-        success: function(data){
-            if(data['text'] == undefined){
-                handle('unknown');
+function m_translate_dictionary(handle, async){
+    if(async === undefined){ async = true; }
+    if(m_translate_dictionary.dic === undefined){
+        $.ajax({
+            url: baseUrl + 'ajax/dictionary',
+            method: 'get',
+            cache: true,
+            async: async,
+            success: function(data){
+                if(data['dictionary'] == undefined){ handle([]); }
+                m_translate_dictionary.dic = data['dictionary'];
+                handle(data['dictionary']);
             }
-            handle(data['text']);
+        });
+    }else{
+        handle(m_translate_dictionary.dic);
+    }
+}
+
+function m_translate_dictionary_text(text, handle, async){
+    m_translate_dictionary(function(data){
+        if(data[text]){
+            handle(data[text]);
+        }else{
+            handle(text);
         }
-    });
+    }, async);
+}
+
+function m_translate(text, handle, async){
+    m_translate_dictionary_text(text, handle, async);
+//    if(async === undefined){ async = true; }
+//    $.ajax({
+//        url: baseUrl + 'ajax/translate',
+//        method: 'get',
+//        data: {text: text},
+//        cache: true,
+//        async: async,
+//        success: function(data){
+//            if(data['text'] == undefined){ handle('unknown'); }
+//            handle(data['text']);
+//        }
+//    });
+}
+
+function m_synchrone_translate(text){
+    var res = '';
+    m_translate(text, function(data){ res = data; }, false);
+    return res;
 }
 
 function scrollSideBar(){
@@ -88,12 +123,12 @@ function initDatePicker(){
         mode: 'range',
         starts: 1,
         locale: {
-            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-            weekMin: 'wk'
+            days: m_synchrone_translate(["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]),
+            daysShort: m_synchrone_translate(["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]),
+            daysMin: m_synchrone_translate(["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"]),
+            months: m_synchrone_translate(["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]),
+            monthsShort: m_synchrone_translate(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]),
+            weekMin: m_synchrone_translate('wk')
         },
         onChange: function(formated) {
             $('#widgetField div').get(0).innerHTML = formated.join(' - ');
@@ -128,7 +163,7 @@ function initConfirm(){
 
 $(function(){
     initConfirm();
-//    initDatePicker();
+    initDatePicker();
     scrollSideBar();
     setTimeout(cleanAlerts, 3000);
     initDropDown();
