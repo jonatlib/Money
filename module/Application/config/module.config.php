@@ -18,12 +18,13 @@ return array(
                     'default' => array(
                         'type' => 'Segment',
                         'options' => array(
-                            'route' => '[:controller[/:action]]',
+                            'route' => '[:controller[/[:action]]]',
                             'constraints' => array(
                                 'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ),
                             'defaults' => array(
+                                'action' => 'index'
                             ),
                         ),
                     ),
@@ -85,7 +86,6 @@ return array(
             'Application\Controller\Money' => 'Application\Controller\MoneyController',
             'Application\Controller\User' => 'Application\Controller\UserController',
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
-//            'Application\Controller\Auth' => 'Application\Controller\AuthController'
         ),
         'factories' => array(
             'Application\Controller\Auth' => function(Zend\Mvc\Controller\ControllerManager $cm) {
@@ -93,6 +93,13 @@ return array(
                 $em = $cm->getServiceLocator()->get('SharedEventManager');
                 $instance = new Application\Controller\AuthController();
                 $em->attach('Application\Controller\AuthController', 'dispatch', array($instance, 'init'), 1000);
+                return $instance;
+            },
+            'Application\Controller\Mobile' => function(Zend\Mvc\Controller\ControllerManager $cm) {
+                /* @var $em Zend\EventManager\SharedEventManager */
+                $em = $cm->getServiceLocator()->get('SharedEventManager');
+                $instance = new Application\Controller\MobileController();
+                $em->attach('Application\Controller\MobileController', 'dispatch', array($instance, 'init'), 1000);
                 return $instance;
             },
             'Application\Controller\Ajax' => function(Zend\Mvc\Controller\ControllerManager $cm) {
