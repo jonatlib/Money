@@ -92,21 +92,21 @@ return array(
                 /* @var $em Zend\EventManager\SharedEventManager */
                 $em = $cm->getServiceLocator()->get('SharedEventManager');
                 $instance = new Application\Controller\AuthController();
-                $em->attach('Application\Controller\AuthController', 'dispatch', array($instance, 'init'), 1000);
+                $em->attach('Application\Controller\AuthController', 'dispatch', array($instance, 'init'), 10);
                 return $instance;
             },
             'Application\Controller\Mobile' => function(Zend\Mvc\Controller\ControllerManager $cm) {
                 /* @var $em Zend\EventManager\SharedEventManager */
                 $em = $cm->getServiceLocator()->get('SharedEventManager');
                 $instance = new Application\Controller\MobileController();
-                $em->attach('Application\Controller\MobileController', 'dispatch', array($instance, 'init'), 1000);
+                $em->attach('Application\Controller\MobileController', 'dispatch', array($instance, 'init'), 10);
                 return $instance;
             },
             'Application\Controller\Ajax' => function(Zend\Mvc\Controller\ControllerManager $cm) {
                 /* @var $em Zend\EventManager\SharedEventManager */
                 $em = $cm->getServiceLocator()->get('SharedEventManager');
                 $instance = new Application\Controller\AjaxController();
-                $em->attach('Application\Controller\AjaxController', 'dispatch', array($instance, 'init'), 1000);
+                $em->attach('Application\Controller\AjaxController', 'dispatch', array($instance, 'init'), 10);
                 return $instance;
             },
         )

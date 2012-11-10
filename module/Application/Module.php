@@ -13,8 +13,11 @@ class Module {
         $events = StaticEventManager::getInstance();
         //Plugins
         $events->attach('Zend\Mvc\Application', \Zend\Mvc\MvcEvent::EVENT_ROUTE, array($this, 'pluginLastPage'), 1);
+        $events->attach('Zend\Mvc\Application', \Zend\Mvc\MvcEvent::EVENT_ROUTE, array($this, 'pluginMobile'), 1);
+        $events->attach('Zend\Mvc\Application', \Zend\Mvc\MvcEvent::EVENT_ROUTE, array($this, 'pluginMobileRoute'), 1);
         $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'pluginAuth'), 100);
         $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'pluginSession'), 1);
+        $events->attach('Zend\Mvc\Application', 'dispatch', array($this, 'pluginMobileLayout'), 1);
         $events->attach('Zend\Mvc\Application', 'dispatch.error', array($this, 'pluginAuthError'), 100);
         $events->attach('Zend\View\View', 'response', array($this, 'pluginSessionSave'), 100);
         //Bootstrap
@@ -84,13 +87,31 @@ class Module {
     ////////////////////////// Plugins ///////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////
 
+    public function pluginMobileLayout(\Zend\Mvc\MvcEvent $e){
+        if($this->isMobile()){
+            $e->getViewModel()->setTemplate('layout/mobile');
+        }
+    }
+    
+    public function pluginMobileRoute(\Zend\Mvc\MvcEvent $e){
+        if($this->isMobile() && strtolower($e->getRouteMatch()->getMatchedRouteName()) == 'home'){
+            $e->getRouteMatch()->setMatchedRouteName('mobile');
+            $e->getRouteMatch()->setParam('controller', '\Application\Controller\Mobile');
+        }
+    }
+    
+    public function pluginMobile(\Zend\Mvc\MvcEvent $e){
+        $router = $e->getApplication()->getServiceManager()->get('Router');
+        $this->isMobile($router->getRequestUri());
+    }
+    
     public function pluginLastPage(\Zend\Mvc\MvcEvent $e) {
         if (substr_count(strtolower($e->getRouteMatch()->getParam('__CONTROLLER__')), 'ajax'))
             return;
         $this->lastRouteMatch = clone $e->getRouteMatch();
         $this->lastRouteMatch->setParam('controller', $this->lastRouteMatch->getParam('__CONTROLLER__'));
     }
-
+    
     public function pluginSession() {
         $manager = \Zend\Session\Container::getDefaultManager();
 
@@ -133,6 +154,19 @@ class Module {
     /////////////////////// Config /////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////
 
+    protected function isMobile($info = null){
+        /* @var $i \Zend\Uri\Http */
+        static $i = null;
+        if(!is_null($info)){
+            $i = $info;
+            return $this->isMobile(null);
+        }
+        if(is_null($i)){
+            return false;
+        }
+        return (substr_count( (string)$i->getHost() , 'm.no-money.') > 0);
+    }
+    
     public function getConfig() {
         return include __DIR__ . '/config/module.config.php';
     }

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <router>
+    <mobile type="Literal">
+        <options>
+            <route>/m</route>
+            <defaults __NAMESPACE__="Application\Controller" controller="Mobile" action="index" />
+        </options>
+    </mobile>
+    
     <home type="Literal">
         <options>
             <route>/</route>
