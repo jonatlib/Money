@@ -19,3 +19,6 @@
 2012-11-10T23:06:33+01:00 WARN (4): Missing translate for __'The requested controller could not be mapped to an existing controller class.'__ in textDomain: 'default' and locale: 'cs_CZ'.
 2012-11-10T23:06:33+01:00 WARN (4): Missing translate for __'resolves to %s'__ in textDomain: 'default' and locale: 'cs_CZ'.
 2012-11-10T23:06:33+01:00 WARN (4): Missing translate for __'Exception'__ in textDomain: 'default' and locale: 'cs_CZ'.
+2012-11-11T10:40:13+01:00 WARN (4): Missing translate for __'The requested controller could not be mapped to an existing controller class.'__ in textDomain: 'default' and locale: 'cs_CZ'.
+2012-11-11T10:40:13+01:00 WARN (4): Missing translate for __'resolves to %s'__ in textDomain: 'default' and locale: 'cs_CZ'.
+2012-11-11T10:40:13+01:00 WARN (4): Missing translate for __'Exception'__ in textDomain: 'default' and locale: 'cs_CZ'.
