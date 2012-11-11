@@ -74,7 +74,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
                     'date' => 'date',
                 ))
                 ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
-                ->group('date')->group('c.id');
+                ->group('c.id');
         $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
 
         return $data;
@@ -259,7 +259,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
             $start = time();
         }
         if(is_null($stop)){
-            $stop = time() + 3600 * 24 * 30; 
+            $stop = time() - 3600 * 24 * 30; 
         }
         if (!is_numeric($start) || !ctype_xdigit($stop)) {
             $this->start = (int) strtotime($start);

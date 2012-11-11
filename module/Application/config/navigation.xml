@@ -40,13 +40,6 @@
                 <controller>calculator</controller>
                 <action>index</action>
             </summary>
-            
-            <perday>
-                <label>Perday</label>
-                <route>application/default</route>
-                <controller>calculator</controller>
-                <action>perday</action>
-            </perday>
         </pages>
     </calculator>
     

@@ -151,6 +151,10 @@ return array(
     'Money spend by category for last 30 days.' => 'Peníte utracené na kategorie za 30 dní.',
     'Money summary for last 30 days.' => 'Souhrn za posledních 30 dní.',
     'Select date range' => 'Vyberte časové období',
+    'The requested controller could not be mapped to an existing controller class.' => 'Požadovaný kontroler nebyl nalezen.',
+    'resolves to %s' => 'Přeložen na %s',
+    'Exception' => 'Vyjímka',
+    'Value' => 'Hodnota',
     
 //    '' => '',
 //    '' => '',
