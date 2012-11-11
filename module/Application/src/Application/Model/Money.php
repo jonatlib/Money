@@ -9,8 +9,12 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     protected $userId = null;
     protected $start, $stop;
 
+    protected function getNumberOfDays() {
+        return (int) ((($this->stop - $this->start) / 3600) / 24);
+    }
+
     protected function getDateWhere() {
-        return '`date` <= DATE(NOW()) AND `date` > DATE(DATE_ADD(NOW(), INTERVAL -1 MONTH))';
+        return "`date` <= DATE(FROM_UNIXTIME({$this->stop})) AND `date` >= DATE(FROM_UNIXTIME({$this->start}))";
     }
 
     public function getCategories() {
@@ -39,7 +43,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
             return false;
         }
     }
-
+    
     public function getMoneys($limit = null) {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
@@ -56,6 +60,26 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         return $data;
     }
 
+    public function getMonthSpendingByCategoryPerDay(){
+        $where = new Db\Sql\Where();
+        $where->equalTo('Money.owner', $this->userId);
+
+        $where1 = new Db\Sql\Where();
+        $where1->lessThanOrEqualTo('Money.value', 0);
+
+        $select = $this->getSql()->select();
+        $select->where(array($where, $where1, $this->getDateWhere()))
+                ->columns(array(
+                    'sumary' => new Db\Sql\Predicate\Expression("(sum(Money.value) / {$this->getNumberOfDays()})"),
+                    'date' => 'date',
+                ))
+                ->join(array('c' => 'Category'), 'category = c.id', array('categName' => 'name'))
+                ->group('date')->group('c.id');
+        $data = $this->getAdapter()->query($select->getSqlString($this->getAdapter()->getPlatform()), Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
+
+        return $data;
+    }
+    
     public function getMonthSpendingByCategory() {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
@@ -231,8 +255,27 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     }
 
     public function __construct($adapter, $userId, $start = null, $stop = null) {
-        $this->start = $start;
-        $this->stop = $stop;
+        if(is_null($start)){
+            $start = time();
+        }
+        if(is_null($stop)){
+            $stop = time() + 3600 * 24 * 30; 
+        }
+        if (!is_numeric($start) || !ctype_xdigit($stop)) {
+            $this->start = (int) strtotime($start);
+        } else {
+            $this->start = (int) $start;
+        }
+        if (!is_numeric($stop) || !ctype_xdigit($stop)) {
+            $this->stop = (int) strtotime($stop);
+        } else {
+            $this->stop = (int) $stop;
+        }
+        if($this->start > $this->stop){
+            $tStop = $this->stop;
+            $this->stop = $this->start;
+            $this->start = $tStop;
+        }
         parent::__construct('Money', $adapter, new \Zend\Db\TableGateway\Feature\RowGatewayFeature('id'));
         $this->userId = (int) $userId;
     }

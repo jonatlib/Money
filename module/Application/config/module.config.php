@@ -86,6 +86,7 @@ return array(
             'Application\Controller\Money' => 'Application\Controller\MoneyController',
             'Application\Controller\User' => 'Application\Controller\UserController',
             'Application\Controller\Category' => 'Application\Controller\CategoryController',
+            'Application\Controller\Calculator' => 'Application\Controller\CalculatorController',
         ),
         'factories' => array(
             'Application\Controller\Auth' => function(Zend\Mvc\Controller\ControllerManager $cm) {
