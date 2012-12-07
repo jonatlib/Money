@@ -3,7 +3,7 @@ function m_translate_dictionary(handle, async){
     if(m_translate_dictionary.dic === undefined){
         $.ajax({
             url: baseUrl + 'ajax/dictionary',
-            method: 'get',
+            type: 'get',
             cache: true,
             async: async,
             success: function(data){

@@ -76,20 +76,20 @@ class AjaxController extends AbstractActionController {
         return $view;
     }
 
-    public function dictionaryAction(){
+    public function dictionaryAction() {
         $view = new JsonModel();
         /* @var $translator \Application\Library\I18n\Translator\Translator */
         $translator = $this->serviceLocator->get('translator');
-        
+
         //FIXME get dictionary from translator
         $locale = $translator->getLocale();
-        $dictionary = function()use($locale){
-           return require __DIR__ . "/../../../language/{$locale}.php";
-        };
+        $dictionary = function()use($locale) {
+                    return require __DIR__ . "/../../../language/{$locale}.php";
+                };
         $view->dictionary = $dictionary();
         return $view;
     }
-    
+
     public function translateAction() {
         $view = new JsonModel();
         $get = $this->params()->fromQuery('text', null);
@@ -97,7 +97,7 @@ class AjaxController extends AbstractActionController {
             $translator = $this->serviceLocator->get('translator');
             if (is_array($get)) {
                 $result = array();
-                foreach($get as $g){
+                foreach ($get as $g) {
                     $result[] = $translator->translate($g);
                 }
                 $view->text = $result;
@@ -108,6 +108,48 @@ class AjaxController extends AbstractActionController {
             $view->text = 'unknown';
         }
 
+        return $view;
+    }
+
+    public function datestartAction() {
+        $view = new JsonModel();
+        /* @var $model \Application\Model\UserVars */
+        $model = $this->getServiceLocator()->get('\Application\Model\UserVars');
+        $view->date = $model->getVariable('date-start');
+        if($view->date === false){
+            $view->date = time() - 24 * 3600;
+        }
+        return $view;
+    }
+
+    public function datestopAction() {
+        $view = new JsonModel();
+        /* @var $model \Application\Model\UserVars */
+        $model = $this->getServiceLocator()->get('\Application\Model\UserVars');
+        $view->date = $model->getVariable('date-stop');
+        if($view->date === false){
+            $view->date = time();
+        }
+        return $view;
+    }
+
+    public function datesaveAction() {
+        $view = new JsonModel();
+        $view->result = 'error';
+        if ($this->request->isPost()) {
+            $data = $this->request->getPost();
+
+            $start = $data['start'];
+            $stop = $data['stop'];
+
+            /* @var $model \Application\Model\UserVars */
+            $model = $this->getServiceLocator()->get('\Application\Model\UserVars');
+            $model->setVariable('date-set', time());
+            $model->setVariable('date-start', $start);
+            $model->setVariable('date-stop', $stop);
+
+            $view->result = 'success';
+        }
         return $view;
     }
 

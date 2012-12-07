@@ -44,7 +44,7 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
         }
     }
     
-    public function getMoneys($limit = null) {
+    public function getMoneys($limit = 20) {
         $where = new Db\Sql\Where();
         $where->equalTo('Money.owner', $this->userId);
 
@@ -255,10 +255,10 @@ class Money extends \Zend\Db\TableGateway\TableGateway {
     }
 
     public function __construct($adapter, $userId, $start = null, $stop = null) {
-        if(is_null($start)){
+        if(!$start){
             $start = time();
         }
-        if(is_null($stop)){
+        if(!$stop){
             $stop = time() - 3600 * 24 * 30; 
         }
         if (!is_numeric($start) || !ctype_xdigit($stop)) {

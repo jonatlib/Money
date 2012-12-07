@@ -53,21 +53,79 @@ function cleanAlerts(){
 }
 
 function initDatePicker(){
-    $('#widgetField a').click(function(){
+    $('#widgetField a').click(function(e){
         if($('div#widgetCalendar:hidden').length > 0){
             $('div#widgetCalendar:hidden').fadeIn('slow');
-            return;
-        }
-        if($('div#widgetCalendar:visible').length > 0){
+        }else if($('div#widgetCalendar:visible').length > 0){
             $('div#widgetCalendar:visible').fadeOut('slow');
-            return;
         }
+        e.stopPropagation();
+    });
+    $(document).click(function(){
+        $('div#widgetCalendar:visible').fadeOut('slow');
     });
     $('#widgetCalendar').show();
+    
+    var loadDate = function(url){
+        var date = new Date();
+        $.ajax({
+            url: baseUrl + 'ajax/' + url,
+            type: 'get',
+            cache: false,
+            async: false,
+            success: function(data){
+                if(data['date'] == undefined){
+                    return;
+                }
+                date = new Date( parseInt(data['date']) * 1000 );
+            }
+        });
+        return date;
+    };
+    
+    var saveDate = function(start, stop){
+        var r = function(d){
+            return Math.round((new Date(d)).getTime() / 1000);
+        };
+        var data = {start: r(start), stop: r(stop)};
+        $.ajax({
+            url: baseUrl + 'ajax/datesave',
+            type: 'POST',
+            cache: false,
+            async: true,
+            data: data,
+            success: function(data){
+                if(data['result'] == undefined || data['result'] != 'success'){
+                    alert(m_synchrone_translate('Could not save date.'));
+                }else{ location.reload(true); }
+            }
+        });
+    };
+    
+    var formatDate = function(date){
+        return date.getDate() + "." + (date.getMonth() + 1) + "." + date.getFullYear();
+    };
+    
+    var callback = function(formated, date, html, save){
+        if(formated[0] == formated[1]) return;
+        var a = new Date(date.pop());
+        var b = new Date(date.pop());
+        if(a < b){
+            $('#widgetField div').get(0).innerHTML = formatDate(a) + ' - ' + formatDate(b);
+            if(save == undefined) saveDate(a, b);
+        }else{
+            $('#widgetField div').get(0).innerHTML = formatDate(b) + ' - ' + formatDate(a);
+            if(save == undefined) saveDate(b, a);
+        }
+    };
+    
+    var start = loadDate('datestart');
+    var stop = loadDate('datestop');
+    
     $('#widgetCalendar').DatePicker({
         flat: true,
-        format: 'd.m.Y',
-        date: [new Date(), new Date()],
+        format: 'm-d-Y',
+        date: [start, stop],
         calendars: 3,
         mode: 'range',
         starts: 1,
@@ -79,10 +137,9 @@ function initDatePicker(){
             monthsShort: m_synchrone_translate(["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]),
             weekMin: m_synchrone_translate('wk')
         },
-        onChange: function(formated) {
-            $('#widgetField div').get(0).innerHTML = formated.join(' - ');
-        }
+        onChange: callback
     });
+    callback([ start, stop ], [ start, stop ], null, false);
     $('#widgetCalendar').hide();
 }
 

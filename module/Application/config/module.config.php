@@ -37,13 +37,35 @@ return array(
             'mail-adapter' => '\Zend\Mail\Transport\Sendmail',
         ),
         'factories' => array(
-            '\Application\Model\Money' => function($sm){
+            '\Application\Model\Money' => function($sm) {
                 $auth = new \Zend\Authentication\AuthenticationService();
-                return new \Application\Model\Money($sm->get('db-adapter'), $auth->getIdentity()->id);
+                /* @var $model \Application\Model\UserVars */
+                $model = $sm->get('\Application\Model\UserVars');
+
+                $set = $model->getVariable('date-set');
+                $start = $model->getVariable('date-start');
+                $stop = $model->getVariable('date-stop');
+
+                if ($set === false) {
+                    $model->setVariable('date-set', time());
+                    $model->setVariable('date-start', time() - 30 * 24 * 3600);
+                    $model->setVariable('date-stop', time());
+                } else {
+                    if ($set - strtotime(date("d.m.Y")) > 3600 * 24) {
+                        $model->setVariable('date-set', time());
+                        $model->setVariable('date-start', $start + 24 * 3600);
+                        $model->setVariable('date-stop', $stop + 24 * 3600);
+                    }
+                }
+                return new \Application\Model\Money($sm->get('db-adapter'), $auth->getIdentity()->id, $start, $stop);
+            },
+            '\Application\Model\UserVars' => function($sm) {
+                $auth = new \Zend\Authentication\AuthenticationService();
+                return new \Application\Model\UserVars($sm->get('db-adapter'), $auth->getIdentity()->id);
             },
             'Navigation' => function($sm) {
                 $config = \Zend\Config\Factory::fromFile(__DIR__ . '/../config/navigation.xml', true);
-                
+
                 $f = new Application\Library\Navigation\Service\ConstructedNavigationFactory($config);
                 return $f->createService($sm);
             },
