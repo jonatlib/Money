@@ -50,7 +50,7 @@ return array(
                     $model->setVariable('date-start', time() - 30 * 24 * 3600);
                     $model->setVariable('date-stop', time());
                 } else {
-                    if (strtotime(date("d.m.Y")) - strtotime(date("d.m.Y", $set)) > 3600 * 24) {
+                    if (strtotime(date("d.m.Y")) - strtotime(date("d.m.Y", $set)) >= 3600 * 24 - 1) {
                         $model->setVariable('date-set', time());
                         $model->setVariable('date-start', strtotime(date("d.m.Y", $start) . " +1day"));
                         $model->setVariable('date-stop', strtotime( date("d.m.Y", $stop) . " +1day"));
