@@ -17,6 +17,9 @@ function createChart(options, url, callbackData, id, chartType){
             var dchart = callbackData(data['data']);
             
             var chart = new google.visualization[chartType](document.getElementById(id));
+            $(window).bind('redraw', function(){
+                chart.draw(dchart, options);
+            });
             $(window).resize(function(){
                 chart.draw(dchart, options);
             });
@@ -70,18 +73,72 @@ function spendingChart(){
 }
 
 function spendingCategoryChart(){
+    if(spendingCategoryChart.dchart != undefined) return;
     createChart({
         'title':'Money spend by category for last 30 days.',
         'height':400,
         'isStacked': true
     }, 'ajax/linegraph', function(data){
-        var dchart = null;
-        var rows = [];
-            $.each(data, function(k, v){
-                rows.push(v);
+        spendingCategoryChart.dchart = null;
+        var rows = [], groups = [];
+        $.each(data, function(k, v){
+            rows.push(v);
+        });
+        spendingCategoryChart.columns = [];
+        $.each(rows[0], function(k, v){
+            spendingCategoryChart.columns.push({
+                title: v,
+                index: k,
+                visible: true
             });
-            dchart = google.visualization.arrayToDataTable(rows);
-        return dchart;
+            if(k > 0) groups.push(v);
+        });
+        spendingCategoryChart.dchart = google.visualization.arrayToDataTable(rows);
+        spendingCategoryChart.view = new google.visualization.DataView(spendingCategoryChart.dchart);
+        setVisibilityOfColumn = function(column, value){
+            $.each(spendingCategoryChart.columns, function(k, v){
+                if(column == v.title && k > 0){
+                    spendingCategoryChart.columns[k].visible = value;
+                    return;
+                }
+            });
+        };
+        getVisibleColumns = function(){
+            var result = [];
+            $.each(spendingCategoryChart.columns, function(k, v){
+                if(v.visible){
+                    result.push(v.index);
+                }
+            });
+            return result;
+        };
+        createCheckBox = function(title){
+            if(createCheckBox.num == undefined){
+                createCheckBox.num = 0;
+            }
+            var value = title.replace(/[^a-z0-9]+/i, '');
+            var name = 'checkbox_' + value + '_' + createCheckBox.num++;
+            $('#' + name).live('change', function(e){
+                var title = $(this).val();
+                var checked = ($(this).is(':checked')) ? true : false;
+                setVisibilityOfColumn(title, checked);
+                spendingCategoryChart.view.setColumns(getVisibleColumns());
+                $(window).trigger('redraw');
+            });
+            return '<label style="background: #eee;" for="' + name + '">' + title + '<input type="checkbox" style="margin:0 0 0 10px;" value="' + title + '" checked="checked" name="' + name + '" id="' + name + '" /></label>';
+        };
+        getCheckBoxes = function(data){
+            var result = [];
+            result.push('<style> div#checkbox_group > * { float:left; margin: 0 10px 0 0; } </style>');
+            result.push('<div id="checkbox_group">');
+            $.each(data, function(k, v){
+                result.push(createCheckBox(v));
+            });
+            result.push('</div>');
+            return result.join("\n");
+        };
+        $('#chart_spending_category').parent().append( getCheckBoxes(groups) );
+        return spendingCategoryChart.view;
     }, 'chart_spending_category', 'ColumnChart');
 }
 
